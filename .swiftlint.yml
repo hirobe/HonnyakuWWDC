@@ -1,0 +1,12 @@
+
+disabled_rules:
+- large_tuple
+- line_length
+- nesting
+- multiple_closures_with_trailing_closure
+- function_body_length
+- for_where
+
+identifier_name:
+  min_length: 2
+
