@@ -29,7 +29,7 @@ class ParseVideoDetailUseCase: ParseVideoDetailUseCaseProtocol {
     /// transcript を抽出
     func parseTranscript(text: String) throws -> TranscriptEntity? {
         func parseSec(startString: String) throws -> Int {
-            if let first = startString.split(by: ".").first,
+            if let first = startString.split(separator: ".").first,
                let sec = Int(first) {
                 return sec
             }
