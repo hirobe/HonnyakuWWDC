@@ -11,7 +11,7 @@ https://user-images.githubusercontent.com/85206/177453843-14c8dd98-288d-4f02-948
 
 ## アプリの構成
 
-このアプリは、iOS16betaで動作する本体(HonnyakuWWDC)と、iOS15/MacOS12.4で動作するPlayer(HonnyakuWWDCClassicPlayer)の二つのアプリで構成されています。元々は、本体のみで全て動くように開発していたのですが、iOS16Beta1/2のシミュレータで読み上げ音声が選択できなかったため旧OSで動くPlayerを作成しました。
+このアプリは、iOS16betaで動作する本体(HonnyakuWWDC)と、iOS15/MacOS12.4で動作するPlayer(HonnyakuWWDCClassicPlayer)の二つのアプリで構成されています。元々は、本体のみで全て動くように開発していたのですが、iOS16Beta1〜3のシミュレータで読み上げ音声が選択できなかったため旧OSで動くPlayerを作成しました。
 
 - HonnyakuWWDC
 
@@ -28,11 +28,11 @@ https://user-images.githubusercontent.com/85206/177453843-14c8dd98-288d-4f02-948
 
 ## How to use
 
-以下はMac上でXcode14.0 beta2を使って動かすための手順です。
+以下はMac上でXcode14.0 beta3を使って動かすための手順です。
 
 1. アプリを起動する前に、日本語の音声読み上げを使うには音声ファイルのダウンロードが必要です。動かしたい環境（Mac）の`設定`→`アクセシビリティ`→`読み上げコンテンツ`から`システムの声`を選択し、`カスタマイズ...`から使いたい声(Kyokoを推奨)をダウンロードしてください。Siriを選びたいところですが、残念ながらアプリではSiriを使うことはできません。
 
-2. Xcode14.0 beta2でWWDCPlayerをビルドし、iPadのシュミレータを実行します。
+2. Xcode14.0 beta3[^1]でWWDCPlayerをビルドし、iPadのシュミレータを実行します。
 
 3. アプリのサイドのリストを表示し、ギアボタンを押して設定画面を開きます。
 DeepLのキーを入力します。DeepLのProアカウントの場合はPro AccountのスイッチをONにします。
@@ -87,3 +87,5 @@ HonnyakuWWDCClassicPlayerは、HonnyakuWWDCの一部のフォルダのコード�
 ## ソースコードの指摘歓迎
 
 私は、SwiftUIでアプリ全体のUIを書くのは初めてなのと、iOS16SDKについても手探りなので、変な箇所があるかもしれません。issueやプルリクで指摘歓迎です。
+
+[^1]: Xcode14 beta1, beta2は、HonnykuWWDC 0.1.0でのみビルド可能です。
