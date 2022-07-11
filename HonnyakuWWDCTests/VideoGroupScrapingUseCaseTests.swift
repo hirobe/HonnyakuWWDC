@@ -15,6 +15,7 @@ final class VideoGroupScrapingUseCaseTests: XCTestCase {
 
     func testExample() throws {
         let html = """
+<body>
 <li class="collection-item hidden" data-released="true">
     <section class="grid">
         <section class="row">
@@ -81,6 +82,7 @@ final class VideoGroupScrapingUseCaseTests: XCTestCase {
         </section>
     </section>
 </li>
+</body>
 """
         let useCase = VideoGroupScrapingUseCase(settingsUseCase: SettingsUseCase.shared,
                                                 taskProgresUseCase: TaskProgressUseCase(),

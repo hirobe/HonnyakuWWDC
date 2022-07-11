@@ -16,7 +16,7 @@ final class DeepLUseCaseTests: XCTestCase {
     }
 
     func testXmlAndTranscript() throws {
-        let deepLUseCase = DeepLUseCase.init(authKey: "", isProAPI: false, language: "JA")
+        let deepLUseCase = DeepLUseCase.init()
         let transcript = TranscriptEntity(
             language: "EN",
             paragraphs:
