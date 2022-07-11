@@ -185,4 +185,14 @@ extension SpeechPlayer: AVSpeechSynthesizerDelegate {
 
         delegate?.didFinishPhase()
     }
+
+    func speechSynthesizer(_ synthesizer: AVSpeechSynthesizer, didCancel utterance: AVSpeechUtterance) {
+        // 普通にスピーチをしていても稀にキャンセルされることがあるようだ
+        guard phrases.nextPhraseIndex() != nil else {
+            // 再生終了
+            return
+        }
+
+        delegate?.didFinishPhase()
+    }
 }
