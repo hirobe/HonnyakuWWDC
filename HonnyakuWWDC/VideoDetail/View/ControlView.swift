@@ -39,6 +39,7 @@ struct ControlView: View {
                     Text("Not translated yet. ")
 
                     Button("Start Translate") {
+                        viewModel.startTransferStart()
                         Task {
                             await viewModel.transfer()
                         }

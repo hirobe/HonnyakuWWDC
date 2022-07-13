@@ -3,6 +3,7 @@
 import Foundation
 
 protocol TranslateCaseProtocol {
+    func startTranslateVideoDetailState(id: String)
     func translateVideoDetail(id: String, url: URL) async throws
     func makeClipText(id: String) -> String?
 }
@@ -33,6 +34,11 @@ class TranslateUseCase: TranslateCaseProtocol {
         self.parseVideoDetailUseCase = parseVideoDetailUseCase
         self.deepLUseCase = deepLUseCase
 
+    }
+
+    /// translate がスレッド待ちですぐ始まらないので、先にprogressStateだけ開始しておく
+    func startTranslateVideoDetailState(id: String) {
+        taskProgresUseCase.setState(taskId: id, state: .processing(progress: 0.0, message: nil))
     }
 
     func translateVideoDetail(id: String, url: URL) async throws {
