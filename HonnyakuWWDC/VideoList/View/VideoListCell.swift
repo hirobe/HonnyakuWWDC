@@ -10,12 +10,12 @@ struct VideoListCell: View {
     var body: some View {
         switch viewModel.state {
         case .completed:
-            NavigationLink("🎉 "+viewModel.video.title, value: viewModel.video)
+            NavigationLink("🎉 \(viewModel.video.title)", value: viewModel.video)
                 .bold()
         case let .processing(progress, _):
             NavigationLink(value: viewModel.video  ) {
                 HStack {
-                    Text(viewModel.video.title)
+                    Text("\(Image(systemName: "wand.and.rays", variableValue: Double(progress)))  \(viewModel.video.title)")
                         .bold()
                     Spacer()
                     ProgressView(value: progress)
