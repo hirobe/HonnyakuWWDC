@@ -76,6 +76,9 @@ class PlayerSettingViewModel: ObservableObject {
 
     func updateVoiceSelect() {
         // 値が空の場合、選択状態でも値の設定が通知されない（？）ので強制的に値を設定する
+        if SettingsUseCase.LanguageDefinition.find(id: selectedLanguageId) == nil {
+            selectedLanguageId = SettingsUseCase.LanguageDefinition.all.first?.id ?? ""
+        }
         let voices = voices(languageId: selectedLanguageId)
         if voices.count > 0 && !voices.contains(where: { $0.id == selectedVoiceId}) {
             selectedVoiceId = voices.first?.id ?? ""
