@@ -41,6 +41,11 @@ class VideoDetailViewModel: ObservableObject {
             .store(in: &cancellables)
     }
 
+    /// translate がスレッド待ちですぐに始まらないので、先にprogressStateだけ開始してボタンを非表示にする
+    func startTransferStart() {
+        transferUserCase.startTranslateVideoDetailState(id: videoId)
+    }
+
     func transfer() async {
         do {
             try await transferUserCase.translateVideoDetail(id: videoId, url: url)
