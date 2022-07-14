@@ -4,9 +4,9 @@ import SwiftUI
 import Combine
 
 class VideoListCellViewModel: ObservableObject {
-    var video: VideoEntity
-    var progress: ProgressObservable
-    @Published var state: ProgressState = .unknwon
+    private(set) var video: VideoEntity
+    private var progress: ProgressObservable
+    @Published private(set) var state: ProgressState = .unknwon
 
     private var cancellables: [AnyCancellable] = []
 

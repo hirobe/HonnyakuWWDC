@@ -6,18 +6,18 @@ import Combine
 
 /// VideoListのViewModel。VideoListStateという方がSwiftUI的には適切なのかもしれない
 class VideoListViewModel: ObservableObject {
-    @Published var videoGroups: [VideoGroupEntity] = []
-    @Published var isProcessing: Bool = false
-    @Published var errorMessage: String = ""
+    @Published private(set) var videoGroups: [VideoGroupEntity] = []
+    @Published private(set) var isProcessing: Bool = false
+    @Published private(set) var errorMessage: String = ""
     @Published var searchText: String = ""
     private var cancellables: [AnyCancellable] = []
     private var videoListUseCase: VideoListUseCase
     private var videoGroupScrapingUseCase: VideoGroupScrapingUseCase
     private var settingsUseCase: SettingsUseCase
 
-    @Published var progressState: [String: ProgressState] = [:]
+    @Published private(set) var progressState: [String: ProgressState] = [:]
 
-    var progressUseCase: TaskProgressUseCase
+    private var progressUseCase: TaskProgressUseCase
 
     init(videoListUseCase: VideoListUseCase = VideoListUseCase(),
          progressUseCase: TaskProgressUseCase = TaskProgressUseCase(),
