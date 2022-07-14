@@ -5,18 +5,17 @@ import Combine
 
 /// VideoDetailViewのViewModel
 class VideoDetailViewModel: ObservableObject {
-    var transferUserCase: TranslateCaseProtocol
-    var progressUseCase: TaskProgressUseCaseProtocol
-
-    @Published var progressState: ProgressState = .unknwon
-    private var cancellables: [AnyCancellable] = []
+    private var transferUserCase: TranslateCaseProtocol
+    private var progressUseCase: TaskProgressUseCaseProtocol
 
     @Published var showPlayerIfEnabled: Bool = true
-    @Published var errorMessage: String = ""
+    @Published private(set) var progressState: ProgressState = .unknwon
+    @Published private(set) var errorMessage: String = ""
+    private(set) var videoId: String
+    private(set) var url: URL
+    private(set) var title: String
 
-    var videoId: String
-    var url: URL
-    var title: String
+    private var cancellables: [AnyCancellable] = []
 
     init(transferUserCase: TranslateCaseProtocol = TranslateUseCase(),
          progressUseCase: TaskProgressUseCaseProtocol = TaskProgressUseCase(),

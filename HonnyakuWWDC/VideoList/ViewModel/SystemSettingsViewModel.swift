@@ -10,11 +10,10 @@ class SystemSettingViewModel: ObservableObject {
     private var videoListUseCase: VideoListUseCase
     private var videoGroupScrapingUseCase: VideoGroupScrapingUseCase
 
-    @Published var isPresent: Bool = true
+    @Published private(set) var isPresent: Bool = true
 
-    @Published var langIndex: Int = 0
+    @Published private(set) var langIndex: Int = 0
 
-    // @Published var language:SettingsUseCase.Language = .ja
     @Published var voiceId: String = ""
     @Published var deepLAuthKey: String = ""
     @Published var isDeepLPro: Bool = false
@@ -22,7 +21,7 @@ class SystemSettingViewModel: ObservableObject {
     @Published var selectedLanguageId: String = ""
     @Published var selectedVoiceId: String = ""
 
-    var videoGroupList: [VideoGroupSettingViewModel] = []
+    private(set) var videoGroupList: [VideoGroupSettingViewModel] = []
 
     private var cancellables: [AnyCancellable] = []
 

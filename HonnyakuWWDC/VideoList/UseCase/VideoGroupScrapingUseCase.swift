@@ -9,7 +9,7 @@ class VideoGroupScrapingUseCase {
     private var taskProgresUseCase: TaskProgressUseCase
     private var fileAccessUseCase: FileAccessUseCaseProtocol
     private var networkAccessUseCase: NetworkAccessUseCaseProtocol
-    @Published var isProcessing: Bool = false
+    @Published private(set) var isProcessing: Bool = false
     private var cancellables: [AnyCancellable] = []
 
     init(settingsUseCase: SettingsUseCase = SettingsUseCase.shared,

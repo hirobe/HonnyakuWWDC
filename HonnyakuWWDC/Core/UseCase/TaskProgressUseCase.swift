@@ -28,7 +28,7 @@ class ProgressObservable: ObservableObject {
 class ProgressManager {
     static var shared: ProgressManager = ProgressManager()
 
-    var tasks: [String: ProgressObservable] = [:]
+    private var tasks: [String: ProgressObservable] = [:]
 
     func setState(taskId: String, state: ProgressState) {
         tasks[taskId] = tasks[taskId] ?? ProgressObservable(state: .unknwon)

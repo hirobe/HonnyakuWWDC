@@ -4,16 +4,16 @@ import Foundation
 import Combine
 
 class VideoGroupSettingViewModel: ObservableObject, Identifiable {
-    var id: String
-    var title: String
+    private(set) var id: String
+    private(set) var title: String
     var enabled: Bool {
         didSet { // 値変更後に呼ぶためにsinkではなくdidSetを使う
             onChanged?(self)
         }
     }
-    @Published var state: ProgressState = .unknwon
-    var progress: ProgressObservable
-    var onChanged: ((_:VideoGroupSettingViewModel) -> Void)?
+    @Published private(set) var state: ProgressState = .unknwon
+    private(set) var progress: ProgressObservable
+    private var onChanged: ((_:VideoGroupSettingViewModel) -> Void)?
 
     private var cancellables: [AnyCancellable] = []
 

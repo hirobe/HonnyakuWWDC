@@ -11,7 +11,6 @@ struct SyncPlayModel: Equatable {
 
     enum ControllerInfo: Equatable {
         struct SeekInfo: Equatable {
-//            var progress: Float
             var seconds: Double
             var inPlaying: Bool
         }
@@ -21,9 +20,9 @@ struct SyncPlayModel: Equatable {
         case seeking(seekInfo: SeekInfo)
     }
 
-    var controllerInfo: ControllerInfo
-    var syncState: SyncState
-    var phraseIndex: Int
+    private(set) var controllerInfo: ControllerInfo
+    private(set) var syncState: SyncState
+    private(set) var phraseIndex: Int
 
     func updatedWith(controllerInfo: ControllerInfo) -> SyncPlayModel {
         return SyncPlayModel(controllerInfo: controllerInfo,

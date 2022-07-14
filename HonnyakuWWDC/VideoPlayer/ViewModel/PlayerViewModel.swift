@@ -9,20 +9,20 @@ class PlayerViewModel: ObservableObject {
     typealias SeekInfo = SyncPlayModel.ControllerInfo.SeekInfo
     typealias SyncState = SyncPlayModel.SyncState
 
-    @Published var translated: TranscriptEntity = .zero
-    @Published var baseTranscript: TranscriptEntity = .zero
-    @Published var videoAttributes: VideoAttributesEntity = VideoAttributesEntity.zero
-    @Published var videoPlayer: AVPlayerWrapperProtocol
+    @Published private(set) var translated: TranscriptEntity = .zero
+    @Published private(set) var baseTranscript: TranscriptEntity = .zero
+    @Published private(set) var videoAttributes: VideoAttributesEntity = VideoAttributesEntity.zero
+    @Published private(set) var videoPlayer: AVPlayerWrapperProtocol
     private var speechPlayer: SpeechPlayerProtocol
 
-    @Published var speechSentence: String = ""
-    @Published var baseSentence: String = ""
-    @Published var showSpeechSentence: Bool = true
-    @Published var showBaseSentence: Bool = true
+    @Published private(set) var speechSentence: String = ""
+    @Published private(set) var baseSentence: String = ""
+    @Published private(set) var showSpeechSentence: Bool = true
+    @Published private(set) var showBaseSentence: Bool = true
 
     // PlayerのController
     @Published var isPlaying: Bool = false
-    @Published var isShowingController: Bool = true
+    @Published private(set) var isShowingController: Bool = true
     @Published var isDraggingSlider: Bool = false
     @Published var sliderPosition: Float = 0.0
     @Published var sliderPositionDraged: Float = 0.0
@@ -31,7 +31,7 @@ class PlayerViewModel: ObservableObject {
     @Published var sliderRightTime: String = "00:00"
 
     @Published var isTouchingScreen: Bool = false // touchが外れてから3秒後にコントロールを隠す
-    @Published var isHoveringScreen: Bool = false // hoverが外れてから3秒後にコントロールを隠す
+    @Published private(set) var isHoveringScreen: Bool = false // hoverが外れてから3秒後にコントロールを隠す
 
     private var settingsUseCase: SettingsUseCase
     private var syncPlayUseCase: SyncPlayUseCase
