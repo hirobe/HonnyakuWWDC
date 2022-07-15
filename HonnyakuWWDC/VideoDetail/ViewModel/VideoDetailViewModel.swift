@@ -46,12 +46,15 @@ class VideoDetailViewModel: ObservableObject {
     }
 
     func transfer() async {
-        do {
-            try await transferUserCase.translateVideoDetail(id: videoId, url: url)
-        } catch {
-            Task { @MainActor in
-                errorMessage = error.localizedDescription
+        Task.detached {
+            do {
+                try await self.transferUserCase.translateVideoDetail(id: self.videoId, url: self.url)
+            } catch {
+                Task { @MainActor in
+                    self.errorMessage = error.localizedDescription
+                }
             }
+
         }
     }
 

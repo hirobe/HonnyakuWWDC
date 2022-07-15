@@ -58,7 +58,7 @@ class VideoGroupScrapingUseCase {
         var videos: [VideoEntity] = []
 
         // まずvideoが1件ずつ含まれる部分に分割する。html全体からregexVideoInfoで抽出すると非常に時間がかかるため
-        var splits = text.split(separator: Self.regexSplit)
+        var splits = text.split(separator: Self.regexSplit, omittingEmptySubsequences: false)
         splits.removeFirst() // 最初のブロックには情報が含まれないので除去
 
         // videoの情報を抽出する
