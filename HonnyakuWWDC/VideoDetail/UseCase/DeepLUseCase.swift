@@ -100,18 +100,22 @@ class DeepLUseCase: DeepLUseCaseProtocol {
         return xml
     }
 
-    private static let regexTranscriptParagraph = /<p>(.+)<\/p>/
-    .dotMatchesNewlines()
-    .repetitionBehavior(.reluctant)
     private static let regexTranscriptSentence = /<s at="(.+)">(.+)<\/s>/
     .dotMatchesNewlines()
     .repetitionBehavior(.reluctant)
 
     func xmlToTranscript(language: String, xml: String) -> TranscriptEntity {
+        func extracts(text: String, pre: some RegexComponent, after: some RegexComponent) -> [Substring] {
+            var pres = text.split(separator: pre, omittingEmptySubsequences: false)
+            pres.removeFirst()
+            let ret = pres.compactMap { $0.split(separator: after).first }
+            return ret
+        }
+
         var paragraphs: [TranscriptEntity.Paragraph] = []
-        for paragraphMatch in xml.matches(of: Self.regexTranscriptParagraph) {
+        for paragraphMatches in extracts(text: xml, pre: #/<p>/#, after: #/</p>/#) {
             var sentences: [TranscriptEntity.Paragraph.Sentence] = []
-            let sentenceMatches = String(paragraphMatch.output.1).matches(of: Self.regexTranscriptSentence)
+            let sentenceMatches = paragraphMatches.matches(of: Self.regexTranscriptSentence)
             for sentence in sentenceMatches {
                 guard let start = Int(sentence.output.1) else { fatalError() }
                 let text = String(sentence.output.2)

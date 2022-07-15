@@ -12,13 +12,7 @@ enum ParseVideoDetailUseCaseError: Error {
 
 class ParseVideoDetailUseCase: ParseVideoDetailUseCaseProtocol {
 
-    private static let regexTranscript = /<!-- transcript -->(.+)<\/li>/
-    .dotMatchesNewlines()
-    .repetitionBehavior(.reluctant)
-    private static let regexTranscriptParagraph = /<p>(.+)<\/p>/
-    .dotMatchesNewlines()
-    .repetitionBehavior(.reluctant)
-    private static let regexTranscriptSentence = /<span data-start="(.+)">(.+)(<\/span>|$)/
+    private static let regexTranscriptSentence = #/<span data-start="(.+)">(.+)(</span>|$)/#
     .dotMatchesNewlines()
     .repetitionBehavior(.reluctant)
 
@@ -26,9 +20,31 @@ class ParseVideoDetailUseCase: ParseVideoDetailUseCaseProtocol {
         .dotMatchesNewlines()
         .repetitionBehavior(.reluctant)
 
+    func extract(text: String, pre: some RegexComponent, after: some RegexComponent) -> Substring? {
+        if let preRemoved = text.split(separator: pre).last,
+           let afterRemoved = preRemoved.split(separator: after).first {
+            return afterRemoved
+        }
+        return nil
+    }
+
     /// transcript を抽出
     func parseTranscript(text: String) throws -> TranscriptEntity? {
-        func parseSec(startString: String) throws -> Int {
+        func extracts(text: String, pre: some RegexComponent, after: some RegexComponent) -> [Substring] {
+            var pres = text.split(separator: pre, omittingEmptySubsequences: false)
+            pres.removeFirst()
+            let ret = pres.compactMap { $0.split(separator: after).first }
+            return ret
+        }
+
+        func extracts(text: Substring, pre: some RegexComponent, after: some RegexComponent) -> [Substring] {
+            var pres = text.split(separator: pre, omittingEmptySubsequences: false)
+            pres.removeFirst()
+            let ret = pres.compactMap { $0.split(separator: after).first }
+            return ret
+        }
+
+        func parseSec(startString: Substring) throws -> Int {
             if let first = startString.split(separator: ".").first,
                let sec = Int(first) {
                 return sec
@@ -38,19 +54,19 @@ class ParseVideoDetailUseCase: ParseVideoDetailUseCaseProtocol {
         }
 
         // transcript
-        if let match = text.firstMatch(of: Self.regexTranscript) {
+        if let textBlock = extracts(text: text, pre: #/<!-- transcript -->/#, after: #/</li>/#).first {
             var paragraphs: [TranscriptEntity.Paragraph] = []
-            let textBlock = String(match.output.1)
-            for paragraphMatch in textBlock.matches(of: Self.regexTranscriptParagraph) {
-                var sentences: [TranscriptEntity.Paragraph.Sentence] = []
-                let sentenceMatches = String(paragraphMatch.output.1).matches(of: Self.regexTranscriptSentence)
+            for block in extracts(text: textBlock, pre: #/<p>/#, after: #/</p>/#) {
                 // sentencesを作成する。<span>が文の途中で切れている場合は、次のに結合する
+                var sentences: [TranscriptEntity.Paragraph.Sentence] = []
+                let sentenceMatches = String(block).matches(of: Self.regexTranscriptSentence)
+
                 var start: Int?
                 var text: String = ""
                 for index in 0..<sentenceMatches.count {
                     let sentenceMatch = sentenceMatches[index]
                     if start == nil {
-                        start = try parseSec(startString: String(sentenceMatch.output.1))
+                        start = try parseSec(startString: sentenceMatch.output.1)
                         text = ""
                     }
                     text += String(sentenceMatch.output.2)
@@ -67,6 +83,7 @@ class ParseVideoDetailUseCase: ParseVideoDetailUseCaseProtocol {
                     paragraphs.append(paragraph)
                 }
             }
+
             let transcript: TranscriptEntity = TranscriptEntity(language: "base", paragraphs: paragraphs)
             return transcript
         }
