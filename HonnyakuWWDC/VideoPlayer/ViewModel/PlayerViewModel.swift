@@ -4,16 +4,15 @@ import SwiftUI
 import Combine
 import AVKit
 
-class PlayerViewModel: ObservableObject {
+final class PlayerViewModel: ObservableObject {
     typealias ControllerInfo = SyncPlayModel.ControllerInfo
     typealias SeekInfo = SyncPlayModel.ControllerInfo.SeekInfo
     typealias SyncState = SyncPlayModel.SyncState
 
-    @Published private(set) var translated: TranscriptEntity = .zero
-    @Published private(set) var baseTranscript: TranscriptEntity = .zero
+    private var speechPlayer: SpeechPlayerProtocol
+
     @Published private(set) var videoAttributes: VideoAttributesEntity = VideoAttributesEntity.zero
     @Published private(set) var videoPlayer: AVPlayerWrapperProtocol
-    private var speechPlayer: SpeechPlayerProtocol
 
     @Published private(set) var speechSentence: String = ""
     @Published private(set) var baseSentence: String = ""
@@ -44,7 +43,7 @@ class PlayerViewModel: ObservableObject {
 
     private let prefferdTimeScale: CMTimeScale = 60
 
-    let timeRemainingFormatter: DateComponentsFormatter = {
+    private let timeRemainingFormatter: DateComponentsFormatter = {
         let formatter = DateComponentsFormatter()
         formatter.zeroFormattingBehavior = .pad
         formatter.allowedUnits = [.minute, .second]
@@ -75,7 +74,7 @@ class PlayerViewModel: ObservableObject {
         self.speechPlayer.delegate = self
     }
 
-    func setupBindings() {
+    private func setupBindings() {
         settingsUseCase.$speechVolume.sink { [weak self] value in
             self?.speechPlayer.setVolume(volume: Float(value))
         }
@@ -178,22 +177,22 @@ class PlayerViewModel: ObservableObject {
         return true
     }
 
-    func setupPlayer(detail: VideoDetailEntity) {
-        translated = detail.translated
+    private func setupPlayer(detail: VideoDetailEntity) {
+        let translated = detail.translated
         videoAttributes = detail.attributes
-        baseTranscript = detail.baseTranscript
+        let baseTranscript = detail.baseTranscript
 
         videoPlayer = videoPlayer.generatePlayer(url: self.videoAttributes.videoUrl)
         videoPlayer.volume = Float(settingsUseCase.videoVolume)
 
-        translatedPhrases = SpeechPhrase.makePhrases(from: self.translated)
+        translatedPhrases = SpeechPhrase.makePhrases(from: translated)
         basePhrases = SpeechPhrase.makePhrases(from: baseTranscript)
         speechPlayer.setPhrases(phrases: translatedPhrases)
         syncPlayUseCase.setPhrases(phrases: translatedPhrases)
 
     }
 
-    func updateDuration(duration: Double) {
+    private func updateDuration(duration: Double) {
         syncPlayUseCase.videoDuration = duration
         // seekBarを更新
         if duration != 0 {
@@ -202,7 +201,7 @@ class PlayerViewModel: ObservableObject {
 
     }
 
-    func timeObserved(cmTime: CMTime) {
+    private func timeObserved(cmTime: CMTime) {
         syncPlayUseCase.timeObserved(cmTime: cmTime)
 
         // seekBarを更新
@@ -212,11 +211,11 @@ class PlayerViewModel: ObservableObject {
         self.sliderLeftTime = self.createTimeString(time: cmTime.seconds)
     }
 
-    func playStart() {
+    private func playStart() {
         syncPlayUseCase.play()
     }
 
-    func pause() {
+    private func pause() {
         syncPlayUseCase.pause()
     }
 
@@ -231,15 +230,15 @@ class PlayerViewModel: ObservableObject {
         syncPlayUseCase.setPhrases(phrases: .zero)
     }
 
-    func seeking(progress: Float) {
+    private func seeking(progress: Float) {
         syncPlayUseCase.seeking(progress: progress)
     }
 
-    func finishSeek(progress: Float) {
+    private func finishSeek(progress: Float) {
         syncPlayUseCase.finishSeek(progress: progress)
     }
 
-    func createTimeString(time: Double) -> String {
+    private func createTimeString(time: Double) -> String {
         let components = NSDateComponents()
         components.second = Int(max(0.0, time))
         return timeRemainingFormatter.string(from: components as DateComponents)!
