@@ -22,9 +22,13 @@ final class PlayerViewModel: ObservableObject {
     // PlayerのController
     @Published var isPlaying: Bool = false
     @Published private(set) var isShowingController: Bool = true
-    @Published var isDraggingSlider: Bool = false
     @Published var sliderPosition: Float = 0.0
-    @Published var sliderPositionDraged: Float = 0.0
+    @Published var sliderDragging: SliderDraggingInfo = SliderDraggingInfo(isDragging: false, position: 0.0)
+
+    struct SliderDraggingInfo {
+        var isDragging: Bool
+        var position: Float
+    }
 
     @Published var sliderLeftTime: String = "00:00"
     @Published var sliderRightTime: String = "00:00"
@@ -107,14 +111,15 @@ final class PlayerViewModel: ObservableObject {
         }
         .store(in: &cancellables)
 
-        $sliderPositionDraged.sink { [weak self] value in
-            self?.seeking(progress: value)
-            self?.sliderPosition = value
-        }
-        .store(in: &cancellables)
-        $isDraggingSlider.filter { !$0 }.sink { [weak self] _ in
+        $sliderDragging.sink { [weak self] value in
             guard let self = self else { return }
-            self.finishSeek(progress: self.sliderPosition)
+            if value.isDragging {
+                self.seeking(progress: value.position)
+                self.sliderPosition = value.position
+            } else if self.sliderDragging.isDragging == true {
+                self.finishSeek(progress: value.position)
+                self.sliderPosition = value.position
+            }
         }
         .store(in: &cancellables)
 
