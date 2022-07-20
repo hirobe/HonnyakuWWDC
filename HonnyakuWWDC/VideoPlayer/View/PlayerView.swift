@@ -11,7 +11,7 @@ struct PlayerView: View {
             VStack(spacing: 0) {
                 PlayerViewController(player: viewModel.videoPlayer.avPlayer)
                     .aspectRatio(1920 / CGFloat(1080), contentMode: .fit)
-                Spacer()
+//                Spacer()
             }
 
             // script
@@ -44,6 +44,7 @@ struct PlayerView: View {
                 }
             }
         }
+        .aspectRatio(1920 / CGFloat(1080), contentMode: .fit)
         .contentShape(Rectangle()) // 透明部分もTouch反応させる
         .gesture(DragGesture(minimumDistance: 0)
             .onEnded({ _ in viewModel.isTouchingScreen = false })

@@ -10,15 +10,23 @@ protocol SpeakDelegate: AnyObject {
     func phraseStarted(phrase: String, index: Int)
 }
 
-struct SpeechPhrase {
+struct SpeechPhrase: Identifiable, Hashable {
+    var id: Int
+
     var at: Double
     var text: String
 
+    var isParagraphFirst: Bool
+
     static func makePhrases(from: TranscriptEntity) -> SpeechPhraseList {
         var flatSentences: [SpeechPhrase] = []
+        var index: Int = 0
         for paragraph in from.paragraphs {
+            var isParagraphFirst = true
             for sentences in paragraph.sentences {
-                flatSentences.append(SpeechPhrase(at: Double(sentences.at), text: sentences.text))
+                flatSentences.append(SpeechPhrase(id: index, at: Double(sentences.at), text: sentences.text, isParagraphFirst: isParagraphFirst))
+                index += 1
+                isParagraphFirst = false
             }
         }
         return SpeechPhraseList(phrases: flatSentences)
@@ -187,6 +195,7 @@ extension SpeechPlayer: AVSpeechSynthesizerDelegate {
     }
 
     func speechSynthesizer(_ synthesizer: AVSpeechSynthesizer, didCancel utterance: AVSpeechUtterance) {
+        print("Speech Canceled")
         // 普通にスピーチをしていても稀にキャンセルされることがあるようだ
         guard phrases.nextPhraseIndex() != nil else {
             // 再生終了

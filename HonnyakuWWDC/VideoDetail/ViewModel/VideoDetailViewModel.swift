@@ -5,10 +5,11 @@ import Combine
 
 /// VideoDetailViewのViewModel
 class VideoDetailViewModel: ObservableObject {
+    private var videoDetailUseCase: VideoDetailUseCase
     private var transferUserCase: TranslateCaseProtocol
     private var progressUseCase: TaskProgressUseCaseProtocol
 
-    @Published var showPlayerIfEnabled: Bool = true
+    @Published var showPlayerIfEnabled: Bool
     @Published private(set) var progressState: ProgressState = .unknwon
     @Published private(set) var errorMessage: String = ""
     private(set) var videoId: String
@@ -17,16 +18,20 @@ class VideoDetailViewModel: ObservableObject {
 
     private var cancellables: [AnyCancellable] = []
 
-    init(transferUserCase: TranslateCaseProtocol = TranslateUseCase(),
+    init(videoDetailUseCase: VideoDetailUseCase = VideoDetailUseCase(),
+         transferUserCase: TranslateCaseProtocol = TranslateUseCase(),
          progressUseCase: TaskProgressUseCaseProtocol = TaskProgressUseCase(),
-         videoId: String, url: URL, title: String
+         videoId: String, url: URL, title: String,
+         showPlayerIfEnabled: Bool = true
     ) {
+        self.videoDetailUseCase = videoDetailUseCase
         self.transferUserCase = transferUserCase
         self.progressUseCase = progressUseCase
 
         self.videoId = videoId
         self.url = url
         self.title = title
+        self.showPlayerIfEnabled = showPlayerIfEnabled
 
         progressUseCase.fetchObservable(taskId: videoId).$state
             .receive(on: DispatchQueue.main)
@@ -64,5 +69,9 @@ class VideoDetailViewModel: ObservableObject {
             return true
         }
         return false
+    }
+
+    func loadVideoDetailFromVideoId(videoId: String) -> VideoDetailEntity? {
+        return try? videoDetailUseCase.loadVideoDetailFromVideoId(videoId: videoId)
     }
 }

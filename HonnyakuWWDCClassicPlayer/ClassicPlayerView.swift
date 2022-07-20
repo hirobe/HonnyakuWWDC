@@ -41,7 +41,7 @@ struct ClassicPlayerView: View {
                         switch command {
                         case .loadData:
                             viewModel.showDocumentFolder()
-                            try viewModel.loadFromVideoId(videoId: viewModel.videoAttributes.id)
+                            //try viewModel.loadFromVideoId(videoId: viewModel.videoAttributes.id)
                         case .pasteData:
                             guard viewModel.pasteData() else {
                                 throw ClassicPlayerViewError.pasteError
@@ -51,7 +51,12 @@ struct ClassicPlayerView: View {
                 }
             }
             .background(Color.white)
-            PlayerView(viewModel: viewModel)
+            VStack(spacing: 0) {
+                PlayerView(viewModel: viewModel)
+                    .layoutPriority(1)
+                TranscriptListView(viewModel: viewModel)
+            }
+//            PlayerView(viewModel: viewModel)
             Spacer()
         }
         .background(Color.black)

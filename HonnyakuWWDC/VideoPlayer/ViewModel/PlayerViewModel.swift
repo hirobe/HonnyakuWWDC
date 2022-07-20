@@ -18,6 +18,7 @@ final class PlayerViewModel: ObservableObject {
     @Published private(set) var baseSentence: String = ""
     @Published private(set) var showSpeechSentence: Bool = true
     @Published private(set) var showBaseSentence: Bool = true
+    @Published private(set) var currentPhraseIndex: Int = 0
 
     // PlayerのController
     @Published var isPlaying: Bool = false
@@ -40,7 +41,7 @@ final class PlayerViewModel: ObservableObject {
     private var syncPlayUseCase: SyncPlayUseCase
     private var fileAccesUseCase: FileAccessUseCaseProtocol
 
-    private var translatedPhrases: SpeechPhraseList = SpeechPhraseList.zero
+    private(set) var translatedPhrases: SpeechPhraseList = SpeechPhraseList.zero
     private var basePhrases: SpeechPhraseList = SpeechPhraseList.zero
 
     private var cancellables: [AnyCancellable] = []
@@ -59,7 +60,7 @@ final class PlayerViewModel: ObservableObject {
          syncPlayUseCase: SyncPlayUseCase = SyncPlayUseCase(),
          videoPlayer: AVPlayerWrapperProtocol = AVPlayerWrapper(avPlayer: AVPlayer()),
          speechPlayer: SpeechPlayerProtocol = SpeechPlayer(voiceId: "", volume: 1.0),
-         videoId: String? = nil) {
+         videoDetailEntity: VideoDetailEntity? = nil) {
         self.settingsUseCase = settingsUseCase
         self.fileAccesUseCase = fileAccesUseCase
         self.videoPlayer = videoPlayer
@@ -71,8 +72,8 @@ final class PlayerViewModel: ObservableObject {
 
         setupBindings()
 
-        if let videoId = videoId {
-            try? loadFromVideoId(videoId: videoId)
+        if let videoDetailEntity = videoDetailEntity {
+            self.setupPlayer(detail: videoDetailEntity)
         }
 
         self.speechPlayer.delegate = self
@@ -114,10 +115,10 @@ final class PlayerViewModel: ObservableObject {
         $sliderDragging.sink { [weak self] value in
             guard let self = self else { return }
             if value.isDragging {
-                self.seeking(progress: value.position)
+                self.seeking(seconds: self.syncPlayUseCase.videoTime(progress: value.position))
                 self.sliderPosition = value.position
             } else if self.sliderDragging.isDragging == true {
-                self.finishSeek(progress: value.position)
+                self.finishSeek(seconds: self.syncPlayUseCase.videoTime(progress: value.position))
                 self.sliderPosition = value.position
             }
         }
@@ -160,13 +161,6 @@ final class PlayerViewModel: ObservableObject {
 
         }
         .store(in: &cancellables)
-    }
-
-    func loadFromVideoId(videoId: String) throws {
-        let data = try fileAccesUseCase.loadFileFromDocuments(path: "\(videoId)_\(settingsUseCase.languageShortLower).json")
-        let detail = try JSONDecoder().decode(VideoDetailEntity.self, from: data)
-
-        setupPlayer(detail: detail)
     }
 
     func showDocumentFolder() {
@@ -235,12 +229,12 @@ final class PlayerViewModel: ObservableObject {
         syncPlayUseCase.setPhrases(phrases: .zero)
     }
 
-    private func seeking(progress: Float) {
-        syncPlayUseCase.seeking(progress: progress)
+    private func seeking(seconds: Double) {
+        syncPlayUseCase.seeking(seconds: seconds)
     }
 
-    private func finishSeek(progress: Float) {
-        syncPlayUseCase.finishSeek(progress: progress)
+    private func finishSeek(seconds: Double) {
+        syncPlayUseCase.finishSeek(seconds: seconds)
     }
 
     private func createTimeString(time: Double) -> String {
@@ -251,6 +245,10 @@ final class PlayerViewModel: ObservableObject {
 
     private func cmTime(seconds: Double) -> CMTime {
         CMTime(seconds: seconds, preferredTimescale: prefferdTimeScale)
+    }
+
+    func phraseSelected(phrase: SpeechPhrase) {
+        syncPlayUseCase.finishSeek(seconds: phrase.at)
     }
 
     @MainActor
@@ -319,6 +317,7 @@ extension PlayerViewModel: SpeakDelegate {
             self.speechSentence = phrase
             self.basePhrases.readyToStart(index: index)
             self.baseSentence = self.basePhrases.currentText() ?? ""
+            self.currentPhraseIndex = index
         }
     }
 }

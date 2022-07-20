@@ -14,7 +14,12 @@ struct VideoDetailView: View {
     var body: some View {
         VStack {
             if viewModel.progressState == .completed && viewModel.showPlayerIfEnabled {
-                PlayerView(viewModel: PlayerViewModel(videoId: viewModel.videoId))
+                VStack(spacing: 0) {
+                    let detail = viewModel.loadVideoDetailFromVideoId(videoId:  viewModel.videoId)
+                    let playerViewModel = PlayerViewModel(videoDetailEntity: detail)
+                    PlayerView(viewModel: playerViewModel)
+                    TranscriptListView(viewModel: playerViewModel)
+                }
             } else {
                 VStack {
                     if !viewModel.errorMessage.isEmpty {
@@ -72,6 +77,24 @@ struct VideoDetailView: View {
 
 struct VideoDetail_Previews: PreviewProvider {
     static var previews: some View {
-        VideoDetailView(viewModel: VideoDetailViewModel(videoId: VideoEntity.mock.id, url: VideoEntity.mock.url, title: VideoEntity.mock.title))
+        Group {
+            VideoDetailView(viewModel: VideoDetailViewModel(
+                progressUseCase:{
+                    let pu = TaskProgressUseCase()
+                    pu.setState(taskId: VideoEntity.mock.id, state: .completed)
+                    return pu
+                }(),
+                videoId: VideoEntity.mock.id,
+                url: VideoEntity.mock.url,
+                title: VideoEntity.mock.title,
+                showPlayerIfEnabled: true))
+                .previewDevice(PreviewDevice(rawValue: "iPad mini 4"))
+                .previewDisplayName("Completed")
+            VideoDetailView(viewModel: VideoDetailViewModel(videoId: VideoEntity.mock.id, url: VideoEntity.mock.url, title: VideoEntity.mock.title))
+                .previewDevice(PreviewDevice(rawValue: "iPad mini 4"))
+                .previewDisplayName("NotTranslated")
+
+        }
     }
+
 }
