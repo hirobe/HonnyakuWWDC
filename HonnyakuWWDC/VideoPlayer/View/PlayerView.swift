@@ -17,7 +17,9 @@ struct PlayerView: View {
             // script
             VStack(spacing: 8) {
                 Spacer()
-                if viewModel.showBaseSentence && !viewModel.baseSentence.isEmpty {
+                if viewModel.showBaseSentence &&
+                    !viewModel.isThmbnailedPlayer &&
+                    !viewModel.baseSentence.isEmpty {
                     Text(viewModel.baseSentence)
                         .font(.title)
                         .foregroundColor(.white)
@@ -25,7 +27,9 @@ struct PlayerView: View {
                         .background(.ultraThinMaterial)
                         .cornerRadius(10)
                 }
-                if viewModel.showSpeechSentence && !viewModel.speechSentence.isEmpty {
+                if viewModel.showSpeechSentence &&
+                    !viewModel.isThmbnailedPlayer &&
+                    !viewModel.speechSentence.isEmpty {
                     Text(viewModel.speechSentence)
                         .font(.title)
                         .foregroundColor(.white)
@@ -74,6 +78,7 @@ struct PlayerViewController: UIViewControllerRepresentable {
         controller.player = player
         controller.videoGravity = .resizeAspect
         controller.showsPlaybackControls = false
+        //controller.allowsPictureInPicturePlayback = true
         return controller
     }
 

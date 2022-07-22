@@ -18,7 +18,8 @@ struct VideoDetailView: View {
                     let detail = viewModel.loadVideoDetailFromVideoId(videoId:  viewModel.videoId)
                     let playerViewModel = PlayerViewModel(videoDetailEntity: detail)
                     PlayerView(viewModel: playerViewModel)
-                    TranscriptListView(viewModel: playerViewModel)
+                        .layoutPriority(1)
+                    TranscriptTextView(viewModel: playerViewModel, textColor: .white)
                 }
             } else {
                 VStack {

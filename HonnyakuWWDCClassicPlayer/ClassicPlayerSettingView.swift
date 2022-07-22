@@ -15,7 +15,8 @@ struct ClassicPlayerSettingView: View {
     var action: ((_ action: Action) throws -> Void)?
 
     var body: some View {
-        VStack(spacing: 0) {
+        //VStack(spacing: 0) {
+            /*
             HStack {
                 Spacer()
                 Button(action: {
@@ -33,7 +34,7 @@ struct ClassicPlayerSettingView: View {
                 .padding(EdgeInsets(top: 0, leading: 30, bottom: 0, trailing: 15))
             }
             .background(Color(.systemGroupedBackground))
-
+*/
             Form {
                 Section {
                     HStack {
@@ -113,7 +114,7 @@ struct ClassicPlayerSettingView: View {
                         Alert(title: Text("Failed"))
                     }*/
                 }
-            }
+            //}
             .padding(EdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 0))
         }
     }

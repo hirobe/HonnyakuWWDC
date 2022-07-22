@@ -19,6 +19,10 @@ final class PlayerViewModel: ObservableObject {
     @Published private(set) var showSpeechSentence: Bool = true
     @Published private(set) var showBaseSentence: Bool = true
     @Published private(set) var currentPhraseIndex: Int = 0
+    @Published var isThmbnailedPlayer: Bool = false
+
+
+    @Published private(set) var phraseText: AttributedString = AttributedString(stringLiteral: "aaa")
 
     // PlayerのController
     @Published var isPlaying: Bool = false
@@ -249,6 +253,10 @@ final class PlayerViewModel: ObservableObject {
 
     func phraseSelected(phrase: SpeechPhrase) {
         syncPlayUseCase.finishSeek(seconds: phrase.at)
+    }
+    func phraseSelected(index: Int) {
+        currentPhraseIndex = index
+        syncPlayUseCase.finishSeek(seconds: translatedPhrases.phrases[index].at)
     }
 
     @MainActor

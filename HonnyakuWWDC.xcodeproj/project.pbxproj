@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		424E12B728854B7C00A0404D /* TranscriptListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 424E12B628854B7C00A0404D /* TranscriptListViewModel.swift */; };
 		424E12B828854B7C00A0404D /* TranscriptListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 424E12B628854B7C00A0404D /* TranscriptListViewModel.swift */; };
+		424E12BA288911FE00A0404D /* TranscriptTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 424E12B9288911FE00A0404D /* TranscriptTextView.swift */; };
+		424E12BB288911FE00A0404D /* TranscriptTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 424E12B9288911FE00A0404D /* TranscriptTextView.swift */; };
 		428F197A28852A1B004A94D0 /* PlayerAndTranscriptView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 428F197928852A1B004A94D0 /* PlayerAndTranscriptView.swift */; };
 		428F197B28852A1B004A94D0 /* PlayerAndTranscriptView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 428F197928852A1B004A94D0 /* PlayerAndTranscriptView.swift */; };
 		428F197D28852B7F004A94D0 /* TranscriptListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 428F197C28852B7F004A94D0 /* TranscriptListView.swift */; };
@@ -108,6 +110,7 @@
 
 /* Begin PBXFileReference section */
 		424E12B628854B7C00A0404D /* TranscriptListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TranscriptListViewModel.swift; sourceTree = "<group>"; };
+		424E12B9288911FE00A0404D /* TranscriptTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TranscriptTextView.swift; sourceTree = "<group>"; };
 		428F197928852A1B004A94D0 /* PlayerAndTranscriptView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerAndTranscriptView.swift; sourceTree = "<group>"; };
 		428F197C28852B7F004A94D0 /* TranscriptListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TranscriptListView.swift; sourceTree = "<group>"; };
 		428F197F288533CA004A94D0 /* VideoDetailUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoDetailUseCase.swift; sourceTree = "<group>"; };
@@ -360,6 +363,7 @@
 				42A935832872727B000E067B /* PlayerView.swift */,
 				428F197928852A1B004A94D0 /* PlayerAndTranscriptView.swift */,
 				428F197C28852B7F004A94D0 /* TranscriptListView.swift */,
+				424E12B9288911FE00A0404D /* TranscriptTextView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -660,6 +664,7 @@
 				42A935A52872727B000E067B /* SyncPlayUseCase.swift in Sources */,
 				42A9359D2872727B000E067B /* SpeechPlayer.swift in Sources */,
 				42A935CF28727298000E067B /* VideoListUseCase.swift in Sources */,
+				424E12BA288911FE00A0404D /* TranscriptTextView.swift in Sources */,
 				42A935C728727298000E067B /* VideoGroupSettingViewModel.swift in Sources */,
 				42A935A32872727B000E067B /* SyncPlayModel.swift in Sources */,
 				42A935E62872834E000E067B /* AVPlayerWrapper.swift in Sources */,
@@ -700,6 +705,7 @@
 				42A935942872727B000E067B /* PlayerViewModel.swift in Sources */,
 				42A935962872727B000E067B /* VideoDeitailEntity.swift in Sources */,
 				42A9351B287271CF000E067B /* ContentView.swift in Sources */,
+				424E12BB288911FE00A0404D /* TranscriptTextView.swift in Sources */,
 				42A935E72872834E000E067B /* AVPlayerWrapper.swift in Sources */,
 				42A935A22872727B000E067B /* PlayerView.swift in Sources */,
 				42A9359C2872727B000E067B /* PlayerSettingsPopover.swift in Sources */,
