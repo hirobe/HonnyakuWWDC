@@ -7,20 +7,17 @@ struct VideoDetailView: View {
         case copyError
     }
 
-    @ObservedObject var viewModel: VideoDetailViewModel
+    @StateObject var viewModel: VideoDetailViewModel
     @State var isShowingPopover: Bool = false
     @State var isShowingSystemSettingPopover: Bool = false
+    
 
     var body: some View {
         VStack {
             if viewModel.progressState == .completed && viewModel.showPlayerIfEnabled {
-                VStack(spacing: 0) {
-                    let detail = viewModel.loadVideoDetailFromVideoId(videoId:  viewModel.videoId)
-                    let playerViewModel = PlayerViewModel(videoDetailEntity: detail)
-                    PlayerView(viewModel: playerViewModel)
-                        .layoutPriority(1)
-                    TranscriptTextView(viewModel: playerViewModel, textColor: .white)
-                }
+
+                PlayerAndTranscriptView(viewModel: viewModel.playerViewModel)
+
             } else {
                 VStack {
                     if !viewModel.errorMessage.isEmpty {
@@ -51,6 +48,16 @@ struct VideoDetailView: View {
             }
 
             if viewModel.progressState == .completed && viewModel.showPlayerIfEnabled {
+                ToolbarItem(placement: .navigationBarTrailing) {
+
+                    Button(action: {
+                        withAnimation {
+                            viewModel.playerViewModel.isThmbnailedPlayer.toggle()
+                        }
+                    }) {
+                        Image(systemName: "ellipsis.bubble")
+                    }
+                }
 
                 ToolbarItem(placement: .navigationBarTrailing) {
                     Button(action: {

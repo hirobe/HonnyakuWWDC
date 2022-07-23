@@ -1,33 +1,45 @@
-//
 //  PlayerAndTranscriptView.swift
-//  HonnyakuWWDC
-//
-//  Created by Kazuya Horibe on 2022/07/18.
-//
 
 import SwiftUI
 
 struct PlayerAndTranscriptView: View {
     @ObservedObject var viewModel: PlayerViewModel
     var body: some View {
-        ZStack {
-            VStack(spacing: 0) {
-                ZStack {
-                    PlayerViewController(player: viewModel.videoPlayer.avPlayer)
+        ZStack() {
+            //TranscriptListView(viewModel: viewModel)
+            if viewModel.isThmbnailedPlayer {
+                ScrollView(.vertical, showsIndicators: true) {                    VStack(spacing: 0) {
+                    Spacer()
+                        .frame(height: 160)
+                    TranscriptTextView(viewModel: viewModel, textColor: .white)
+                    Spacer()
+                    Spacer()
+                        .frame(height: 50)
 
-                    if viewModel.isShowingController {
-                        VStack(spacing: 8) {
-                            Spacer()
-                            ControlBar(viewModel: viewModel)
-                                .padding(EdgeInsets(top: 8, leading: 8, bottom: 8, trailing: 8))
-                        }
                     }
                 }
-                .aspectRatio(1920 / CGFloat(1080), contentMode: .fit)
+                .background(.ultraThinMaterial)
+
+            }
+
+            //PlayerView(viewModel: playerViewModel)
+            VStack() {
+                GeometryReader{ geometry in
+                    HStack {
+                        PlayerView(viewModel: viewModel)
+                        if viewModel.isThmbnailedPlayer {
+                            Spacer(minLength: geometry.size.width - 320)
+                        }
+                    }
+                    .layoutPriority(1)
+
+                }
                 Spacer()
             }
 
+
         }
+
     }
 }
 

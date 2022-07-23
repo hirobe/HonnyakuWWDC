@@ -5,6 +5,8 @@ import Combine
 import AVKit
 
 final class PlayerViewModel: ObservableObject {
+    static let empty: PlayerViewModel = PlayerViewModel.init()
+
     typealias ControllerInfo = SyncPlayModel.ControllerInfo
     typealias SeekInfo = SyncPlayModel.ControllerInfo.SeekInfo
     typealias SyncState = SyncPlayModel.SyncState
@@ -20,7 +22,6 @@ final class PlayerViewModel: ObservableObject {
     @Published private(set) var showBaseSentence: Bool = true
     @Published private(set) var currentPhraseIndex: Int = 0
     @Published var isThmbnailedPlayer: Bool = false
-
 
     @Published private(set) var phraseText: AttributedString = AttributedString(stringLiteral: "aaa")
 
