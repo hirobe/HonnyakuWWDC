@@ -67,9 +67,9 @@ final class SyncPlayUseCaseTests: XCTestCase {
 
     func testSimplePlay() throws {
         let phrases = SpeechPhraseList(phrases: [
-            SpeechPhrase(at: 0, text: "The first phrase. "),
-            SpeechPhrase(at: 10, text: "The second phrase. "),
-            SpeechPhrase(at: 20, text: "The last phrase. ")
+            SpeechPhrase(id:0, at: 0, text: "The first phrase. ", isParagraphFirst: true),
+            SpeechPhrase(id:0, at: 10, text: "The second phrase. ", isParagraphFirst: false),
+            SpeechPhrase(id:0, at: 20, text: "The last phrase. ", isParagraphFirst: false)
         ])
 
         var lastSyncPlayModel: SyncPlayModel = SyncPlayModel.zero
