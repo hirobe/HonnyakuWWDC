@@ -6,7 +6,7 @@ import Combine
 
 /// VideoListのViewModel。VideoListStateという方がSwiftUI的には適切なのかもしれない
 class VideoListViewModel: ObservableObject {
-    @Published private(set) var videoGroups: [VideoGroupEntity] = []
+    @Published private(set) var videoGroups: [VideoOutlineNode] = []
     @Published private(set) var isProcessing: Bool = false
     @Published private(set) var errorMessage: String = ""
     @Published var searchText: String = ""

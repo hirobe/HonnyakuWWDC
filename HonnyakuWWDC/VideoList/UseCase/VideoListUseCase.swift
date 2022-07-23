@@ -19,32 +19,42 @@ class VideoListUseCase {
         print(fileAccessUseCase.documentDirectoryPath ?? "")
     }
 
-    var videoGroups: [VideoGroupEntity] = []
-    func reload() throws -> [VideoGroupEntity] {
+    var videoGroups: [VideoOutlineNode] = []
+    func reload() throws -> [VideoOutlineNode] {
         videoGroups = try load()
         return videoGroups
     }
 
-    func search(searchText: String) -> [VideoGroupEntity] {
-        var resultGroups: [VideoGroupEntity] = []
+    func search(searchText: String) -> [VideoOutlineNode] {
+        var resultGroups: [VideoOutlineNode] = []
         for videoGroup in videoGroups {
-            let result = videoGroup.videos.filter({ video in
-                video.title.localizedStandardContains(searchText)
+            let result = videoGroup.children?.filter({ video in
+                if case let .video(entry) = video.value,
+                   entry.title.localizedStandardContains(searchText) {
+                    return true
+                }
+                return false
             })
-            if result.count > 0 {
-                resultGroups.append(VideoGroupEntity(id: videoGroup.id, videos: result))
+            if let result,
+                result.count > 0 {
+                let title = VideoGroupAttributesEntity.all[videoGroup.id]?.title ?? "-"
+                resultGroups.append(VideoOutlineNode(id: videoGroup.id, value: .group(title: title), children: result))
             }
         }
         return resultGroups
     }
 
-    private func load() throws -> [VideoGroupEntity] {
-        var videoGroups: [VideoGroupEntity] = []
+    private func load() throws -> [VideoOutlineNode] {
+        var videoGroups: [VideoOutlineNode] = []
         print(settingsUseCase.videoGroupIds)
         for id in settingsUseCase.videoGroupIds {
             let json = try fileAccessUseCase.loadFileFromDocuments(path: "\(id)_list.json")
             let videos = try JSONDecoder().decode([VideoEntity].self, from: json)
-            videoGroups.append(VideoGroupEntity(id: id, videos: videos))
+            let title = VideoGroupAttributesEntity.all[id]?.title ?? "-"
+            videoGroups.append(VideoOutlineNode(id: id, value: .group(title: title), children: videos.map({ entity in
+                VideoOutlineNode(id: entity.id, value: .video(entity: entity), children: nil)
+            })))
+//            videoGroups.append(VideoGroupEntity(id: id, videos: videos))
         }
         return videoGroups
     }

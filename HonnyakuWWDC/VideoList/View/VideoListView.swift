@@ -20,6 +20,44 @@ struct VideoListView: View {
                         .padding()
                 }
 
+                List(viewModel.videoGroups, id: \.id, children: \.children, selection: $selection) { item in
+                    switch item.value {
+                    case let .group(title):
+                        Text("\(title)")
+                    case let .video(entity):
+                        VideoListCell(viewModel: VideoListCellViewModel(video: entity, progress: viewModel.progress(of: entity)))
+                            .tag(entity)
+
+                    }
+                }
+                .listStyle(.sidebar)
+
+/*
+//                List(viewModel.videoGroups, selection: $selection) { section in
+                List {
+                    ForEach(viewModel.videoGroups, id: \.id) { section in
+                        
+                        Section(header: Text(section.title)) {
+                            OutlineGroup(
+                                section.children ?? [],
+                                id: \.value,
+                                children: \.children
+                            ) { node in
+                                switch node {
+                                case let .group(title):
+                                    Text(title)
+                                case let .video(entity):
+                                    VideoListCell(viewModel: VideoListCellViewModel(video: entity, progress: viewModel.progress(of: entity)))
+                                        .tag(entity)
+                                }
+//                                Text(tree.value)
+//                                    .font(.subheadline)
+                            }
+                        }
+                    }
+                }.listStyle(SidebarListStyle())
+*/
+/*
                 List(viewModel.videoGroups, selection: $selection) { section in
                     let title = viewModel.videoGroupAttributes(id: section.id)?.title ?? "-"
                     Section(header: Text(title)) {
@@ -29,6 +67,7 @@ struct VideoListView: View {
                         }
                     }
                 }
+ */
             }
             .navigationTitle("Videos")
             .searchable(text: $viewModel.searchText)
