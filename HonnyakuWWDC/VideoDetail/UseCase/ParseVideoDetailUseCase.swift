@@ -13,8 +13,8 @@ enum ParseVideoDetailUseCaseError: Error {
 class ParseVideoDetailUseCase: ParseVideoDetailUseCaseProtocol {
 
     private static let regexTranscriptSentence = #/<span data-start="(.+)">(.+)(</span>|$)/#
-    .dotMatchesNewlines()
-    .repetitionBehavior(.reluctant)
+        .dotMatchesNewlines()
+        .repetitionBehavior(.reluctant)
 
     private static let regexTranscriptSentenceEnd = #/[\.\!\?♪]"* $/#
         .dotMatchesNewlines()

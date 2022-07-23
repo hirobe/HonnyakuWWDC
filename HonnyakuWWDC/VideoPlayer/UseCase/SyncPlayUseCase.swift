@@ -39,8 +39,7 @@ class SyncPlayUseCase: ObservableObject {
         syncPlayModel = syncPlayModel.updatedWith(controllerInfo: .pausing)
     }
 
-    func seeking(progress: Float) {
-        let seconds = videoTime(progress: progress)
+    func seeking(seconds: Double) {
         let newControllerInfo: ControllerInfo
         switch syncPlayModel.controllerInfo {
         case .playing:
@@ -53,16 +52,16 @@ class SyncPlayUseCase: ObservableObject {
         syncPlayModel = syncPlayModel.updatedWith(controllerInfo: newControllerInfo)
     }
 
-    func finishSeek(progress: Float) {
+    func finishSeek(seconds: Double) {
         switch syncPlayModel.controllerInfo {
         case .playing, .pausing:
-            seeking(progress: progress) // 一旦seekingにする
+            seeking(seconds: seconds) // 一旦seekingにする
         default: break
         }
 
         guard case let .seeking(seekInfo) = syncPlayModel.controllerInfo else { return }
 
-        let index = self.speechPhraseList.prefferIndex(at: videoTime(progress: progress))
+        let index = self.speechPhraseList.prefferIndex(at: seconds)
         syncPlayModel = SyncPlayModel(controllerInfo: seekInfo.inPlaying ? .playing : .pausing,
                               syncState: .bothRunning,
                               phraseIndex: index)
@@ -120,7 +119,7 @@ class SyncPlayUseCase: ObservableObject {
         }
     }
 
-    private func videoTime(progress: Float) -> Double {
+    func videoTime(progress: Float) -> Double {
         return videoDuration * Double(progress)
     }
 }

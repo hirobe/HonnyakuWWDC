@@ -7,14 +7,16 @@ struct VideoDetailView: View {
         case copyError
     }
 
-    @ObservedObject var viewModel: VideoDetailViewModel
+    @StateObject var viewModel: VideoDetailViewModel
     @State var isShowingPopover: Bool = false
     @State var isShowingSystemSettingPopover: Bool = false
 
     var body: some View {
         VStack {
             if viewModel.progressState == .completed && viewModel.showPlayerIfEnabled {
-                PlayerView(viewModel: PlayerViewModel(videoId: viewModel.videoId))
+
+                PlayerAndTranscriptView(viewModel: viewModel.playerViewModel)
+
             } else {
                 VStack {
                     if !viewModel.errorMessage.isEmpty {
@@ -45,6 +47,16 @@ struct VideoDetailView: View {
             }
 
             if viewModel.progressState == .completed && viewModel.showPlayerIfEnabled {
+                ToolbarItem(placement: .navigationBarTrailing) {
+
+                    Button(action: {
+                        withAnimation {
+                            viewModel.playerViewModel.isThmbnailedPlayer.toggle()
+                        }
+                    }) {
+                        Image(systemName: "ellipsis.bubble")
+                    }
+                }
 
                 ToolbarItem(placement: .navigationBarTrailing) {
                     Button(action: {
@@ -72,6 +84,24 @@ struct VideoDetailView: View {
 
 struct VideoDetail_Previews: PreviewProvider {
     static var previews: some View {
-        VideoDetailView(viewModel: VideoDetailViewModel(videoId: VideoEntity.mock.id, url: VideoEntity.mock.url, title: VideoEntity.mock.title))
+        Group {
+            VideoDetailView(viewModel: VideoDetailViewModel( progressUseCase: {
+                let pu = TaskProgressUseCase()
+                pu.setState(taskId: VideoEntity.mock.id, state: .completed)
+                return pu
+            }(),
+            videoId: VideoEntity.mock.id,
+            url: VideoEntity.mock.url,
+            title: VideoEntity.mock.title,
+            showPlayerIfEnabled: true))
+            .previewDevice(PreviewDevice(rawValue: "iPad mini 4"))
+            .previewDisplayName("Completed")
+
+            VideoDetailView(viewModel: VideoDetailViewModel(videoId: VideoEntity.mock.id, url: VideoEntity.mock.url, title: VideoEntity.mock.title))
+                .previewDevice(PreviewDevice(rawValue: "iPad mini 4"))
+                .previewDisplayName("NotTranslated")
+
+        }
     }
+
 }

@@ -3,7 +3,7 @@
 import Foundation
 
 class SpeechPhraseList {
-    private var phrases: [SpeechPhrase]
+    private(set) var phrases: [SpeechPhrase]
     private(set) var currentIndex: Int = 0
 
     init(phrases: [SpeechPhrase]) {
