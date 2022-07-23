@@ -4,33 +4,34 @@ import SwiftUI
 struct TranscriptTextView: View {
     @ObservedObject var viewModel: PlayerViewModel
     var textColor: Color
+    var padding: EdgeInsets = EdgeInsets()
 
     var body: some View {
-        //ScrollView(.vertical, showsIndicators: true) {
-            viewModel.translatedPhrases.phrases
-                .map { phrase in
-                    var container = AttributeContainer()
-                    container.link = .init(string: String(phrase.id))
-                    container.foregroundColor = textColor
-                    if viewModel.currentPhraseIndex == phrase.id {
-                        container.underlineStyle = .single
-                        container.underlineColor = .gray
-                    }
-
-                    let attributedString = AttributedString(phrase.text, attributes: container)
-                    return Text(phrase.isParagraphFirst ? "\n\n　" : " ") +
-                        Text(attributedString)
-                        .font(.title3)
+        // ScrollView(.vertical, showsIndicators: true) {
+        viewModel.translatedPhrases.phrases
+            .map { phrase in
+                var container = AttributeContainer()
+                container.link = .init(string: String(phrase.id))
+                container.foregroundColor = textColor
+                if viewModel.currentPhraseIndex == phrase.id {
+                    container.underlineStyle = .single
+                    container.underlineColor = .gray
                 }
-                .reduce(Text("")) { $0 + $1 }
-                .environment(\.openURL, OpenURLAction { url in
-                    if let index = Int(url.absoluteString) {
-                        viewModel.phraseSelected(index: index)
-                    }
-                    return .systemAction
-                })
-                .padding(EdgeInsets(top: 0, leading: 16, bottom: 0, trailing: 16))
-        //}
+
+                let attributedString = AttributedString(phrase.text, attributes: container)
+                return Text(phrase.isParagraphFirst ? "\n\n　" : " ") +
+                    Text(attributedString)
+                    .font(.title3)
+            }
+            .reduce(Text("")) { $0 + $1 }
+            .environment(\.openURL, OpenURLAction { url in
+                if let index = Int(url.absoluteString) {
+                    viewModel.phraseSelected(index: index)
+                }
+                return .systemAction
+            })
+            .padding(padding)
+        // }
     }
 }
 

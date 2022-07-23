@@ -11,7 +11,7 @@ struct ClassicPlayerView: View {
     @ObservedObject var viewModel: PlayerViewModel
     @State private var showControls = true
     @State var showingPopUp = false
-    //@State var showingPopUpText = false
+    // @State var showingPopUpText = false
 
     var body: some View {
         // データがなければ設定画面を表示して貼り付けを促す（Viewerのみ）
@@ -26,7 +26,6 @@ struct ClassicPlayerView: View {
                 Button(action: {
                     withAnimation {
                         viewModel.isThmbnailedPlayer.toggle()
-//                        showingPopUpText = !showingPopUpText
                     }
                 }) {
                     Image(systemName: "ellipsis.bubble")
@@ -38,24 +37,7 @@ struct ClassicPlayerView: View {
                 .buttonStyle(PlainButtonStyle())
                 .frame(width: 44, height: 44, alignment: .topTrailing)
                 .padding(EdgeInsets(top: 10, leading: 20, bottom: 10, trailing: 20))
-                /*
-                .sheet(isPresented: $showingPopUpText) {
-                    NavigationView {
-                        TranscriptTextView(viewModel: viewModel, textColor: .white)
-                            .navigationBarTitleDisplayMode(.inline)
-                            .toolbar {
-                                ToolbarItem(placement: .navigationBarTrailing) {
-                                    Button(action: {
-                                        showingPopUpText = false
-                                    }) {
-                                        Label("Close", systemImage: "xmark")
-                                    }
-                                }
-                            }
-                    }
 
-                }
-                 */
                 Button(action: {
                     withAnimation {
                         showingPopUp = true
@@ -76,7 +58,7 @@ struct ClassicPlayerView: View {
                             switch command {
                             case .loadData:
                                 viewModel.showDocumentFolder()
-                                //try viewModel.loadFromVideoId(videoId: viewModel.videoAttributes.id)
+                            // try viewModel.loadFromVideoId(videoId: viewModel.videoAttributes.id)
                             case .pasteData:
                                 guard viewModel.pasteData() else {
                                     throw ClassicPlayerViewError.pasteError
@@ -99,7 +81,6 @@ struct ClassicPlayerView: View {
             .background(Color.white)
 
             PlayerAndTranscriptView(viewModel: viewModel)
-//            PlayerView(viewModel: viewModel)
         }
         .background(Color.black)
     }

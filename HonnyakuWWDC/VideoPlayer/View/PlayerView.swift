@@ -8,11 +8,8 @@ struct PlayerView: View {
 
     var body: some View {
         ZStack {
-            VStack(spacing: 0) {
-                PlayerViewController(player: viewModel.videoPlayer.avPlayer)
-                    .aspectRatio(1920 / CGFloat(1080), contentMode: .fit)
-//                Spacer()
-            }
+            PlayerViewController(player: viewModel.videoPlayer.avPlayer)
+                .aspectRatio(1920 / CGFloat(1080), contentMode: .fit)
 
             // script
             VStack(spacing: 8) {
@@ -51,8 +48,8 @@ struct PlayerView: View {
         .aspectRatio(1920 / CGFloat(1080), contentMode: .fit)
         .contentShape(Rectangle()) // 透明部分もTouch反応させる
         .gesture(DragGesture(minimumDistance: 0)
-            .onEnded({ _ in viewModel.isTouchingScreen = false })
-            .onChanged({ _ in viewModel.isTouchingScreen = true})
+                    .onEnded({ _ in viewModel.isTouchingScreen = false })
+                    .onChanged({ _ in viewModel.isTouchingScreen = true})
         )
         .onHover { hovering in
             viewModel.isTouchingScreen = hovering
@@ -60,8 +57,6 @@ struct PlayerView: View {
         .onDisappear {
             viewModel.clearPlayer()
         }
-//        .edgesIgnoringSafeArea(.all)
-//        .aspectRatio(1920 / CGFloat(1080), contentMode: .fit)
     }
 
 }
@@ -78,7 +73,7 @@ struct PlayerViewController: UIViewControllerRepresentable {
         controller.player = player
         controller.videoGravity = .resizeAspect
         controller.showsPlaybackControls = false
-        //controller.allowsPictureInPicturePlayback = true
+        // controller.allowsPictureInPicturePlayback = true
         return controller
     }
 

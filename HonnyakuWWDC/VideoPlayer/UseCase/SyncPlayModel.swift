@@ -26,11 +26,11 @@ struct SyncPlayModel: Equatable {
 
     func updatedWith(controllerInfo: ControllerInfo) -> SyncPlayModel {
         return SyncPlayModel(controllerInfo: controllerInfo,
-                              syncState: self.syncState,
-                              phraseIndex: self.phraseIndex)
+                             syncState: self.syncState,
+                             phraseIndex: self.phraseIndex)
     }
 
     static var zero: SyncPlayModel = SyncPlayModel(controllerInfo: .pausing,
-                                                     syncState: .bothRunning,
-                                                     phraseIndex: 0)
+                                                   syncState: .bothRunning,
+                                                   phraseIndex: 0)
 }

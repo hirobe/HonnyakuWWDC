@@ -13,8 +13,6 @@
 		424E12BB288911FE00A0404D /* TranscriptTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 424E12B9288911FE00A0404D /* TranscriptTextView.swift */; };
 		428F197A28852A1B004A94D0 /* PlayerAndTranscriptView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 428F197928852A1B004A94D0 /* PlayerAndTranscriptView.swift */; };
 		428F197B28852A1B004A94D0 /* PlayerAndTranscriptView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 428F197928852A1B004A94D0 /* PlayerAndTranscriptView.swift */; };
-		428F197D28852B7F004A94D0 /* TranscriptListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 428F197C28852B7F004A94D0 /* TranscriptListView.swift */; };
-		428F197E28852B7F004A94D0 /* TranscriptListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 428F197C28852B7F004A94D0 /* TranscriptListView.swift */; };
 		428F1980288533CA004A94D0 /* VideoDetailUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 428F197F288533CA004A94D0 /* VideoDetailUseCase.swift */; };
 		42A934AF28726FAC000E067B /* HonnyakuWWDCApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42A934AE28726FAC000E067B /* HonnyakuWWDCApp.swift */; };
 		42A934B328726FAC000E067B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 42A934B228726FAC000E067B /* Assets.xcassets */; };
@@ -112,7 +110,6 @@
 		424E12B628854B7C00A0404D /* TranscriptListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TranscriptListViewModel.swift; sourceTree = "<group>"; };
 		424E12B9288911FE00A0404D /* TranscriptTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TranscriptTextView.swift; sourceTree = "<group>"; };
 		428F197928852A1B004A94D0 /* PlayerAndTranscriptView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerAndTranscriptView.swift; sourceTree = "<group>"; };
-		428F197C28852B7F004A94D0 /* TranscriptListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TranscriptListView.swift; sourceTree = "<group>"; };
 		428F197F288533CA004A94D0 /* VideoDetailUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoDetailUseCase.swift; sourceTree = "<group>"; };
 		42A934AB28726FAC000E067B /* HonnyakuWWDC.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = HonnyakuWWDC.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		42A934AE28726FAC000E067B /* HonnyakuWWDCApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HonnyakuWWDCApp.swift; sourceTree = "<group>"; };
@@ -362,7 +359,6 @@
 				42A935822872727B000E067B /* ControlBar.swift */,
 				42A935832872727B000E067B /* PlayerView.swift */,
 				428F197928852A1B004A94D0 /* PlayerAndTranscriptView.swift */,
-				428F197C28852B7F004A94D0 /* TranscriptListView.swift */,
 				424E12B9288911FE00A0404D /* TranscriptTextView.swift */,
 			);
 			path = View;
@@ -629,7 +625,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				428F197D28852B7F004A94D0 /* TranscriptListView.swift in Sources */,
 				42A935932872727B000E067B /* PlayerViewModel.swift in Sources */,
 				42A935952872727B000E067B /* VideoDeitailEntity.swift in Sources */,
 				42A935CC28727298000E067B /* VideoListCell.swift in Sources */,
@@ -715,7 +710,6 @@
 				42A9358C2872727B000E067B /* NetworkAccessUseCase.swift in Sources */,
 				42A935A02872727B000E067B /* ControlBar.swift in Sources */,
 				42A935DA287272B1000E067B /* ClassicPlayerSettingView.swift in Sources */,
-				428F197E28852B7F004A94D0 /* TranscriptListView.swift in Sources */,
 				42A93519287271CF000E067B /* HonnyakuWWDCClassicPlayerApp.swift in Sources */,
 				42A935982872727B000E067B /* VideoAttributesEntity.swift in Sources */,
 				424E12B828854B7C00A0404D /* TranscriptListViewModel.swift in Sources */,

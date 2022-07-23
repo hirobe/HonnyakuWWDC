@@ -5,26 +5,23 @@ import SwiftUI
 struct PlayerAndTranscriptView: View {
     @ObservedObject var viewModel: PlayerViewModel
     var body: some View {
-        ZStack() {
-            //TranscriptListView(viewModel: viewModel)
+        ZStack {
+            // TranscriptListView(viewModel: viewModel)
             if viewModel.isThmbnailedPlayer {
-                ScrollView(.vertical, showsIndicators: true) {                    VStack(spacing: 0) {
-                    Spacer()
-                        .frame(height: 160)
-                    TranscriptTextView(viewModel: viewModel, textColor: .white)
-                    Spacer()
-                    Spacer()
-                        .frame(height: 50)
-
+                ScrollView(.vertical, showsIndicators: true) {
+                    VStack(spacing: 0) {
+                        TranscriptTextView(viewModel: viewModel, textColor: .white,
+                                           padding: EdgeInsets(top: 160, leading: 16, bottom: 50, trailing: 16))
+                        Spacer()
                     }
                 }
                 .background(.ultraThinMaterial)
 
             }
 
-            //PlayerView(viewModel: playerViewModel)
-            VStack() {
-                GeometryReader{ geometry in
+            // PlayerView(viewModel: playerViewModel)
+            VStack {
+                GeometryReader { geometry in
                     HStack {
                         PlayerView(viewModel: viewModel)
                         if viewModel.isThmbnailedPlayer {
@@ -36,7 +33,6 @@ struct PlayerAndTranscriptView: View {
                 }
                 Spacer()
             }
-
 
         }
 
