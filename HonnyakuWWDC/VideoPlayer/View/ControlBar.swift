@@ -6,8 +6,7 @@ private let controlHieght: CGFloat = 44
 
 struct SeekSlider: View {
     @Binding var value: Float
-    @Binding var valueDraged: Float
-    @Binding var idDragging: Bool
+    @Binding var draggInfo: PlayerViewModel.SliderDraggingInfo
     @Binding var isTouching: Bool
     @Binding var leftTimeString: String
     @Binding var rightTimeString: String
@@ -38,14 +37,15 @@ struct SeekSlider: View {
                         .position(x: geometry.size.width * CGFloat(value) - 2, y: geometry.size.height * 0.5)
                 }
                 .gesture(DragGesture(minimumDistance: 0)
-                    .onEnded({ _ in
-                        idDragging = false
+                    .onEnded({ value in
+                        let valueDraged = min(max(0, Float(value.location.x / geometry.size.width )), 1.0)
+                        draggInfo = PlayerViewModel.SliderDraggingInfo(isDragging: false, position: valueDraged)
                         isTouching = false
                     })
                     .onChanged({ value in
-                        idDragging = true
+                        let valueDraged = min(max(0, Float(value.location.x / geometry.size.width )), 1.0)
+                        draggInfo = PlayerViewModel.SliderDraggingInfo(isDragging: true, position: valueDraged)
                         isTouching = true
-                        self.valueDraged = min(max(0, Float(value.location.x / geometry.size.width )), 1.0)
                     })
                 )
             }
@@ -87,8 +87,7 @@ struct ControlBar: View {
                 })
                 // Image(systemName: "goforward.15")
                 SeekSlider(value: $viewModel.sliderPosition,
-                           valueDraged: $viewModel.sliderPositionDraged,
-                           idDragging: $viewModel.isDraggingSlider,
+                           draggInfo: $viewModel.sliderDragging,
                            isTouching: $viewModel.isTouchingScreen,
                            leftTimeString: $viewModel.sliderLeftTime,
                            rightTimeString: $viewModel.sliderRightTime)
