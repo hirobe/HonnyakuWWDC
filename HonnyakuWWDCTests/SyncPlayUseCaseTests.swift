@@ -40,6 +40,7 @@ final class SyncPlayUseCaseTests: XCTestCase {
             lastCommand = "seek2"
             lastCommandArg = "\(time.seconds)"
         }
+        func refreshPlayer(size: CGSize) {}
     }
     class SpeechPlayerDumy: SpeechPlayerProtocol {
         var lastCommand: String = ""
@@ -67,9 +68,9 @@ final class SyncPlayUseCaseTests: XCTestCase {
 
     func testSimplePlay() throws {
         let phrases = SpeechPhraseList(phrases: [
-            SpeechPhrase(id:0, at: 0, text: "The first phrase. ", isParagraphFirst: true),
-            SpeechPhrase(id:0, at: 10, text: "The second phrase. ", isParagraphFirst: false),
-            SpeechPhrase(id:0, at: 20, text: "The last phrase. ", isParagraphFirst: false)
+            SpeechPhrase(id: 0, at: 0, text: "The first phrase. ", isParagraphFirst: true),
+            SpeechPhrase(id: 1, at: 10, text: "The second phrase. ", isParagraphFirst: false),
+            SpeechPhrase(id: 2, at: 20, text: "The last phrase. ", isParagraphFirst: false)
         ])
 
         var lastSyncPlayModel: SyncPlayModel = SyncPlayModel.zero
