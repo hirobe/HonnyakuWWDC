@@ -29,6 +29,15 @@ struct PlayerAndTranscriptView: View {
                         }
                     }
                     .layoutPriority(1)
+                    .onAppear {
+                        // Windowのサイズを通知する
+                        viewModel.refreshPlayer(size: geometry.size)
+
+                    }
+                    .onChange(of: geometry.size.width) { _ in
+                        // Windowのサイズ変更時に通知する（サムネイル化時は無視）
+                        viewModel.refreshPlayer(size: geometry.size)
+                    }
 
                 }
                 Spacer()

@@ -15,6 +15,7 @@ protocol AVPlayerWrapperProtocol {
     func pause()
     func seek(to time: CMTime) async -> Bool
     func seek(to time: CMTime, toleranceBefore: CMTime, toleranceAfter: CMTime)
+    func refreshPlayer(size: CGSize)
 }
 
 /// AVPlayerのWrapper。
@@ -56,4 +57,9 @@ class AVPlayerWrapper: AVPlayerWrapperProtocol {
     func pause() { avPlayer.pause() }
     func seek(to time: CMTime) async -> Bool { return await avPlayer.seek(to: time) }
     func seek(to time: CMTime, toleranceBefore: CMTime, toleranceAfter: CMTime) { avPlayer.seek(to: time, toleranceBefore: toleranceBefore, toleranceAfter: toleranceAfter) }
+
+    func refreshPlayer(size: CGSize) {
+        // preferredMaximumResolutionを更新すると、何故か解像度がリフレッシュされるようだ
+        avPlayer.currentItem?.preferredMaximumResolution = CGSize(width: size.width * 2.0, height: size.height * 2.0) // 等倍だと若干ボケるので2倍にする
+    }
 }

@@ -313,6 +313,11 @@ final class PlayerViewModel: ObservableObject {
                              toleranceAfter: cmTime(seconds: 1.0))
         }
     }
+
+    func refreshPlayer(size: CGSize) {
+        videoPlayer.refreshPlayer(size: size)
+    }
+
 }
 
 extension PlayerViewModel: SpeakDelegate {
