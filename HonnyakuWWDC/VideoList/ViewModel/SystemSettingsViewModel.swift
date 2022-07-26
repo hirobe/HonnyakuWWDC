@@ -4,7 +4,7 @@ import Foundation
 import Combine
 import AVFoundation
 
-class SystemSettingViewModel: ObservableObject {
+final class SystemSettingViewModel: ObservableObject {
     private var progressUseCase: TaskProgressUseCase
     private var settings: SettingsUseCase
     private var videoListUseCase: VideoListUseCase

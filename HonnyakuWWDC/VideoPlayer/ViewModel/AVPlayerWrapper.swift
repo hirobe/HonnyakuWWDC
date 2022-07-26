@@ -20,7 +20,7 @@ protocol AVPlayerWrapperProtocol {
 
 /// AVPlayerのWrapper。
 /// addPeriodicTimeObserverを隠蔽してtimeChangedブロックを呼ぶようにしています
-class AVPlayerWrapper: AVPlayerWrapperProtocol {
+final class AVPlayerWrapper: AVPlayerWrapperProtocol {
     let avPlayer: AVPlayer
     var timeChanged: ((_ cmTime: CMTime) -> Void)?
 

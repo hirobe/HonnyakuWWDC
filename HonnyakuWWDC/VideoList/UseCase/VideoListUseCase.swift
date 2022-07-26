@@ -4,7 +4,7 @@ import Foundation
 import Combine
 
 /// VideoListViewModelで使うためのUseCase
-class VideoListUseCase {
+final class VideoListUseCase {
     private var settingsUseCase: SettingsUseCase
     private var taskProgresUseCase: TaskProgressUseCase
     private var fileAccessUseCase: FileAccessUseCaseProtocol

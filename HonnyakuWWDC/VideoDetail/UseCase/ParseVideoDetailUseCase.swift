@@ -10,7 +10,7 @@ enum ParseVideoDetailUseCaseError: Error {
     case parseError(error: Error?)
 }
 
-class ParseVideoDetailUseCase: ParseVideoDetailUseCaseProtocol {
+final class ParseVideoDetailUseCase: ParseVideoDetailUseCaseProtocol {
 
     private static let regexTranscriptSentence = #/<span data-start="(.+)">(.+)(</span>|$)/#
         .dotMatchesNewlines()

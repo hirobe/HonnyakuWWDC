@@ -4,7 +4,7 @@ import Foundation
 import Combine
 
 /// Videoのリストをダウンロード、パースし、ファイルとして保存する
-class VideoGroupScrapingUseCase {
+final class VideoGroupScrapingUseCase {
     private var settingsUseCase: SettingsUseCase
     private var taskProgresUseCase: TaskProgressUseCase
     private var fileAccessUseCase: FileAccessUseCaseProtocol

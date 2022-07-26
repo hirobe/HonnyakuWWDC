@@ -16,7 +16,7 @@ enum ProgressState: Hashable, Equatable {
     case failed(message: String?)
 }
 
-class ProgressObservable: ObservableObject {
+final class ProgressObservable: ObservableObject {
     @Published var message: String = ""
     @Published var state: ProgressState = .unknwon
 
@@ -25,7 +25,7 @@ class ProgressObservable: ObservableObject {
     }
 }
 
-class ProgressManager {
+final class ProgressManager {
     static var shared: ProgressManager = ProgressManager()
 
     private var tasks: [String: ProgressObservable] = [:]
@@ -46,7 +46,7 @@ class ProgressManager {
 /// 処理のTask自体は保持しません。IDと進捗だけ。
 /// IDから進捗を通知するObsrvableを返すことができます。
 /// アプリ開始時に、ファイルから進捗をセットし直す必要があります。
-class TaskProgressUseCase: TaskProgressUseCaseProtocol {
+final class TaskProgressUseCase: TaskProgressUseCaseProtocol {
     private var progressManager: ProgressManager
 
     init(progressManager: ProgressManager = ProgressManager.shared) {

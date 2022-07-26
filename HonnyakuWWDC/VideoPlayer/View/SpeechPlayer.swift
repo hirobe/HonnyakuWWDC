@@ -47,7 +47,7 @@ protocol SpeechPlayerProtocol {
 }
 
 /// 読み上げを行うクラス。Viewではないが、ユーザインターフェースを提供するクラスなのでView層に置きます。
-class SpeechPlayer: NSObject, SpeechPlayerProtocol {
+final class SpeechPlayer: NSObject, SpeechPlayerProtocol {
     struct IdentifiableVoice: Identifiable {
         var voice: AVSpeechSynthesisVoice
         var id: String { voice.identifier }

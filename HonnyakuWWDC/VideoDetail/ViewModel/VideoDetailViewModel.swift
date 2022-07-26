@@ -4,7 +4,7 @@ import SwiftUI
 import Combine
 
 /// VideoDetailViewのViewModel
-class VideoDetailViewModel: ObservableObject {
+final class VideoDetailViewModel: ObservableObject {
     private var videoDetailUseCase: VideoDetailUseCase
     private var transferUserCase: TranslateCaseProtocol
     private var progressUseCase: TaskProgressUseCaseProtocol

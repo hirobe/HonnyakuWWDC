@@ -12,7 +12,7 @@ enum TranslateUseCaseError: Error {
     case fetchError(error: Error?)
 }
 
-class TranslateUseCase: TranslateCaseProtocol {
+final class TranslateUseCase: TranslateCaseProtocol {
     private var settingsUseCase: SettingsUseCase
     private var taskProgresUseCase: TaskProgressUseCase
     private var fileAccessUseCase: FileAccessUseCaseProtocol

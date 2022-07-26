@@ -32,7 +32,7 @@ enum DeepLUseCaseError: Error, LocalizedError {
     }
 }
 
-class DeepLUseCase: DeepLUseCaseProtocol {
+final class DeepLUseCase: DeepLUseCaseProtocol {
     static var dumy: DeepLUseCase {
         fatalError()
     }
