@@ -186,7 +186,7 @@ class SpeechPlayer: NSObject, SpeechPlayerProtocol {
 
 extension SpeechPlayer: AVSpeechSynthesizerDelegate {
     func speechSynthesizer(_ synthesizer: AVSpeechSynthesizer, didFinish utterance: AVSpeechUtterance) {
-        guard phrases.nextPhraseIndex() != nil else {
+        if phrases.isEnd(index: phrases.currentIndex) {
             // 再生終了
             return
         }
@@ -197,7 +197,7 @@ extension SpeechPlayer: AVSpeechSynthesizerDelegate {
     func speechSynthesizer(_ synthesizer: AVSpeechSynthesizer, didCancel utterance: AVSpeechUtterance) {
         print("Speech Canceled")
         // 普通にスピーチをしていても稀にキャンセルされることがあるようだ
-        guard phrases.nextPhraseIndex() != nil else {
+        if phrases.isEnd(index: phrases.currentIndex) {
             // 再生終了
             return
         }

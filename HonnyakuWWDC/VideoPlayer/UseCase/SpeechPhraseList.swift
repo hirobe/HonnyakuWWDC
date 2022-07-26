@@ -12,12 +12,6 @@ class SpeechPhraseList {
 
     static let zero: SpeechPhraseList = SpeechPhraseList(phrases: [])
 
-    func nextPhraseIndex() -> Int? {
-        guard currentIndex+1 < phrases.count else {
-            return nil
-        }
-        return currentIndex + 1
-    }
     func prefferIndex(at: Double) -> Int {
         for index in (0 ..< phrases.count).reversed() {
             if phrases[index].at <= at {
@@ -32,9 +26,9 @@ class SpeechPhraseList {
         currentIndex = index
     }
 
-    func isTimeToPlayNext(time: Double) -> Bool {
-        if currentIndex+1 < phrases.count,
-           time >= phrases[currentIndex+1].at { return true }
+    func isTimeToPlayNext(index: Int, time: Double) -> Bool {
+        if index+1 < phrases.count,
+           time >= phrases[index+1].at { return true }
         return false
     }
 
@@ -45,8 +39,8 @@ class SpeechPhraseList {
         return phrases[currentIndex+1].at
     }
 
-    func isEnd() -> Bool {
-        return currentIndex >= phrases.count
+    func isEnd(index: Int) -> Bool {
+        return index >= phrases.count - 1
     }
 
     func currentText() -> String? {

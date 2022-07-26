@@ -73,21 +73,21 @@ class SyncPlayUseCase: ObservableObject {
         if let nextPhraseStartAt = speechPhraseList.nextPhraseStartAt(),
            nextPhraseStartAt - videoAt > 3 {
             // speechが3秒以上先行したらspeechをwait
-            syncPlayModel = SyncPlayModel(controllerInfo: .playing,
-                                       syncState: .speechWaiting,
-                                       phraseIndex: syncPlayModel.phraseIndex)
+            syncPlayModel = SyncPlayModel(controllerInfo: syncPlayModel.controllerInfo,
+                                          syncState: .speechWaiting,
+                                          phraseIndex: syncPlayModel.phraseIndex)
         } else {
-            syncPlayModel = SyncPlayModel(controllerInfo: .playing,
+            syncPlayModel = SyncPlayModel(controllerInfo: syncPlayModel.controllerInfo,
                                        syncState: .bothRunning,
-                                       phraseIndex: speechPhraseList.currentIndex+1)
+                                       phraseIndex: syncPlayModel.phraseIndex+1)
         }
     }
 
     /// videoの再生中0.5秒ごとに呼ばれる
     func timeObserved(cmTime: CMTime) {
         self.curerntTime = cmTime.seconds
-        if speechPhraseList.isTimeToPlayNext(time: cmTime.seconds) {
-            didComeNextPhraseTime(at: cmTime.seconds, nextPhraseIndex: speechPhraseList.currentIndex+1)
+        if speechPhraseList.isTimeToPlayNext(index: syncPlayModel.phraseIndex, time: cmTime.seconds) {
+            didComeNextPhraseTime(at: cmTime.seconds, nextPhraseIndex: syncPlayModel.phraseIndex+1)
         }
     }
 
@@ -96,7 +96,7 @@ class SyncPlayUseCase: ObservableObject {
             // speechPlayerが無効の場合、時間が来たら強制的に次のフレーズに移動します。
             syncPlayModel = SyncPlayModel(controllerInfo: .playing,
                                        syncState: .bothRunning,
-                                       phraseIndex: speechPhraseList.currentIndex+1)
+                                       phraseIndex: nextPhraseIndex)
 
         } else {
             switch syncPlayModel.controllerInfo {
@@ -105,10 +105,12 @@ class SyncPlayUseCase: ObservableObject {
                     // speechが待ちの場合は、待ちを解除して次のフレーズに移動します
                     syncPlayModel = SyncPlayModel(controllerInfo: .playing,
                                                syncState: .bothRunning,
-                                               phraseIndex: speechPhraseList.currentIndex+1)
+                                               phraseIndex: nextPhraseIndex)
 
                 } else if speechPhraseList.currentIndex < nextPhraseIndex {
                     // speechが遅れているならVideoをwait
+                    // (synthesizer.isSpeaking) がfalseなら待つのをやめるべき
+
                     syncPlayModel = SyncPlayModel(controllerInfo: .playing,
                                                syncState: .videoWaiting,
                                                phraseIndex: syncPlayModel.phraseIndex)
