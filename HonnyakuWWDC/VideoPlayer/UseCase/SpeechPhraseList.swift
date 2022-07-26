@@ -40,7 +40,7 @@ class SpeechPhraseList {
     }
 
     func isEnd(index: Int) -> Bool {
-        return !(index < phrases.count)
+        return index >= phrases.count - 1
     }
 
     func currentText() -> String? {
