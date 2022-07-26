@@ -177,6 +177,16 @@ final class PlayerViewModel: ObservableObject {
         guard let data = text.data(using: .utf8),
               let detail = try? JSONDecoder().decode(VideoDetailEntity.self, from: data) else { return false }
 
+        try? fileAccesUseCase.saveFileToDocuments(data: data, path: "_.json")
+
+        setupPlayer(detail: detail)
+        return true
+    }
+
+    func loadData() -> Bool {
+        guard let data = try? fileAccesUseCase.loadFileFromDocuments(path: "_.json"),
+              let detail = try? JSONDecoder().decode(VideoDetailEntity.self, from: data) else { return false }
+
         setupPlayer(detail: detail)
         return true
     }

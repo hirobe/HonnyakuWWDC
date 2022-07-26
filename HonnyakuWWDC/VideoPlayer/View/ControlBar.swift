@@ -36,6 +36,8 @@ struct SeekSlider: View {
                         .cornerRadius(2)
                         .position(x: geometry.size.width * CGFloat(value) - 2, y: geometry.size.height * 0.5)
                 }
+                .frame(height: controlHieght)
+                .contentShape(Rectangle()) // 透明部分もTouch反応させる
                 .gesture(DragGesture(minimumDistance: 0)
                     .onEnded({ value in
                         let valueDraged = min(max(0, Float(value.location.x / geometry.size.width )), 1.0)
@@ -50,7 +52,6 @@ struct SeekSlider: View {
                 )
             }
             .frame(height: controlHieght)
-            .contentShape(Rectangle()) // 透明部分もTouch反応させる
             Text(rightTimeString)
                 .font(.system(size: 12))
                 .foregroundColor(Color.white).opacity(0.8)
@@ -101,8 +102,8 @@ struct ControlBar_Previews: PreviewProvider {
     static var previews: some View {
         Group {
             ControlBar(viewModel: PlayerViewModel())
-                .frame(width: 400)
-                .padding(EdgeInsets(top: 8, leading: 8, bottom: 8, trailing: 8))
+                .previewDevice(PreviewDevice(rawValue: "iPhone 8"))
+                .previewDisplayName("iPhone 5")
 
         }
         .background(Color.black)
