@@ -52,7 +52,6 @@ struct SeekSlider: View {
                 )
             }
             .frame(height: controlHieght)
-            //.contentShape(Rectangle()) // 透明部分もTouch反応させる
             Text(rightTimeString)
                 .font(.system(size: 12))
                 .foregroundColor(Color.white).opacity(0.8)
