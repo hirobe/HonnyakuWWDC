@@ -137,7 +137,7 @@ final class SyncPlayUseCaseTests: XCTestCase {
     func testPauseOnBothPlaying() throws {
         let phrases = SpeechPhraseList(phrases: [
             SpeechPhrase(id: 0, at: 0, text: "The first phrase. ", isParagraphFirst: true),
-            SpeechPhrase(id: 1, at: 20, text: "The second phrase. ", isParagraphFirst: false),
+            SpeechPhrase(id: 1, at: 20, text: "The second phrase. ", isParagraphFirst: false)
         ])
 
         var lastSyncPlayModel: SyncPlayModel = SyncPlayModel.zero
@@ -205,11 +205,10 @@ final class SyncPlayUseCaseTests: XCTestCase {
         phrases.readyToStart(index: 2)
     }
 
-
     func testPauseOnVideoWaiting() throws {
         let phrases = SpeechPhraseList(phrases: [
             SpeechPhrase(id: 0, at: 0, text: "The first phrase. ", isParagraphFirst: true),
-            SpeechPhrase(id: 1, at: 5, text: "The second phrase. ", isParagraphFirst: false),
+            SpeechPhrase(id: 1, at: 5, text: "The second phrase. ", isParagraphFirst: false)
         ])
 
         var lastSyncPlayModel: SyncPlayModel = SyncPlayModel.zero
@@ -241,7 +240,6 @@ final class SyncPlayUseCaseTests: XCTestCase {
         XCTAssertEqual(lastSyncPlayModel, SyncPlayModel(controllerInfo: .playing, syncState: .bothRunning, phraseIndex: 1))
         phrases.readyToStart(index: 1)
     }
-
 
     func testSeekOnPlaying() throws {
         let phrases = SpeechPhraseList(phrases: [
@@ -300,7 +298,6 @@ final class SyncPlayUseCaseTests: XCTestCase {
         syncPlayUseCase.timeObserved(cmTime: CMTime(seconds: 31.000587833, preferredTimescale: 1000000000))
         XCTAssertEqual(lastSyncPlayModel, SyncPlayModel(controllerInfo: .playing, syncState: .bothRunning, phraseIndex: 4))
     }
-
 
     func testSeekOnPausing() throws {
         let phrases = SpeechPhraseList(phrases: [
@@ -379,5 +376,4 @@ final class SyncPlayUseCaseTests: XCTestCase {
             // Put the code you want to measure the time of here.
         }
     }
-
 }
