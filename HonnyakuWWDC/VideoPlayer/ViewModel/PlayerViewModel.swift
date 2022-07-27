@@ -4,14 +4,15 @@ import SwiftUI
 import Combine
 import AVKit
 
+typealias ControllerInfo = SyncPlayModel.ControllerInfo
+typealias SeekInfo = SyncPlayModel.ControllerInfo.SeekInfo
+typealias SyncState = SyncPlayModel.SyncState
+
 final class PlayerViewModel: ObservableObject {
     static let empty: PlayerViewModel = PlayerViewModel.init()
 
-    typealias ControllerInfo = SyncPlayModel.ControllerInfo
-    typealias SeekInfo = SyncPlayModel.ControllerInfo.SeekInfo
-    typealias SyncState = SyncPlayModel.SyncState
-
     private var speechPlayer: SpeechPlayerProtocol
+    var controlBarViewModel: ControlBarViewModel
 
     @Published private(set) var videoAttributes: VideoAttributesEntity = VideoAttributesEntity.zero
     @Published private(set) var videoPlayer: AVPlayerWrapperProtocol
@@ -22,22 +23,11 @@ final class PlayerViewModel: ObservableObject {
     @Published private(set) var showBaseSentence: Bool = true
     @Published private(set) var currentPhraseIndex: Int = 0
     @Published var isThmbnailedPlayer: Bool = false
-
-    @Published private(set) var phraseText: AttributedString = AttributedString(stringLiteral: "aaa")
+    private(set) var translatedPhrases: SpeechPhraseList = SpeechPhraseList.zero
+    private var basePhrases: SpeechPhraseList = SpeechPhraseList.zero
 
     // PlayerのController
-    @Published var isPlaying: Bool = false
     @Published private(set) var isShowingController: Bool = true
-    @Published var sliderPosition: Float = 0.0
-    @Published var sliderDragging: SliderDraggingInfo = SliderDraggingInfo(isDragging: false, position: 0.0)
-
-    struct SliderDraggingInfo {
-        var isDragging: Bool
-        var position: Float
-    }
-
-    @Published var sliderLeftTime: String = "00:00"
-    @Published var sliderRightTime: String = "00:00"
 
     @Published var isTouchingScreen: Bool = false // touchが外れてから3秒後にコントロールを隠す
     @Published private(set) var isHoveringScreen: Bool = false // hoverが外れてから3秒後にコントロールを隠す
@@ -46,19 +36,9 @@ final class PlayerViewModel: ObservableObject {
     private var syncPlayUseCase: SyncPlayUseCase
     private var fileAccesUseCase: FileAccessUseCaseProtocol
 
-    private(set) var translatedPhrases: SpeechPhraseList = SpeechPhraseList.zero
-    private var basePhrases: SpeechPhraseList = SpeechPhraseList.zero
-
     private var cancellables: [AnyCancellable] = []
 
     private let prefferdTimeScale: CMTimeScale = 60
-
-    private let timeRemainingFormatter: DateComponentsFormatter = {
-        let formatter = DateComponentsFormatter()
-        formatter.zeroFormattingBehavior = .pad
-        formatter.allowedUnits = [.minute, .second]
-        return formatter
-    }()
 
     init(fileAccesUseCase: FileAccessUseCaseProtocol = FileAccessUseCase(),
          settingsUseCase: SettingsUseCase = SettingsUseCase.shared,
@@ -69,11 +49,12 @@ final class PlayerViewModel: ObservableObject {
         self.settingsUseCase = settingsUseCase
         self.fileAccesUseCase = fileAccesUseCase
         self.videoPlayer = videoPlayer
-
         self.speechPlayer = speechPlayer
 
         self.syncPlayUseCase = syncPlayUseCase
         self.syncPlayUseCase.setPhrases(phrases: SpeechPhraseList.zero)
+
+        self.controlBarViewModel = ControlBarViewModel(syncPlayUseCase: self.syncPlayUseCase)
 
         setupBindings()
 
@@ -108,27 +89,6 @@ final class PlayerViewModel: ObservableObject {
         }
         .store(in: &cancellables)
 
-        $isPlaying.sink { [weak self] playing in
-            if playing {
-                self?.playStart()
-            } else {
-                self?.pause()
-            }
-        }
-        .store(in: &cancellables)
-
-        $sliderDragging.sink { [weak self] value in
-            guard let self = self else { return }
-            if value.isDragging {
-                self.seeking(seconds: self.syncPlayUseCase.videoTime(progress: value.position))
-                self.sliderPosition = value.position
-            } else if self.sliderDragging.isDragging == true {
-                self.finishSeek(seconds: self.syncPlayUseCase.videoTime(progress: value.position))
-                self.sliderPosition = value.position
-            }
-        }
-        .store(in: &cancellables)
-
         // 画面に触ったらボタンを表示し、3秒間触らなければボタンを隠す
         $isTouchingScreen.merge(with: $isHoveringScreen)
             .debounce(for: .seconds(3.0), scheduler: RunLoop.main)
@@ -150,9 +110,9 @@ final class PlayerViewModel: ObservableObject {
             guard let self = self else { return }
             var player = newPlayer
             player.timeChanged = { cmTime in
-                self.timeObserved(cmTime: cmTime)
+                self.syncPlayUseCase.timeObserved(cmTime: cmTime)
             }
-            self.updateDuration(duration: player.duration.seconds)
+            self.syncPlayUseCase.videoDuration = player.duration.seconds
         }
         .store(in: &cancellables)
 
@@ -166,29 +126,6 @@ final class PlayerViewModel: ObservableObject {
 
         }
         .store(in: &cancellables)
-    }
-
-    func showDocumentFolder() {
-        print(fileAccesUseCase.documentDirectoryPath ?? "")
-    }
-
-    func pasteData() -> Bool {
-        guard let text = UIPasteboard.general.string else { return false }
-        guard let data = text.data(using: .utf8),
-              let detail = try? JSONDecoder().decode(VideoDetailEntity.self, from: data) else { return false }
-
-        try? fileAccesUseCase.saveFileToDocuments(data: data, path: "_.json")
-
-        setupPlayer(detail: detail)
-        return true
-    }
-
-    func loadData() -> Bool {
-        guard let data = try? fileAccesUseCase.loadFileFromDocuments(path: "_.json"),
-              let detail = try? JSONDecoder().decode(VideoDetailEntity.self, from: data) else { return false }
-
-        setupPlayer(detail: detail)
-        return true
     }
 
     private func setupPlayer(detail: VideoDetailEntity) {
@@ -206,33 +143,6 @@ final class PlayerViewModel: ObservableObject {
 
     }
 
-    private func updateDuration(duration: Double) {
-        syncPlayUseCase.videoDuration = duration
-        // seekBarを更新
-        if duration != 0 {
-            self.sliderRightTime = self.createTimeString(time: duration)
-        }
-
-    }
-
-    private func timeObserved(cmTime: CMTime) {
-        syncPlayUseCase.timeObserved(cmTime: cmTime)
-
-        // seekBarを更新
-        if syncPlayUseCase.videoDuration > 0 {
-            self.sliderPosition = Float(cmTime.seconds / syncPlayUseCase.videoDuration)
-        }
-        self.sliderLeftTime = self.createTimeString(time: cmTime.seconds)
-    }
-
-    private func playStart() {
-        syncPlayUseCase.play()
-    }
-
-    private func pause() {
-        syncPlayUseCase.pause()
-    }
-
     func clearPlayer() {
         videoPlayer.pause()
         speechPlayer.stop()
@@ -244,30 +154,8 @@ final class PlayerViewModel: ObservableObject {
         syncPlayUseCase.setPhrases(phrases: .zero)
     }
 
-    private func seeking(seconds: Double) {
-        syncPlayUseCase.seeking(seconds: seconds)
-    }
-
-    private func finishSeek(seconds: Double) {
-        syncPlayUseCase.finishSeek(seconds: seconds)
-    }
-
-    private func createTimeString(time: Double) -> String {
-        let components = NSDateComponents()
-        components.second = Int(max(0.0, time))
-        return timeRemainingFormatter.string(from: components as DateComponents)!
-    }
-
     private func cmTime(seconds: Double) -> CMTime {
         CMTime(seconds: seconds, preferredTimescale: prefferdTimeScale)
-    }
-
-    func phraseSelected(phrase: SpeechPhrase) {
-        syncPlayUseCase.finishSeek(seconds: phrase.at)
-    }
-    func phraseSelected(index: Int) {
-        currentPhraseIndex = index
-        syncPlayUseCase.finishSeek(seconds: translatedPhrases.phrases[index].at)
     }
 
     @MainActor
@@ -324,6 +212,7 @@ final class PlayerViewModel: ObservableObject {
         }
     }
 
+    // 画面サイズ変更時に解像度を再設定する
     func refreshPlayer(size: CGSize) {
         videoPlayer.refreshPlayer(size: size)
     }
@@ -343,5 +232,45 @@ extension PlayerViewModel: SpeakDelegate {
             self.baseSentence = self.basePhrases.currentText() ?? ""
             self.currentPhraseIndex = index
         }
+    }
+}
+
+extension PlayerViewModel {
+    /// for TranscriptTextView
+
+    func phraseSelected(phrase: SpeechPhrase) {
+        syncPlayUseCase.finishSeek(seconds: phrase.at)
+    }
+
+    func phraseSelected(index: Int) {
+        currentPhraseIndex = index
+        syncPlayUseCase.finishSeek(seconds: translatedPhrases.phrases[index].at)
+    }
+}
+
+extension PlayerViewModel {
+    /// for classic player
+
+    func showDocumentFolder() {
+        print(fileAccesUseCase.documentDirectoryPath ?? "")
+    }
+
+    func classicPasteData() -> Bool {
+        guard let text = UIPasteboard.general.string else { return false }
+        guard let data = text.data(using: .utf8),
+              let detail = try? JSONDecoder().decode(VideoDetailEntity.self, from: data) else { return false }
+
+        try? fileAccesUseCase.saveFileToDocuments(data: data, path: "_.json")
+
+        setupPlayer(detail: detail)
+        return true
+    }
+
+    func classicLoadData() -> Bool {
+        guard let data = try? fileAccesUseCase.loadFileFromDocuments(path: "_.json"),
+              let detail = try? JSONDecoder().decode(VideoDetailEntity.self, from: data) else { return false }
+
+        setupPlayer(detail: detail)
+        return true
     }
 }

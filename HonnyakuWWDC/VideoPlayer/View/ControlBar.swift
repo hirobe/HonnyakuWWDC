@@ -5,8 +5,10 @@ import SwiftUI
 private let controlHieght: CGFloat = 44
 
 struct SeekSlider: View {
+    typealias SliderDraggingInfo = ControlBarViewModel.SliderDraggingInfo
+
     @Binding var value: Float
-    @Binding var draggInfo: PlayerViewModel.SliderDraggingInfo
+    @Binding var draggInfo: SliderDraggingInfo
     @Binding var isTouching: Bool
     @Binding var leftTimeString: String
     @Binding var rightTimeString: String
@@ -41,12 +43,12 @@ struct SeekSlider: View {
                 .gesture(DragGesture(minimumDistance: 0)
                     .onEnded({ value in
                         let valueDraged = min(max(0, Float(value.location.x / geometry.size.width )), 1.0)
-                        draggInfo = PlayerViewModel.SliderDraggingInfo(isDragging: false, position: valueDraged)
+                        draggInfo = SliderDraggingInfo(isDragging: false, position: valueDraged)
                         isTouching = false
                     })
                     .onChanged({ value in
                         let valueDraged = min(max(0, Float(value.location.x / geometry.size.width )), 1.0)
-                        draggInfo = PlayerViewModel.SliderDraggingInfo(isDragging: true, position: valueDraged)
+                        draggInfo = SliderDraggingInfo(isDragging: true, position: valueDraged)
                         isTouching = true
                     })
                 )
@@ -62,7 +64,8 @@ struct SeekSlider: View {
 }
 
 struct ControlBar: View {
-    @ObservedObject var viewModel: PlayerViewModel
+    @StateObject var viewModel: ControlBarViewModel
+    @Binding var isTouching: Bool
 
     var body: some View {
         ZStack(alignment: .center) {
@@ -79,8 +82,8 @@ struct ControlBar: View {
                     .frame(width: 44, height: controlHieght)
                 .foregroundColor(Color.white).opacity(0.8)
                 .gesture(DragGesture(minimumDistance: 0)
-                    .onEnded({ _ in viewModel.isTouchingScreen = false })
-                    .onChanged({ _ in viewModel.isTouchingScreen = true})
+                    .onEnded({ _ in isTouching = false })
+                    .onChanged({ _ in isTouching = true})
                 )
                 .simultaneousGesture(TapGesture(count: 1)
                     .onEnded {
@@ -89,7 +92,7 @@ struct ControlBar: View {
                 // Image(systemName: "goforward.15")
                 SeekSlider(value: $viewModel.sliderPosition,
                            draggInfo: $viewModel.sliderDragging,
-                           isTouching: $viewModel.isTouchingScreen,
+                           isTouching: $isTouching,
                            leftTimeString: $viewModel.sliderLeftTime,
                            rightTimeString: $viewModel.sliderRightTime)
             }
@@ -101,7 +104,7 @@ struct ControlBar: View {
 struct ControlBar_Previews: PreviewProvider {
     static var previews: some View {
         Group {
-            ControlBar(viewModel: PlayerViewModel())
+            ControlBar(viewModel: ControlBarViewModel(), isTouching: .constant(false))
                 .previewDevice(PreviewDevice(rawValue: "iPhone 8"))
                 .previewDisplayName("iPhone 5")
 
