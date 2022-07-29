@@ -70,6 +70,10 @@ final class PlayerViewModel: ObservableObject {
             self?.speechPlayer.setVolume(volume: Float(value))
         }
         .store(in: &cancellables)
+        settingsUseCase.$speechRate.sink { [weak self] value in
+            self?.speechPlayer.setRate(rate: value)
+        }
+        .store(in: &cancellables)
         settingsUseCase.$videoVolume.sink { [weak self] value in
             self?.videoPlayer.volume = Float(value)
         }

@@ -52,6 +52,7 @@ final class SyncPlayUseCaseTests: XCTestCase {
         func setPhrases(phrases: SpeechPhraseList) {}
         func setVoice(voiceId: String) {}
         func setVolume(volume: Float) {}
+        func setRate(rate: Float) {}
 
         func restart() { lastCommand = "restart" }
         func pause() { lastCommand = "pause" }

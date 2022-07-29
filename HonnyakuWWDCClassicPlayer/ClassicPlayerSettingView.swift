@@ -22,6 +22,18 @@ struct ClassicPlayerSettingView: View {
                     Slider(value: $viewModel.speechVolume)
                 }
                 HStack {
+                    Text("Speech Speed")
+                    Spacer()
+                    Picker("", selection: $viewModel.speechRate) {
+                        ForEach(viewModel.speechRates()) { rate in
+                            Text("\(rate.name)")
+                                .tag(rate.id)
+                        }
+                    }
+                }
+                .pickerStyle(MenuPickerStyle())
+
+                HStack {
                     Text("Video Volume")
 
                     Slider(value: $viewModel.videoVolume)
