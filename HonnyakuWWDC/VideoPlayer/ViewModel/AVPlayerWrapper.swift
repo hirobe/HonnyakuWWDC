@@ -6,6 +6,7 @@ import AVKit
 protocol AVPlayerWrapperProtocol {
     var avPlayer: AVPlayer { get }
     var volume: Float { get set }
+    var rate: Float { get set }
     var duration: CMTime { get }
     var timeChanged: ((_ cmTime: CMTime) -> Void)? { get set }
 
@@ -52,6 +53,7 @@ final class AVPlayerWrapper: AVPlayerWrapperProtocol {
     var duration: CMTime { return avPlayer.currentItem?.asset.duration ?? CMTime.zero }
 
     var volume: Float { get { avPlayer.volume } set { avPlayer.volume = newValue }}
+    var rate: Float { get { avPlayer.rate } set { avPlayer.rate = newValue }}
     func currentTime() -> CMTime { return avPlayer.currentTime() }
     func play() { avPlayer.play() }
     func pause() { avPlayer.pause() }

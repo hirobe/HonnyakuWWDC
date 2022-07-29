@@ -65,6 +65,7 @@ final class SettingsUseCase: ObservableObject {
     @Published var speechVolume: Double
     @Published var speechRate: Float
     @Published var videoVolume: Double
+    @Published var videoRate: Float
     @Published var showOriginalText: Bool
     @Published var showTransferdText: Bool
 
@@ -83,6 +84,7 @@ final class SettingsUseCase: ObservableObject {
             "speechVolume": 1.0,
             "speechRate": 1.0,
             "videoVolume": 0.5,
+            "videoRate": 1.0,
             "showOriginalText": false,
             "showTransferdText": true,
             "deepLAuthKey": "",
@@ -95,6 +97,7 @@ final class SettingsUseCase: ObservableObject {
         self.speechVolume = UserDefaults.standard.double(forKey: "speechVolume")
         self.speechRate = UserDefaults.standard.float(forKey: "speechRate")
         self.videoVolume = UserDefaults.standard.double(forKey: "videoVolume")
+        self.videoRate = UserDefaults.standard.float(forKey: "videoRate")
         self.showOriginalText = UserDefaults.standard.bool(forKey: "showOriginalText")
         self.showTransferdText = UserDefaults.standard.bool(forKey: "showTransferdText")
         self.deepLAuthKey = UserDefaults.standard.string(forKey: "deepLAuthKey") ?? ""
@@ -118,6 +121,10 @@ final class SettingsUseCase: ObservableObject {
         .store(in: &cancellables)
         $videoVolume.sink { value in
             UserDefaults.standard.setValue(value, forKey: "videoVolume")
+        }
+        .store(in: &cancellables)
+        $videoRate.sink { value in
+            UserDefaults.standard.setValue(value, forKey: "videoRate")
         }
         .store(in: &cancellables)
         $showOriginalText.sink { value in

@@ -78,6 +78,10 @@ final class PlayerViewModel: ObservableObject {
             self?.videoPlayer.volume = Float(value)
         }
         .store(in: &cancellables)
+        settingsUseCase.$videoRate.sink { [weak self] value in
+            self?.videoPlayer.rate = Float(value) // rateはplayの直後に再設定する必要がある
+        }
+        .store(in: &cancellables)
         settingsUseCase.$showOriginalText.sink { [weak self] value in
             self?.showBaseSentence = value
         }
@@ -183,6 +187,7 @@ final class PlayerViewModel: ObservableObject {
 
             if newState.syncState != .videoWaiting {
                 videoPlayer.play()
+                videoPlayer.rate = settingsUseCase.videoRate
             } else {
                 videoPlayer.pause()
             }
