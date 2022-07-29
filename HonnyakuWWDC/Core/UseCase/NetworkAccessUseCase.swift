@@ -21,7 +21,7 @@ enum NetworkAccessUseCaseError: Error, LocalizedError {
     }
 }
 
-class NetworkAccessUseCase: NetworkAccessUseCaseProtocol {
+final class NetworkAccessUseCase: NetworkAccessUseCaseProtocol {
 
     func fetchText(url: URL) async throws -> String {
         let (data, urlResponse) = try await URLSession.shared.data(from: url)

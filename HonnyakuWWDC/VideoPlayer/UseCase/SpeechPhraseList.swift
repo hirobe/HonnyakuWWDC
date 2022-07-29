@@ -2,7 +2,7 @@
 
 import Foundation
 
-class SpeechPhraseList {
+final class SpeechPhraseList {
     private(set) var phrases: [SpeechPhrase]
     private(set) var currentIndex: Int = 0
 

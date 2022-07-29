@@ -3,7 +3,7 @@
 import Foundation
 import Combine
 
-class VideoGroupSettingViewModel: ObservableObject, Identifiable {
+final class VideoGroupSettingViewModel: ObservableObject, Identifiable {
     private(set) var id: String
     private(set) var title: String
     var enabled: Bool {

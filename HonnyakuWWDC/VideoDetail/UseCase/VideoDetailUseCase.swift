@@ -5,7 +5,7 @@ protocol VideoDetailUseCaseProtocol {
     func loadVideoDetailFromVideoId(videoId: String) throws -> VideoDetailEntity
 }
 
-class VideoDetailUseCase: VideoDetailUseCaseProtocol {
+final class VideoDetailUseCase: VideoDetailUseCaseProtocol {
     private var settingsUseCase: SettingsUseCase
     private var fileAccessUseCase: FileAccessUseCaseProtocol
 

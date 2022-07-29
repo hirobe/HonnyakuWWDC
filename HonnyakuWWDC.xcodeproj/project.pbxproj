@@ -7,8 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		424E12B728854B7C00A0404D /* TranscriptListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 424E12B628854B7C00A0404D /* TranscriptListViewModel.swift */; };
-		424E12B828854B7C00A0404D /* TranscriptListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 424E12B628854B7C00A0404D /* TranscriptListViewModel.swift */; };
 		424E12BA288911FE00A0404D /* TranscriptTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 424E12B9288911FE00A0404D /* TranscriptTextView.swift */; };
 		424E12BB288911FE00A0404D /* TranscriptTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 424E12B9288911FE00A0404D /* TranscriptTextView.swift */; };
 		428F197A28852A1B004A94D0 /* PlayerAndTranscriptView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 428F197928852A1B004A94D0 /* PlayerAndTranscriptView.swift */; };
@@ -107,7 +105,6 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		424E12B628854B7C00A0404D /* TranscriptListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TranscriptListViewModel.swift; sourceTree = "<group>"; };
 		424E12B9288911FE00A0404D /* TranscriptTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TranscriptTextView.swift; sourceTree = "<group>"; };
 		428F197928852A1B004A94D0 /* PlayerAndTranscriptView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerAndTranscriptView.swift; sourceTree = "<group>"; };
 		428F197F288533CA004A94D0 /* VideoDetailUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoDetailUseCase.swift; sourceTree = "<group>"; };
@@ -336,7 +333,6 @@
 				42A935792872727B000E067B /* PlayerSettingViewModel.swift */,
 				42A9357A2872727B000E067B /* PlayerViewModel.swift */,
 				42A935E52872834E000E067B /* AVPlayerWrapper.swift */,
-				424E12B628854B7C00A0404D /* TranscriptListViewModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -650,7 +646,6 @@
 				42A935C828727298000E067B /* VideoEntity.swift in Sources */,
 				42A935D428727298000E067B /* ControlView.swift in Sources */,
 				42A935D728727298000E067B /* TranslateUseCase.swift in Sources */,
-				424E12B728854B7C00A0404D /* TranscriptListViewModel.swift in Sources */,
 				42A935972872727B000E067B /* VideoAttributesEntity.swift in Sources */,
 				42A935CE28727298000E067B /* VideoGroupScrapingUseCase.swift in Sources */,
 				42A935D128727298000E067B /* EmptyView.swift in Sources */,
@@ -712,7 +707,6 @@
 				42A935DA287272B1000E067B /* ClassicPlayerSettingView.swift in Sources */,
 				42A93519287271CF000E067B /* HonnyakuWWDCClassicPlayerApp.swift in Sources */,
 				42A935982872727B000E067B /* VideoAttributesEntity.swift in Sources */,
-				424E12B828854B7C00A0404D /* TranscriptListViewModel.swift in Sources */,
 				42A9358A2872727B000E067B /* SettingsUseCase.swift in Sources */,
 				42A935EC2873CCBF000E067B /* SpeechPhraseList.swift in Sources */,
 				42A935A62872727B000E067B /* SyncPlayUseCase.swift in Sources */,

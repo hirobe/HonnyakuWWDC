@@ -3,7 +3,7 @@
 import SwiftUI
 import Combine
 
-class VideoListCellViewModel: ObservableObject {
+final class VideoListCellViewModel: ObservableObject {
     private(set) var video: VideoEntity
     private var progress: ProgressObservable
     @Published private(set) var state: ProgressState = .unknwon

@@ -5,7 +5,7 @@ import Combine
 
 /// Viewを返すためのクラス
 /// NavitagionのDetailとして表示するViewを返します
-class ViewResolver {
+final class ViewResolver {
     @ViewBuilder
     static func resolve(viewDescriptor: ViewDescriptor) -> some View {
         switch viewDescriptor {

@@ -20,7 +20,7 @@ enum FileAccessUseCaseError: Error, LocalizedError {
     }
 }
 
-class FileAccessUseCase: FileAccessUseCaseProtocol {
+final class FileAccessUseCase: FileAccessUseCaseProtocol {
     func saveFileToDocuments(data: Data, path: String) throws {
         let fileManager = FileManager.default
         let documentDirectoryUrl = try fileManager.url(

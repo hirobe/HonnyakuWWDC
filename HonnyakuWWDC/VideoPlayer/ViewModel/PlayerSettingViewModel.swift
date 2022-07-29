@@ -4,7 +4,7 @@ import Foundation
 import Combine
 import UIKit
 
-class PlayerSettingViewModel: ObservableObject {
+final class PlayerSettingViewModel: ObservableObject {
     @Published var isPresent: Bool = true
 
     @Published var speechVolume: Double

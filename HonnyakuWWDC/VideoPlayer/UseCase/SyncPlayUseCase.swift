@@ -7,7 +7,7 @@ import AVKit
 /// SpeechとVideoを同期して動かすための状態管理クラス
 /// このクラスは内部で、syncPlayModel状態変数を持ち、ユーザの操作入力を受けて$syncPlayModelを更新します。
 /// 実際のSpeechとVideoの操作はこのクラスでは行いません。View ModelでsyncPlayModelを監視して行います
-class SyncPlayUseCase: ObservableObject {
+final class SyncPlayUseCase: ObservableObject {
     typealias SyncState = SyncPlayModel.SyncState
     typealias ControllerInfo = SyncPlayModel.ControllerInfo
     typealias SeekInfo = SyncPlayModel.ControllerInfo.SeekInfo
