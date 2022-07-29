@@ -54,7 +54,7 @@ final class SpeechPlayer: NSObject, SpeechPlayerProtocol {
         var title: String {
             switch voice.quality {
             case .enhanced:
-                return "\(voice.name) (Enhanced)"
+                return "\(voice.name)"
             case .premium:
                 return "\(voice.name) (Premium)"
 
