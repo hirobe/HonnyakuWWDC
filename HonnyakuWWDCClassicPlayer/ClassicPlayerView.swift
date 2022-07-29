@@ -57,12 +57,12 @@ struct ClassicPlayerView: View {
                         ClassicPlayerSettingView(viewModel: PlayerSettingViewModel(), showingPopup: $showingPopUp, action: { command in
                             switch command {
                             case .loadData:
-                                guard viewModel.loadData() else {
+                                guard viewModel.classicLoadData() else {
                                     throw ClassicPlayerViewError.pasteError
                                 }
                             // try viewModel.loadFromVideoId(videoId: viewModel.videoAttributes.id)
                             case .pasteData:
-                                guard viewModel.pasteData() else {
+                                guard viewModel.classicPasteData() else {
                                     throw ClassicPlayerViewError.pasteError
                                 }
                             }
@@ -86,7 +86,7 @@ struct ClassicPlayerView: View {
         }
         .background(Color.black)
         .onAppear {
-            _ = viewModel.loadData()
+            _ = viewModel.classicLoadData()
         }
     }
 }

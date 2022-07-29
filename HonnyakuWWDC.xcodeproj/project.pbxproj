@@ -12,6 +12,8 @@
 		428F197A28852A1B004A94D0 /* PlayerAndTranscriptView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 428F197928852A1B004A94D0 /* PlayerAndTranscriptView.swift */; };
 		428F197B28852A1B004A94D0 /* PlayerAndTranscriptView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 428F197928852A1B004A94D0 /* PlayerAndTranscriptView.swift */; };
 		428F1980288533CA004A94D0 /* VideoDetailUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 428F197F288533CA004A94D0 /* VideoDetailUseCase.swift */; };
+		42A81F6D2890D66A00550CC8 /* ControlBarViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42A81F6C2890D66A00550CC8 /* ControlBarViewModel.swift */; };
+		42A81F6E2890D66A00550CC8 /* ControlBarViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42A81F6C2890D66A00550CC8 /* ControlBarViewModel.swift */; };
 		42A934AF28726FAC000E067B /* HonnyakuWWDCApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42A934AE28726FAC000E067B /* HonnyakuWWDCApp.swift */; };
 		42A934B328726FAC000E067B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 42A934B228726FAC000E067B /* Assets.xcassets */; };
 		42A934B728726FAC000E067B /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 42A934B628726FAC000E067B /* Preview Assets.xcassets */; };
@@ -108,6 +110,7 @@
 		424E12B9288911FE00A0404D /* TranscriptTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TranscriptTextView.swift; sourceTree = "<group>"; };
 		428F197928852A1B004A94D0 /* PlayerAndTranscriptView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerAndTranscriptView.swift; sourceTree = "<group>"; };
 		428F197F288533CA004A94D0 /* VideoDetailUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoDetailUseCase.swift; sourceTree = "<group>"; };
+		42A81F6C2890D66A00550CC8 /* ControlBarViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ControlBarViewModel.swift; sourceTree = "<group>"; };
 		42A934AB28726FAC000E067B /* HonnyakuWWDC.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = HonnyakuWWDC.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		42A934AE28726FAC000E067B /* HonnyakuWWDCApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HonnyakuWWDCApp.swift; sourceTree = "<group>"; };
 		42A934B228726FAC000E067B /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -333,6 +336,7 @@
 				42A935792872727B000E067B /* PlayerSettingViewModel.swift */,
 				42A9357A2872727B000E067B /* PlayerViewModel.swift */,
 				42A935E52872834E000E067B /* AVPlayerWrapper.swift */,
+				42A81F6C2890D66A00550CC8 /* ControlBarViewModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -627,6 +631,7 @@
 				42A935C928727298000E067B /* VideoGroupEntity.swift in Sources */,
 				42A935D528727298000E067B /* DeepLUseCase.swift in Sources */,
 				42A934DA28726FF2000E067B /* ViewResolver.swift in Sources */,
+				42A81F6D2890D66A00550CC8 /* ControlBarViewModel.swift in Sources */,
 				42A935A12872727B000E067B /* PlayerView.swift in Sources */,
 				42A9359B2872727B000E067B /* PlayerSettingsPopover.swift in Sources */,
 				428F1980288533CA004A94D0 /* VideoDetailUseCase.swift in Sources */,
@@ -698,6 +703,7 @@
 				424E12BB288911FE00A0404D /* TranscriptTextView.swift in Sources */,
 				42A935E72872834E000E067B /* AVPlayerWrapper.swift in Sources */,
 				42A935A22872727B000E067B /* PlayerView.swift in Sources */,
+				42A81F6E2890D66A00550CC8 /* ControlBarViewModel.swift in Sources */,
 				42A9359C2872727B000E067B /* PlayerSettingsPopover.swift in Sources */,
 				428F197B28852A1B004A94D0 /* PlayerAndTranscriptView.swift in Sources */,
 				42A9358E2872727B000E067B /* TaskProgressUseCase.swift in Sources */,

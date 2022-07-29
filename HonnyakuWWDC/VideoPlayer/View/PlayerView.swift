@@ -40,7 +40,7 @@ struct PlayerView: View {
             if viewModel.isShowingController {
                 VStack(spacing: 8) {
                     Spacer()
-                    ControlBar(viewModel: viewModel)
+                    ControlBar(viewModel: viewModel.controlBarViewModel, isTouching: $viewModel.isTouchingScreen)
                         .padding(EdgeInsets(top: 8, leading: 8, bottom: 8, trailing: 8))
                 }
             }
