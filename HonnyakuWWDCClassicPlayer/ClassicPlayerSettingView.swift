@@ -39,6 +39,17 @@ struct ClassicPlayerSettingView: View {
                     Slider(value: $viewModel.videoVolume)
                 }
                 HStack {
+                    Text("Video Speed")
+                    Spacer()
+                    Picker("", selection: $viewModel.videoRate) {
+                        ForEach(viewModel.videoRates()) { rate in
+                            Text("\(rate.name)")
+                                .tag(rate.id)
+                        }
+                    }
+                }
+                .pickerStyle(MenuPickerStyle())
+                HStack {
                     Text("音声")
                 }
                 Toggle("オリジナルテキストを表示", isOn: $viewModel.showOriginalText)
