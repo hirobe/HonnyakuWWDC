@@ -54,10 +54,34 @@ struct PlayerSettingsPopover: View {
 
             }
             PopoverItem {
+                Text("Speech Speed")
+                Spacer()
+                Picker("", selection: $viewModel.speechRate) {
+                    ForEach(viewModel.speechRates()) { rate in
+                        Text("\(rate.name)")
+                            .tag(rate.id)
+                    }
+                }
+            }
+            .pickerStyle(MenuPickerStyle())
+
+            PopoverItem {
                 Text("Video Volume")
 
                 Slider(value: $viewModel.videoVolume)
             }
+            PopoverItem {
+                Text("Video Speed")
+                Spacer()
+                Picker("", selection: $viewModel.videoRate) {
+                    ForEach(viewModel.videoRates()) { rate in
+                        Text("\(rate.name)")
+                            .tag(rate.id)
+                    }
+                }
+            }
+            .pickerStyle(MenuPickerStyle())
+
             PopoverItem {
                 Toggle("オリジナルテキストを表示", isOn: $viewModel.showOriginalText)
             }

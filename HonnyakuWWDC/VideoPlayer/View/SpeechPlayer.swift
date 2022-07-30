@@ -40,6 +40,7 @@ protocol SpeechPlayerProtocol {
     func setPhrases(phrases: SpeechPhraseList)
     func setVoice(voiceId: String)
     func setVolume(volume: Float)
+    func setRate(rate: Float)
 
     func restart()
     func pause()
@@ -69,7 +70,7 @@ final class SpeechPlayer: NSObject, SpeechPlayerProtocol {
 
     private let synthesizer = AVSpeechSynthesizer()
     private var voice: AVSpeechSynthesisVoice?
-    private var rate: Float = AVSpeechUtteranceDefaultSpeechRate
+    private var rate: Float = 1.0
 
     private var volume: Float = 1.0
     private var isPausing: Bool = false
@@ -92,7 +93,7 @@ final class SpeechPlayer: NSObject, SpeechPlayerProtocol {
         if let voice = self.makeVoice(voiceId) {
             self.voice = voice
         }
-        rate = AVSpeechUtteranceDefaultSpeechRate
+        rate = 1.0
 
         // Volumeが無視される問題の対処
         // see: https://stackoverflow.com/questions/53619027/avspeechsynthesizer-volume-too-low
@@ -120,6 +121,10 @@ final class SpeechPlayer: NSObject, SpeechPlayerProtocol {
 
     func setVolume(volume: Float) {
         self.volume = volume
+    }
+
+    func setRate(rate: Float) {
+        self.rate = rate
     }
 
     static func getVoices(languageCode: String) -> [IdentifiableVoice] {
@@ -150,7 +155,7 @@ final class SpeechPlayer: NSObject, SpeechPlayerProtocol {
         if let voice = voice,
            self.isActive {
             let utterance = AVSpeechUtterance(string: phrase)
-            utterance.rate = rate
+            utterance.rate = AVSpeechUtteranceDefaultSpeechRate * rate
             utterance.voice = voice
             utterance.volume = volume
 

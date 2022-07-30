@@ -24,7 +24,8 @@ final class SyncPlayUseCaseTests: XCTestCase {
         var lastCommandArg: String = ""
 
         var avPlayer: AVPlayer { fatalError() }
-        var volume: Float = 0.0
+        var volume: Float = 1.0
+        var rate: Float = 1.0
         var duration: CMTime = CMTime.zero
         func generatePlayer(url: URL?) -> HonnyakuWWDC.AVPlayerWrapperProtocol {
             return AVPlayerWrapperDumy()
@@ -52,6 +53,7 @@ final class SyncPlayUseCaseTests: XCTestCase {
         func setPhrases(phrases: SpeechPhraseList) {}
         func setVoice(voiceId: String) {}
         func setVolume(volume: Float) {}
+        func setRate(rate: Float) {}
 
         func restart() { lastCommand = "restart" }
         func pause() { lastCommand = "pause" }
