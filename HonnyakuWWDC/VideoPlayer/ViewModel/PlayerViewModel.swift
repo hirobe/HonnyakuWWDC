@@ -79,7 +79,9 @@ final class PlayerViewModel: ObservableObject {
         }
         .store(in: &cancellables)
         settingsUseCase.$videoRate.sink { [weak self] value in
-            self?.videoPlayer.rate = Float(value) // rateはplayの直後に再設定する必要がある
+            guard let self = self,
+                  self.videoPlayer.rate > 0 else { return } // 停止中はrateを変えない
+            self.videoPlayer.rate = Float(value) // rateはplayの直後に再設定する必要がある
         }
         .store(in: &cancellables)
         settingsUseCase.$showOriginalText.sink { [weak self] value in
