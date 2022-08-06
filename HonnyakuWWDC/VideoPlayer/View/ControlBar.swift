@@ -81,13 +81,18 @@ struct ControlBar: View {
                 Image(systemName: viewModel.isPlaying ? "pause.fill" : "play.fill")
                     .frame(width: 44, height: controlHieght)
                 .foregroundColor(Color.white).opacity(0.8)
+                .contentShape(Rectangle()) // 透明部分もTouch反応させる
                 .gesture(DragGesture(minimumDistance: 0)
                     .onEnded({ _ in isTouching = false })
                     .onChanged({ _ in isTouching = true})
                 )
                 .simultaneousGesture(TapGesture(count: 1)
                     .onEnded {
-                        viewModel.isPlaying.toggle()
+                        if viewModel.isPlaying {
+                            viewModel.pause()
+                        } else {
+                            viewModel.playStart()
+                        }
                 })
                 // Image(systemName: "goforward.15")
                 SeekSlider(value: $viewModel.sliderPosition,

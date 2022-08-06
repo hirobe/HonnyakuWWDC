@@ -139,6 +139,10 @@ final class PlayerViewModel: ObservableObject {
     }
 
     private func setupPlayer(detail: VideoDetailEntity) {
+        videoPlayer.pause()
+        speechPlayer.stop()
+        syncPlayUseCase.clear()
+
         let translated = detail.translated
         videoAttributes = detail.attributes
         let baseTranscript = detail.baseTranscript
