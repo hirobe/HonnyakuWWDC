@@ -7,7 +7,7 @@ import AVKit
 final class ControlBarViewModel: ObservableObject {
     @Published var sliderPosition: Float = 0.0
     @Published var sliderDragging: SliderDraggingInfo = SliderDraggingInfo(isDragging: false, position: 0.0)
-    @Published var isPlaying: Bool = false
+    @Published private(set) var isPlaying: Bool = false
 
     private let timeRemainingFormatter: DateComponentsFormatter = {
         let formatter = DateComponentsFormatter()
@@ -36,11 +36,11 @@ final class ControlBarViewModel: ObservableObject {
 
     }
     private func setupBindings() {
-        $isPlaying.sink { [weak self] playing in
-            if playing {
-                self?.playStart()
+        syncPlayUseCase.$syncPlayModel.sink { [weak self] syncPlayModel in
+            if case .playing = syncPlayModel.controllerInfo {
+                self?.isPlaying = true
             } else {
-                self?.pause()
+                self?.isPlaying = false
             }
         }
         .store(in: &cancellables)
@@ -68,14 +68,13 @@ final class ControlBarViewModel: ObservableObject {
             self?.showDuration(duration: value)
         }
         .store(in: &cancellables)
-
     }
 
-    private func playStart() {
+    func playStart() {
         syncPlayUseCase.play()
     }
 
-    private func pause() {
+    func pause() {
         syncPlayUseCase.pause()
     }
 
