@@ -27,6 +27,13 @@ final class SyncPlayUseCase: ObservableObject {
         return false
     }
 
+    func clear() {
+        syncPlayModel = .zero
+        curerntTime = 0.0
+        videoDuration = 0.0
+        isSpeechActive = true
+    }
+
     func setPhrases(phrases: SpeechPhraseList) {
         self.speechPhraseList = phrases
     }
