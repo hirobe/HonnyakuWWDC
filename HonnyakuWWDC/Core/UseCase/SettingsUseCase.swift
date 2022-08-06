@@ -34,7 +34,7 @@ final class SettingsUseCase: ObservableObject {
             SpeechRateDefinition(name: "x1.2", value: 1.2),
             SpeechRateDefinition(name: "x1.3", value: 1.3),
             SpeechRateDefinition(name: "x1.5", value: 1.5),
-            SpeechRateDefinition(name: "x1.8", value: 1.8),
+            SpeechRateDefinition(name: "x1.8", value: 1.8)
         ]
 
         static func find(value: Float) -> SpeechRateDefinition? {
@@ -54,7 +54,7 @@ final class SettingsUseCase: ObservableObject {
             VideoRateDefinition(name: "x1.2", value: 1.2),
             VideoRateDefinition(name: "x1.3", value: 1.3),
             VideoRateDefinition(name: "x1.5", value: 1.5),
-            VideoRateDefinition(name: "x1.8", value: 1.8),
+            VideoRateDefinition(name: "x1.8", value: 1.8)
         ]
 
         static func find(value: Float) -> VideoRateDefinition? {
