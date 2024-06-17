@@ -10,7 +10,7 @@ struct PlayerAndTranscriptView: View {
             if viewModel.isThmbnailedPlayer {
                 ScrollView(.vertical, showsIndicators: true) {
                     VStack(spacing: 0) {
-                        TranscriptTextView(viewModel: viewModel, textColor: .white,
+                        TranscriptTextView(viewModel: viewModel, textColor: .primary,
                                            padding: EdgeInsets(top: 160, leading: 16, bottom: 50, trailing: 16))
                         Spacer()
                     }
