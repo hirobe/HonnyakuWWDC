@@ -6,7 +6,7 @@ import Combine
 final class VideoGroupSettingViewModel: ObservableObject, Identifiable {
     private(set) var id: String
     private(set) var title: String
-    var enabled: Bool {
+    @Published var enabled: Bool {
         didSet { // 値変更後に呼ぶためにsinkではなくdidSetを使う
             onChanged?(self)
         }
