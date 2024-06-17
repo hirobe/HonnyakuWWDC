@@ -21,7 +21,7 @@ final class SystemSettingViewModel: ObservableObject {
     @Published var selectedLanguageId: String = ""
     @Published var selectedVoiceId: String = ""
 
-    private(set) var videoGroupList: [VideoGroupSettingViewModel] = []
+    @Published private(set) var videoGroupList: [VideoGroupSettingViewModel] = []
 
     private var cancellables: [AnyCancellable] = []
 
