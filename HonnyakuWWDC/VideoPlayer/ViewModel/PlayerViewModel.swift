@@ -9,7 +9,7 @@ typealias SeekInfo = SyncPlayModel.ControllerInfo.SeekInfo
 typealias SyncState = SyncPlayModel.SyncState
 
 final class PlayerViewModel: ObservableObject {
-    static let empty: PlayerViewModel = PlayerViewModel.init()
+    //static let empty: PlayerViewModel = PlayerViewModel.init()
 
     private var speechPlayer: SpeechPlayerProtocol
     var controlBarViewModel: ControlBarViewModel
@@ -192,8 +192,13 @@ final class PlayerViewModel: ObservableObject {
             }
 
             if newState.syncState != .videoWaiting {
-                videoPlayer.play()
-                videoPlayer.rate = settingsUseCase.videoRate
+                if videoPlayer.rate != settingsUseCase.videoRate {
+                    videoPlayer.rate = settingsUseCase.videoRate
+                }
+                if videoPlayer.avPlayer.timeControlStatus != .playing { // 再生中にplay()すると表示が不正になる
+                    videoPlayer.play()
+
+                }
             } else {
                 videoPlayer.pause()
             }

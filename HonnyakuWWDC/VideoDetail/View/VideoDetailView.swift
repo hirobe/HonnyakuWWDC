@@ -13,9 +13,9 @@ struct VideoDetailView: View {
 
     var body: some View {
         VStack {
-            if viewModel.progressState == .completed && viewModel.showPlayerIfEnabled {
+            if viewModel.progressState == .completed && viewModel.showPlayerIfEnabled && viewModel.playerViewModel != nil {
 
-                PlayerAndTranscriptView(viewModel: viewModel.playerViewModel)
+                PlayerAndTranscriptView(viewModel: viewModel.playerViewModel!)
 
             } else {
                 VStack {
@@ -44,14 +44,14 @@ struct VideoDetailView: View {
                         Label("Change", systemImage: "wand.and.stars")
                     }
                 }
+                 
             }
-
-            if viewModel.progressState == .completed && viewModel.showPlayerIfEnabled {
+            if viewModel.progressState == .completed && viewModel.showPlayerIfEnabled && viewModel.playerViewModel != nil {
                 ToolbarItem(placement: .navigationBarTrailing) {
 
                     Button(action: {
                         withAnimation {
-                            viewModel.playerViewModel.isThmbnailedPlayer.toggle()
+                            viewModel.playerViewModel!.isThmbnailedPlayer.toggle()
                         }
                     }) {
                         Image(systemName: "ellipsis.bubble")

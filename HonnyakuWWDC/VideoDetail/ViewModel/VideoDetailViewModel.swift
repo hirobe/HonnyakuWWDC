@@ -14,7 +14,7 @@ final class VideoDetailViewModel: ObservableObject {
     @Published private(set) var progressState: ProgressState = .unknwon
     @Published private(set) var errorMessage: String = ""
 
-    @Published private(set) var playerViewModel: PlayerViewModel = .empty
+    @Published private(set) var playerViewModel: PlayerViewModel? = nil
 
     private(set) var videoId: String
     private(set) var url: URL
