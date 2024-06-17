@@ -17,6 +17,7 @@ final class SystemSettingViewModel: ObservableObject {
     @Published var voiceId: String = ""
     @Published var deepLAuthKey: String = ""
     @Published var isDeepLPro: Bool = false
+    @Published var openAIAuthKey: String = ""
 
     @Published var selectedLanguageId: String = ""
     @Published var selectedVoiceId: String = ""
@@ -36,6 +37,7 @@ final class SystemSettingViewModel: ObservableObject {
 
         deepLAuthKey = settings.deepLAuthKey
         isDeepLPro = settings.isDeepLPro
+        openAIAuthKey = settings.openAIAuthKey
 
         selectedLanguageId = settings.languageId
         selectedVoiceId = settings.voiceId
@@ -50,6 +52,11 @@ final class SystemSettingViewModel: ObservableObject {
 
         $deepLAuthKey.sink { [weak self] value in
             self?.settings.deepLAuthKey = value
+        }
+        .store(in: &cancellables)
+        
+        $openAIAuthKey.sink { [weak self] value in
+            self?.settings.openAIAuthKey = value
         }
         .store(in: &cancellables)
 

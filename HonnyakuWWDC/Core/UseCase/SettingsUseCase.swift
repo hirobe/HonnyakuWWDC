@@ -73,6 +73,7 @@ final class SettingsUseCase: ObservableObject {
     @Published var voiceId: String
     @Published var deepLAuthKey: String
     @Published var isDeepLPro: Bool
+    @Published var openAIAuthKey: String
 
     @Published var videoGroupIds: [String]
 
@@ -89,6 +90,7 @@ final class SettingsUseCase: ObservableObject {
             "showTransferdText": true,
             "deepLAuthKey": "",
             "isDeepLPro": false,
+            "openAIAuthKey": "",
             "languageId": LanguageDefinition.all.first?.id ?? "",
             "voiceId": "",
             "videoGroupIds": []
@@ -102,6 +104,7 @@ final class SettingsUseCase: ObservableObject {
         self.showTransferdText = UserDefaults.standard.bool(forKey: "showTransferdText")
         self.deepLAuthKey = UserDefaults.standard.string(forKey: "deepLAuthKey") ?? ""
         self.isDeepLPro = UserDefaults.standard.bool(forKey: "isDeepLPro")
+        self.openAIAuthKey = UserDefaults.standard.string(forKey: "openAIAuthKey") ?? ""
 
         self.languageId = UserDefaults.standard.string(forKey: "languageId") ?? ""
         self.voiceId = UserDefaults.standard.string(forKey: "voiceId") ?? ""
@@ -151,6 +154,10 @@ final class SettingsUseCase: ObservableObject {
         .store(in: &cancellables)
         $isDeepLPro.sink { value in
             UserDefaults.standard.setValue(value, forKey: "isDeepLPro")
+        }
+        .store(in: &cancellables)
+        $openAIAuthKey.sink { value in
+            UserDefaults.standard.setValue(value, forKey: "openAIAuthKey")
         }
         .store(in: &cancellables)
         $videoGroupIds.sink { value in

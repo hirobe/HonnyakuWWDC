@@ -7,6 +7,7 @@ import Combine
 final class VideoDetailViewModel: ObservableObject {
     private var videoDetailUseCase: VideoDetailUseCase
     private var transferUserCase: TranslateCaseProtocol
+    private var downloadAudioUserCase: TranslateCaseProtocol
     private var progressUseCase: TaskProgressUseCaseProtocol
 
     @Published var showPlayerIfEnabled: Bool
@@ -23,12 +24,14 @@ final class VideoDetailViewModel: ObservableObject {
 
     init(videoDetailUseCase: VideoDetailUseCase = VideoDetailUseCase(),
          transferUserCase: TranslateCaseProtocol = TranslateUseCase(),
+         downloadAudioUserCase: TranslateCaseProtocol = DownloadAudioUserCase(),
          progressUseCase: TaskProgressUseCaseProtocol = TaskProgressUseCase(),
          videoId: String, url: URL, title: String,
          showPlayerIfEnabled: Bool = true
     ) {
         self.videoDetailUseCase = videoDetailUseCase
         self.transferUserCase = transferUserCase
+        self.downloadAudioUserCase = downloadAudioUserCase
         self.progressUseCase = progressUseCase
 
         self.videoId = videoId
@@ -75,6 +78,29 @@ final class VideoDetailViewModel: ObservableObject {
             }
 
         }
+    }
+    
+    func downloadSound() async {
+        Task.detached {
+            do {
+                try await self.downloadAudioUserCase.translateVideoDetail(id: self.videoId, url: self.url)
+                /*
+                let detail = self.loadVideoDetailFromVideoId(videoId: self.videoId)
+                print(detail?.attributes.relatedVideos)
+                guard let sdUrl = detail?.attributes.resources.first(where: {$0.title == "SD Video"})?.url else { return }
+                guard let videoUrl = detail?.attributes.videoUrl else { return }
+                DownloadSound().extractAudio(from: sdUrl) { url in
+                    print(url)
+                }
+                 */
+            } catch {
+                Task { @MainActor in
+                    self.errorMessage = error.localizedDescription
+                }
+            }
+
+        }
+
     }
 
     func copyDataToPasteBoard() -> Bool {

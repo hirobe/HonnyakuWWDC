@@ -87,6 +87,7 @@
 		42A935E92872A147000E067B /* SyncPlayUseCaseTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42A935E82872A147000E067B /* SyncPlayUseCaseTests.swift */; };
 		42A935EB2873CCBF000E067B /* SpeechPhraseList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42A935EA2873CCBF000E067B /* SpeechPhraseList.swift */; };
 		42A935EC2873CCBF000E067B /* SpeechPhraseList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42A935EA2873CCBF000E067B /* SpeechPhraseList.swift */; };
+		5D6CB1982C19A7F700850FB3 /* DownloadAudioUserCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D6CB1962C19A7F100850FB3 /* DownloadAudioUserCase.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -174,6 +175,7 @@
 		42A935E52872834E000E067B /* AVPlayerWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AVPlayerWrapper.swift; sourceTree = "<group>"; };
 		42A935E82872A147000E067B /* SyncPlayUseCaseTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SyncPlayUseCaseTests.swift; sourceTree = "<group>"; };
 		42A935EA2873CCBF000E067B /* SpeechPhraseList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpeechPhraseList.swift; sourceTree = "<group>"; };
+		5D6CB1962C19A7F100850FB3 /* DownloadAudioUserCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DownloadAudioUserCase.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -457,6 +459,7 @@
 		42A935C028727298000E067B /* UseCase */ = {
 			isa = PBXGroup;
 			children = (
+				5D6CB1962C19A7F100850FB3 /* DownloadAudioUserCase.swift */,
 				42A935C128727298000E067B /* DeepLUseCase.swift */,
 				42A935C228727298000E067B /* ParseVideoDetailUseCase.swift */,
 				42A935C328727298000E067B /* TranslateUseCase.swift */,
@@ -669,6 +672,7 @@
 				428F197A28852A1B004A94D0 /* PlayerAndTranscriptView.swift in Sources */,
 				42A935912872727B000E067B /* PlayerSettingViewModel.swift in Sources */,
 				42A935872872727B000E067B /* ViewDescriptor.swift in Sources */,
+				5D6CB1982C19A7F700850FB3 /* DownloadAudioUserCase.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

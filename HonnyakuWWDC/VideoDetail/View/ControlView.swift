@@ -19,6 +19,14 @@ struct ControlView: View {
                             viewModel.showPlayerIfEnabled = true
                         }
                     }
+                    
+                    Button("Download sound") {
+//                        viewModel.startTransferStart()
+                        Task {
+                            await viewModel.downloadSound()
+                        }
+                    }
+
                 }
             case let .processing(progress, message):
                 HStack(spacing: 10) {
@@ -44,6 +52,14 @@ struct ControlView: View {
                             await viewModel.transfer()
                         }
                     }
+
+                    Button("Download sound") {
+//                        viewModel.startTransferStart()
+                        Task {
+                            await viewModel.downloadSound()
+                        }
+                    }
+
                 }
             case let .failed(message):
                 HStack(spacing: 10) {
