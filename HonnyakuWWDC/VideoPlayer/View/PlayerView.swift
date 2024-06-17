@@ -61,18 +61,25 @@ struct PlayerView: View {
 
 struct PlayerViewController: UIViewControllerRepresentable {
     let player: AVPlayer
+    static var controller : AVPlayerViewController?
 
     init(player: AVPlayer) {
         self.player = player
     }
 
     func makeUIViewController(context: Context) -> AVPlayerViewController {
-        let controller =  AVPlayerViewController()
-        controller.player = player
-        controller.videoGravity = .resizeAspect
-        controller.showsPlaybackControls = false
-        // controller.allowsPictureInPicturePlayback = true
-        return controller
+        //let controller =  AVPlayerViewController()
+        if Self.controller == nil {
+            Self.controller = AVPlayerViewController()
+            
+            let controller = Self.controller!
+            controller.player = player
+            controller.videoGravity = .resizeAspect
+            controller.showsPlaybackControls = false
+
+            // controller.allowsPictureInPicturePlayback = true
+        }
+        return Self.controller!
     }
 
     func updateUIViewController(_ playerController: AVPlayerViewController, context: Context) {
