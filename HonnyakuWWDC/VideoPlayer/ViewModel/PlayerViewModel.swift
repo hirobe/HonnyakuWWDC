@@ -9,7 +9,7 @@ typealias SeekInfo = SyncPlayModel.ControllerInfo.SeekInfo
 typealias SyncState = SyncPlayModel.SyncState
 
 final class PlayerViewModel: ObservableObject {
-    static let empty: PlayerViewModel = PlayerViewModel.init()
+    //static let empty: PlayerViewModel = PlayerViewModel.init()
 
     private var speechPlayer: SpeechPlayerProtocol
     var controlBarViewModel: ControlBarViewModel
