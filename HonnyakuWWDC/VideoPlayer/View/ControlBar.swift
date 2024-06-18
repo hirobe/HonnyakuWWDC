@@ -65,7 +65,7 @@ struct SeekSlider: View {
 
 struct ControlBar: View {
     @StateObject var viewModel: ControlBarViewModel
-    @Binding var isTouching: Bool
+    @State var isTouching: Bool = false
 
     var body: some View {
         ZStack(alignment: .center) {
@@ -109,7 +109,7 @@ struct ControlBar: View {
 struct ControlBar_Previews: PreviewProvider {
     static var previews: some View {
         Group {
-            ControlBar(viewModel: ControlBarViewModel(), isTouching: .constant(false))
+            ControlBar(viewModel: ControlBarViewModel())
                 .previewDevice(PreviewDevice(rawValue: "iPhone 8"))
                 .previewDisplayName("iPhone 5")
 

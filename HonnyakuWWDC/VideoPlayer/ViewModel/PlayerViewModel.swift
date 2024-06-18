@@ -29,8 +29,7 @@ final class PlayerViewModel: ObservableObject {
     // PlayerのController
     @Published private(set) var isShowingController: Bool = true
 
-    @Published var isTouchingScreen: Bool = false // touchが外れてから3秒後にコントロールを隠す
-    @Published private(set) var isHoveringScreen: Bool = false // hoverが外れてから3秒後にコントロールを隠す
+    @Published var isHoveringScreen: Bool = false
 
     private var settingsUseCase: SettingsUseCase
     private var syncPlayUseCase: SyncPlayUseCase
@@ -99,14 +98,14 @@ final class PlayerViewModel: ObservableObject {
         }
         .store(in: &cancellables)
 
-        // 画面に触ったらボタンを表示し、3秒間触らなければボタンを隠す
-        $isTouchingScreen.merge(with: $isHoveringScreen)
+        // 画面にホバーしたらボタンを表示し、3秒間触らなければボタンを隠す
+        $isHoveringScreen
             .debounce(for: .seconds(3.0), scheduler: RunLoop.main)
             .sink { [weak self] _ in
                 self?.isShowingController = false
             }
             .store(in: &cancellables)
-        $isTouchingScreen.merge(with: $isHoveringScreen)
+        $isHoveringScreen
             .filter { $0 }
             .sink { [weak self] _ in
                 if self?.isShowingController == false {
@@ -154,6 +153,15 @@ final class PlayerViewModel: ObservableObject {
         basePhrases = SpeechPhrase.makePhrases(from: baseTranscript)
         speechPlayer.setPhrases(phrases: translatedPhrases)
         syncPlayUseCase.setPhrases(phrases: translatedPhrases)
+
+    }
+    
+    func togglePlay() {
+        if controlBarViewModel.isPlaying {
+            controlBarViewModel.pause()
+        } else {
+            controlBarViewModel.playStart()
+        }
 
     }
 
