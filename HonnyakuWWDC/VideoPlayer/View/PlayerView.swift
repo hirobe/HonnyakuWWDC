@@ -11,22 +11,29 @@ struct PlayerView: View {
             ZStack {
                 PlayerViewController(player: viewModel.videoPlayer.avPlayer)
                     .aspectRatio(1920 / CGFloat(1080), contentMode: .fit)
+                
                 if viewModel.isShowingController {
                     VStack(spacing: 8) {
                         Spacer()
-                        ControlBar(viewModel: viewModel.controlBarViewModel, isTouching: $viewModel.isTouchingScreen)
+                        ControlBar(viewModel: viewModel.controlBarViewModel)
                             .padding(EdgeInsets(top: 8, leading: 8, bottom: 8, trailing: 8))
                     }
                 }
+                
             }
             .aspectRatio(1920 / CGFloat(1080), contentMode: .fit)
             .contentShape(Rectangle()) // 透明部分もTouch反応させる
-            .gesture(DragGesture(minimumDistance: 0)
-                        .onEnded({ _ in viewModel.isTouchingScreen = false })
-                        .onChanged({ _ in viewModel.isTouchingScreen = true})
-            )
+//            .gesture(DragGesture(minimumDistance: 0)
+//                        .onEnded({ _ in viewModel.isTouchingScreen = false })
+//                        .onChanged({ _ in viewModel.isTouchingScreen = true})
+//            )
+            
             .onHover { hovering in
-                viewModel.isTouchingScreen = hovering
+                viewModel.isHoveringScreen = hovering
+            }
+            .onTapGesture {
+                viewModel.togglePlay()
+                print("tap")
             }
             .onDisappear {
                 viewModel.clearPlayer()
