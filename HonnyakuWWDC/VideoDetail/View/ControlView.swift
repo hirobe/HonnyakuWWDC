@@ -20,12 +20,6 @@ struct ControlView: View {
                         }
                     }
                     
-                    Button("Download sound") {
-//                        viewModel.startTransferStart()
-                        Task {
-                            await viewModel.downloadSound()
-                        }
-                    }
 
                 }
             case let .processing(progress, message):
@@ -46,19 +40,26 @@ struct ControlView: View {
 
                     Text("Not translated yet. ")
 
-                    Button("Start Translate") {
-                        viewModel.startTransferStart()
-                        Task {
-                            await viewModel.transfer()
+                    switch viewModel.transcriptFetchResult {
+                    case .hasTranscript:
+                        Button("Start Translate") {
+                            viewModel.startTransferStart()
+                            Task {
+                                await viewModel.transfer()
+                            }
                         }
+                    case .noTranscript:
+                        Button("Download video, extract transcript and translate it (teke few minutes).") {
+    //                        viewModel.startTransferStart()
+                            Task {
+                                await viewModel.downloadAndExtractText()
+                            }
+                        }
+                    case .notFetched:
+                        Text("fetching info..")
                     }
+                    
 
-                    Button("Download sound") {
-//                        viewModel.startTransferStart()
-                        Task {
-                            await viewModel.downloadSound()
-                        }
-                    }
 
                 }
             case let .failed(message):
@@ -66,11 +67,23 @@ struct ControlView: View {
 
                     Text("Translated failed! " + (message ?? "") + " " )
 
-                    Button("Restart Translate") {
-                        Task {
-                            await viewModel.transfer()
+                    switch viewModel.transcriptFetchResult {
+                    case .hasTranscript:
+                        Button("Restart Translate") {
+                            Task {
+                                await viewModel.transfer()
+                            }
                         }
+                    case .noTranscript:
+                        Button("Restart Download and Translate") {
+                            Task {
+                                await viewModel.downloadAndExtractText()
+                            }
+                        }
+                    case .notFetched:
+                        Text("")
                     }
+
                 }
             }
         }
