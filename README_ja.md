@@ -5,7 +5,8 @@ HonnyakuWWDCは、WWDCの動画をDeepLで日本語に翻訳し、さらにiOS/M
 
 https://user-images.githubusercontent.com/85206/177453843-14c8dd98-288d-4f02-948a-5e99cd89120c.mov
 
-注意：このアプリを使うにはDeepLのAPI Keyと、OpenAIのAPI Keyが必要です。翻訳にDeepLを、元の動画からテキストを抽出するためにOpenAIのAPIを使用します。それぞれコストがかかることに注意してください。DeepLは無料分でもある程度の量使用できます。ちなみにOpenAIのモデルはGPTではなくAudio Modelを使用します（OpenAIのUsageを見ると使用したモデルが記録されるので、ちゃんと使用許可のあるAPI Keyを使いましょう）。
+> [!IMPORTANT]
+> このアプリを使うにはDeepLのAPI Keyと、OpenAIのAPI Keyが必要です。翻訳にDeepLを、元の動画からテキストを抽出するためにOpenAIのAPIを使用します。それぞれコストがかかることに注意してください。DeepLは無料分でもある程度の量使用できます。ちなみにOpenAIのモデルはGPTではなくAudio Modelを使用します（OpenAIのUsageを見ると使用したモデルが記録されるので、ちゃんと使用許可のあるAPI Keyを使いましょう）。
 
 ## アプリの構成
 
