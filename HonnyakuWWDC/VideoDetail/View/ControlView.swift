@@ -19,6 +19,8 @@ struct ControlView: View {
                             viewModel.showPlayerIfEnabled = true
                         }
                     }
+                    
+
                 }
             case let .processing(progress, message):
                 HStack(spacing: 10) {
@@ -38,23 +40,50 @@ struct ControlView: View {
 
                     Text("Not translated yet. ")
 
-                    Button("Start Translate") {
-                        viewModel.startTransferStart()
-                        Task {
-                            await viewModel.transfer()
+                    switch viewModel.transcriptFetchResult {
+                    case .hasTranscript:
+                        Button("Start Translate") {
+                            viewModel.startTransferStart()
+                            Task {
+                                await viewModel.transfer()
+                            }
                         }
+                    case .noTranscript:
+                        Button("Download video, extract transcript and translate it (teke few minutes).") {
+    //                        viewModel.startTransferStart()
+                            Task {
+                                await viewModel.downloadAndExtractText()
+                            }
+                        }
+                    case .notFetched:
+                        Text("fetching info..")
                     }
+                    
+
+
                 }
             case let .failed(message):
                 HStack(spacing: 10) {
 
                     Text("Translated failed! " + (message ?? "") + " " )
 
-                    Button("Restart Translate") {
-                        Task {
-                            await viewModel.transfer()
+                    switch viewModel.transcriptFetchResult {
+                    case .hasTranscript:
+                        Button("Restart Translate") {
+                            Task {
+                                await viewModel.transfer()
+                            }
                         }
+                    case .noTranscript:
+                        Button("Restart Download and Translate") {
+                            Task {
+                                await viewModel.downloadAndExtractText()
+                            }
+                        }
+                    case .notFetched:
+                        Text("")
                     }
+
                 }
             }
         }

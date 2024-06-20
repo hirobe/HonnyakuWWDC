@@ -113,6 +113,16 @@ struct SystemSettingView: View {
 
                 Section {
                     HStack {
+                        Text("OpenAI Auth Key: ")
+                        Spacer()
+                        SecureField("XXXXXX...", text: $viewModel.openAIAuthKey)
+                    }
+                } header: {
+                    Text("OpenAI")
+                }
+
+                Section {
+                    HStack {
                         Text("DeepL Auth Key: ")
                         Spacer()
                         SecureField("XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXX...", text: $viewModel.deepLAuthKey)
