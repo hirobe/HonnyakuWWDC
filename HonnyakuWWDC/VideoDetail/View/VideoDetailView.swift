@@ -31,6 +31,7 @@ struct VideoDetailView: View {
             }
         }
         .toolbar {
+            /*
             if viewModel.progressState == .completed {
                 ToolbarItem(placement: .navigation) {
                     Text(viewModel.title)
@@ -46,6 +47,7 @@ struct VideoDetailView: View {
                 }
                  
             }
+             */
             if viewModel.progressState == .completed && viewModel.showPlayerIfEnabled && viewModel.playerViewModel != nil {
                 ToolbarItem(placement: .navigationBarTrailing) {
 
