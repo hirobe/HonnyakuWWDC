@@ -96,7 +96,7 @@ final class ParseVideoDetailUseCase: ParseVideoDetailUseCaseProtocol {
     private static let regexDetails = #/<video.+src="(.+)".+<h1>(.+)</h1>\s*<p>(.+)</p>/#
         .dotMatchesNewlines()
         .repetitionBehavior(.reluctant)
-    private static let regexResources = #/<h2>Resources<\/h2>(.+)<h/#
+    private static let regexResources = #/<h2>Resources<\/h2>(.+)(<h|<!)/#
         .dotMatchesNewlines()
         .repetitionBehavior(.reluctant)
     private static let regexResourcesSub = #/<a href="([^"]+)"( target="_blank">|>)([^<]+)</a>/#
