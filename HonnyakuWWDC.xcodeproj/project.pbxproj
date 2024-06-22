@@ -57,7 +57,7 @@
 		42A935A42872727B000E067B /* SyncPlayModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42A935852872727B000E067B /* SyncPlayModel.swift */; };
 		42A935A52872727B000E067B /* SyncPlayUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42A935862872727B000E067B /* SyncPlayUseCase.swift */; };
 		42A935A62872727B000E067B /* SyncPlayUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42A935862872727B000E067B /* SyncPlayUseCase.swift */; };
-		42A935C428727298000E067B /* SystemSettingsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42A935A928727298000E067B /* SystemSettingsViewModel.swift */; };
+		42A935C428727298000E067B /* SystemSettingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42A935A928727298000E067B /* SystemSettingViewModel.swift */; };
 		42A935C528727298000E067B /* VideoListCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42A935AA28727298000E067B /* VideoListCellViewModel.swift */; };
 		42A935C628727298000E067B /* VideoListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42A935AB28727298000E067B /* VideoListViewModel.swift */; };
 		42A935C728727298000E067B /* VideoGroupSettingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42A935AC28727298000E067B /* VideoGroupSettingViewModel.swift */; };
@@ -145,7 +145,7 @@
 		42A935832872727B000E067B /* PlayerView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlayerView.swift; sourceTree = "<group>"; };
 		42A935852872727B000E067B /* SyncPlayModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SyncPlayModel.swift; sourceTree = "<group>"; };
 		42A935862872727B000E067B /* SyncPlayUseCase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SyncPlayUseCase.swift; sourceTree = "<group>"; };
-		42A935A928727298000E067B /* SystemSettingsViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SystemSettingsViewModel.swift; sourceTree = "<group>"; };
+		42A935A928727298000E067B /* SystemSettingViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SystemSettingViewModel.swift; sourceTree = "<group>"; };
 		42A935AA28727298000E067B /* VideoListCellViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VideoListCellViewModel.swift; sourceTree = "<group>"; };
 		42A935AB28727298000E067B /* VideoListViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VideoListViewModel.swift; sourceTree = "<group>"; };
 		42A935AC28727298000E067B /* VideoGroupSettingViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VideoGroupSettingViewModel.swift; sourceTree = "<group>"; };
@@ -390,7 +390,7 @@
 		42A935A828727298000E067B /* ViewModel */ = {
 			isa = PBXGroup;
 			children = (
-				42A935A928727298000E067B /* SystemSettingsViewModel.swift */,
+				42A935A928727298000E067B /* SystemSettingViewModel.swift */,
 				42A935AA28727298000E067B /* VideoListCellViewModel.swift */,
 				42A935AB28727298000E067B /* VideoListViewModel.swift */,
 				42A935AC28727298000E067B /* VideoGroupSettingViewModel.swift */,
@@ -644,7 +644,7 @@
 				42A9358D2872727B000E067B /* TaskProgressUseCase.swift in Sources */,
 				42A935992872727B000E067B /* TranscriptEntity.swift in Sources */,
 				42A9358B2872727B000E067B /* NetworkAccessUseCase.swift in Sources */,
-				42A935C428727298000E067B /* SystemSettingsViewModel.swift in Sources */,
+				42A935C428727298000E067B /* SystemSettingViewModel.swift in Sources */,
 				42A9359F2872727B000E067B /* ControlBar.swift in Sources */,
 				42A935C528727298000E067B /* VideoListCellViewModel.swift in Sources */,
 				42A935D628727298000E067B /* ParseVideoDetailUseCase.swift in Sources */,
