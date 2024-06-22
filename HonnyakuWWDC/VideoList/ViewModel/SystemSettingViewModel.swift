@@ -33,7 +33,7 @@ final class SystemSettingViewModel: ObservableObject {
         self.progressUseCase = progressUseCase
         self.videoListUseCase = videoListUseCase
         self.settings = settings
-        self.videoGroupScrapingUseCase = VideoGroupScrapingUseCase()
+        self.videoGroupScrapingUseCase = videoGroupScrapingUseCase
 
         deepLAuthKey = settings.deepLAuthKey
         isDeepLPro = settings.isDeepLPro
