@@ -104,10 +104,8 @@ final class SystemSettingViewModel: ObservableObject {
     }
 
     func voices(languageId: String) -> [SpeechPlayer.IdentifiableVoice] {
-        guard let code = SettingsUseCase.LanguageDefinition.find(id: languageId)?.voicesKey else { return []}
-        let voices = SpeechPlayer.getVoices(languageCode: code)
-
-        return voices
+        guard let code = SettingsUseCase.LanguageDefinition.find(id: languageId)?.voicesKey else { return [] }
+        return SpeechPlayer.getVoices(languageCode: code)
     }
 
     func updateVoiceSelect() {

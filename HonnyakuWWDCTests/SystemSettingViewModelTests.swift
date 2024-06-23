@@ -1,28 +1,112 @@
 import XCTest
+@testable import HonnyakuWWDC
+import AVFoundation
 
 final class SystemSettingViewModelTests: XCTestCase {
+    var viewModel: SystemSettingViewModel!
+    var mockSettings: MockSettingsUseCase!
+    var mockProgressUseCase: MockTaskProgressUseCase!
+    var mockVideoListUseCase: MockVideoListUseCase!
+    var mockVideoGroupScrapingUseCase: MockVideoGroupScrapingUseCase!
 
     override func setUpWithError() throws {
-        // Put setup code here. This method is called before the invocation of each test method in the class.
+        mockSettings = MockSettingsUseCase()
+        mockProgressUseCase = MockTaskProgressUseCase()
+        mockVideoListUseCase = MockVideoListUseCase()
+        mockVideoGroupScrapingUseCase = MockVideoGroupScrapingUseCase()
+        
+        viewModel = SystemSettingViewModel(
+            settings: mockSettings,
+            progressUseCase: mockProgressUseCase,
+            videoListUseCase: mockVideoListUseCase,
+            videoGroupScrapingUseCase: mockVideoGroupScrapingUseCase
+        )
     }
 
     override func tearDownWithError() throws {
-        // Put teardown code here. This method is called after the invocation of each test method in the class.
+        viewModel = nil
+        mockSettings = nil
+        mockProgressUseCase = nil
+        mockVideoListUseCase = nil
+        mockVideoGroupScrapingUseCase = nil
     }
 
-    func testExample() throws {
-        // This is an example of a functional test case.
-        // Use XCTAssert and related functions to verify your tests produce the correct results.
-        // Any test you write for XCTest can be annotated as throws and async.
-        // Mark your test throws to produce an unexpected failure when your test encounters an uncaught error.
-        // Mark your test async to allow awaiting for asynchronous code to complete. Check the results with assertions afterwards.
+    func testInitialization() {
+        XCTAssertEqual(viewModel.deepLAuthKey, mockSettings.deepLAuthKey)
+        XCTAssertEqual(viewModel.isDeepLPro, mockSettings.isDeepLPro)
+        XCTAssertEqual(viewModel.openAIAuthKey, mockSettings.openAIAuthKey)
+        XCTAssertEqual(viewModel.selectedLanguageId, mockSettings.languageId)
+        XCTAssertEqual(viewModel.selectedVoiceId, mockSettings.voiceId)
     }
 
-    func testPerformanceExample() throws {
-        // This is an example of a performance test case.
-        self.measure {
-            // Put the code you want to measure the time of here.
-        }
+    func testUpdateSettings() {
+        viewModel.deepLAuthKey = "newDeepLKey"
+        XCTAssertEqual(mockSettings.deepLAuthKey, "newDeepLKey")
+
+        viewModel.isDeepLPro = true
+        XCTAssertTrue(mockSettings.isDeepLPro)
+
+        viewModel.openAIAuthKey = "newOpenAIKey"
+        XCTAssertEqual(mockSettings.openAIAuthKey, "newOpenAIKey")
+
+        viewModel.selectedLanguageId = "en"
+        XCTAssertEqual(mockSettings.languageId, "en")
+
+        viewModel.selectedVoiceId = "voice2"
+        XCTAssertEqual(mockSettings.voiceId, "voice2")
     }
 
+    func testLanguages() {
+        let languages = viewModel.languages()
+        XCTAssertEqual(languages.map { $0.id }, SettingsUseCase.LanguageDefinition.all.map { $0.id })
+    }
+
+    func testVoices() {
+        // モックの音声リストを設定
+        let mockVoices = [
+            SpeechPlayer.IdentifiableVoice(voice: AVSpeechSynthesisVoice(language: "ja-JP")!),
+            SpeechPlayer.IdentifiableVoice(voice: AVSpeechSynthesisVoice(language: "en-US")!)
+        ]
+        SpeechPlayer.mockVoices = mockVoices
+
+        let voices = viewModel.voices(languageId: "ja")
+        XCTAssertEqual(voices.count, 1)
+        XCTAssertEqual(voices.first?.voice.language, "ja-JP")
+    }
+
+    // 他のテストメソッドを追加...
+}
+
+// モッククラスの定義
+class MockSettingsUseCase: SettingsUseCase {
+    init() {
+        super.init(userDefaults: UserDefaults(suiteName: #file)!)
+        // モックデータの初期化
+        self.deepLAuthKey = "mockDeepLKey"
+        self.isDeepLPro = false
+        self.openAIAuthKey = "mockOpenAIKey"
+        self.languageId = "ja"
+        self.voiceId = "voice1"
+    }
+}
+
+class MockTaskProgressUseCase: TaskProgressUseCase {
+    // 必要に応じてメソッドをオーバーライド
+}
+
+class MockVideoListUseCase: VideoListUseCase {
+    // 必要に応じてメソッドをオーバーライド
+}
+
+class MockVideoGroupScrapingUseCase: VideoGroupScrapingUseCase {
+    // 必要に応じてメソッドをオーバーライド
+}
+
+// SpeechPlayerにモック用のプロパティを追加
+extension SpeechPlayer {
+    static var mockVoices: [IdentifiableVoice] = []
+    
+    static func getVoices(languageCode: String) -> [IdentifiableVoice] {
+        return mockVoices.filter { $0.voice.language.starts(with: languageCode) }
+    }
 }

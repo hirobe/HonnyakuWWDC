@@ -79,8 +79,8 @@ class SettingsUseCase: ObservableObject {
 
     private var cancellables: [AnyCancellable] = []
 
-    private init() {
-        let userDefaults = UserDefaults.standard
+    init(userDefaults: UserDefaults = .standard) {
+        let userDefaults = userDefaults
         userDefaults.register(defaults: [
             "speechVolume": 1.0,
             "speechRate": 1.0,
@@ -96,72 +96,72 @@ class SettingsUseCase: ObservableObject {
             "videoGroupIds": []
         ])
 
-        self.speechVolume = UserDefaults.standard.double(forKey: "speechVolume")
-        self.speechRate = UserDefaults.standard.float(forKey: "speechRate")
-        self.videoVolume = UserDefaults.standard.double(forKey: "videoVolume")
-        self.videoRate = UserDefaults.standard.float(forKey: "videoRate")
-        self.showOriginalText = UserDefaults.standard.bool(forKey: "showOriginalText")
-        self.showTransferdText = UserDefaults.standard.bool(forKey: "showTransferdText")
-        self.deepLAuthKey = UserDefaults.standard.string(forKey: "deepLAuthKey") ?? ""
-        self.isDeepLPro = UserDefaults.standard.bool(forKey: "isDeepLPro")
-        self.openAIAuthKey = UserDefaults.standard.string(forKey: "openAIAuthKey") ?? ""
+        self.speechVolume = userDefaults.double(forKey: "speechVolume")
+        self.speechRate = userDefaults.float(forKey: "speechRate")
+        self.videoVolume = userDefaults.double(forKey: "videoVolume")
+        self.videoRate = userDefaults.float(forKey: "videoRate")
+        self.showOriginalText = userDefaults.bool(forKey: "showOriginalText")
+        self.showTransferdText = userDefaults.bool(forKey: "showTransferdText")
+        self.deepLAuthKey = userDefaults.string(forKey: "deepLAuthKey") ?? ""
+        self.isDeepLPro = userDefaults.bool(forKey: "isDeepLPro")
+        self.openAIAuthKey = userDefaults.string(forKey: "openAIAuthKey") ?? ""
 
-        self.languageId = UserDefaults.standard.string(forKey: "languageId") ?? ""
-        self.voiceId = UserDefaults.standard.string(forKey: "voiceId") ?? ""
-        self.videoGroupIds = UserDefaults.standard.array(forKey: "videoGroupIds") as? [String] ?? []
+        self.languageId = userDefaults.string(forKey: "languageId") ?? ""
+        self.voiceId = userDefaults.string(forKey: "voiceId") ?? ""
+        self.videoGroupIds = userDefaults.array(forKey: "videoGroupIds") as? [String] ?? []
 
         if self.languageId.isEmpty {
             self.languageId = LanguageDefinition.all.first?.id ?? ""
         }
 
         $speechVolume.sink { value in
-            UserDefaults.standard.setValue(value, forKey: "speechVolume")
+            userDefaults.setValue(value, forKey: "speechVolume")
         }
         .store(in: &cancellables)
         $speechRate.sink { value in
-            UserDefaults.standard.setValue(value, forKey: "speechRate")
+            userDefaults.setValue(value, forKey: "speechRate")
         }
         .store(in: &cancellables)
         $videoVolume.sink { value in
-            UserDefaults.standard.setValue(value, forKey: "videoVolume")
+            userDefaults.setValue(value, forKey: "videoVolume")
         }
         .store(in: &cancellables)
         $videoRate.sink { value in
-            UserDefaults.standard.setValue(value, forKey: "videoRate")
+            userDefaults.setValue(value, forKey: "videoRate")
         }
         .store(in: &cancellables)
         $showOriginalText.sink { value in
-            UserDefaults.standard.setValue(value, forKey: "showOriginalText")
+            userDefaults.setValue(value, forKey: "showOriginalText")
         }
         .store(in: &cancellables)
         $showTransferdText.sink { value in
-            UserDefaults.standard.setValue(value, forKey: "showTransferdText")
+            userDefaults.setValue(value, forKey: "showTransferdText")
         }
         .store(in: &cancellables)
 
         $languageId.sink { value in
-            UserDefaults.standard.setValue(value, forKey: "languageId")
+            userDefaults.setValue(value, forKey: "languageId")
         }
         .store(in: &cancellables)
         $voiceId.sink { value in
-            UserDefaults.standard.setValue(value, forKey: "voiceId")
+            userDefaults.setValue(value, forKey: "voiceId")
         }
         .store(in: &cancellables)
 
         $deepLAuthKey.sink { value in
-            UserDefaults.standard.setValue(value, forKey: "deepLAuthKey")
+            userDefaults.setValue(value, forKey: "deepLAuthKey")
         }
         .store(in: &cancellables)
         $isDeepLPro.sink { value in
-            UserDefaults.standard.setValue(value, forKey: "isDeepLPro")
+            userDefaults.setValue(value, forKey: "isDeepLPro")
         }
         .store(in: &cancellables)
         $openAIAuthKey.sink { value in
-            UserDefaults.standard.setValue(value, forKey: "openAIAuthKey")
+            userDefaults.setValue(value, forKey: "openAIAuthKey")
         }
         .store(in: &cancellables)
         $videoGroupIds.sink { value in
-            UserDefaults.standard.setValue(value, forKey: "videoGroupIds")
+            userDefaults.setValue(value, forKey: "videoGroupIds")
         }
         .store(in: &cancellables)
     }
