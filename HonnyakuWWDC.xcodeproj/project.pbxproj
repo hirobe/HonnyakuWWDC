@@ -87,6 +87,7 @@
 		42A935E92872A147000E067B /* SyncPlayUseCaseTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42A935E82872A147000E067B /* SyncPlayUseCaseTests.swift */; };
 		42A935EB2873CCBF000E067B /* SpeechPhraseList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42A935EA2873CCBF000E067B /* SpeechPhraseList.swift */; };
 		42A935EC2873CCBF000E067B /* SpeechPhraseList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42A935EA2873CCBF000E067B /* SpeechPhraseList.swift */; };
+		5D0DC5FE2C280A500060C936 /* SystemSettingViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D0DC5FD2C280A500060C936 /* SystemSettingViewModelTests.swift */; };
 		5D6CB1982C19A7F700850FB3 /* DownloadAudioUserCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D6CB1962C19A7F100850FB3 /* DownloadAudioUserCase.swift */; };
 /* End PBXBuildFile section */
 
@@ -175,6 +176,7 @@
 		42A935E52872834E000E067B /* AVPlayerWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AVPlayerWrapper.swift; sourceTree = "<group>"; };
 		42A935E82872A147000E067B /* SyncPlayUseCaseTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SyncPlayUseCaseTests.swift; sourceTree = "<group>"; };
 		42A935EA2873CCBF000E067B /* SpeechPhraseList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpeechPhraseList.swift; sourceTree = "<group>"; };
+		5D0DC5FD2C280A500060C936 /* SystemSettingViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SystemSettingViewModelTests.swift; sourceTree = "<group>"; };
 		5D6CB1962C19A7F100850FB3 /* DownloadAudioUserCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DownloadAudioUserCase.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -266,6 +268,7 @@
 				42A935DD28727664000E067B /* ParseVideoDetailUseCaseTests.swift */,
 				42A935DE28727664000E067B /* VideoGroupScrapingUseCaseTests.swift */,
 				42A935E82872A147000E067B /* SyncPlayUseCaseTests.swift */,
+				5D0DC5FD2C280A500060C936 /* SystemSettingViewModelTests.swift */,
 			);
 			path = HonnyakuWWDCTests;
 			sourceTree = "<group>";
@@ -684,6 +687,7 @@
 				42A935E128727664000E067B /* VideoGroupScrapingUseCaseTests.swift in Sources */,
 				42A935E92872A147000E067B /* SyncPlayUseCaseTests.swift in Sources */,
 				42A935DF28727664000E067B /* DeepLUseCaseTests.swift in Sources */,
+				5D0DC5FE2C280A500060C936 /* SystemSettingViewModelTests.swift in Sources */,
 				42A934C128726FAC000E067B /* HonnyakuWWDCTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
