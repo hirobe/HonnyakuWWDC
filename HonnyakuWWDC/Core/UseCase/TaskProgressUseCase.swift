@@ -46,7 +46,7 @@ final class ProgressManager {
 /// 処理のTask自体は保持しません。IDと進捗だけ。
 /// IDから進捗を通知するObsrvableを返すことができます。
 /// アプリ開始時に、ファイルから進捗をセットし直す必要があります。
-final class TaskProgressUseCase: TaskProgressUseCaseProtocol {
+class TaskProgressUseCase: TaskProgressUseCaseProtocol {
     private var progressManager: ProgressManager
 
     init(progressManager: ProgressManager = ProgressManager.shared) {

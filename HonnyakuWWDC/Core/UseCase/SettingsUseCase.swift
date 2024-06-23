@@ -3,7 +3,7 @@
 import Foundation
 import Combine
 
-final class SettingsUseCase: ObservableObject {
+class SettingsUseCase: ObservableObject {
     static let shared: SettingsUseCase = SettingsUseCase()
 
     struct LanguageDefinition: Identifiable {
