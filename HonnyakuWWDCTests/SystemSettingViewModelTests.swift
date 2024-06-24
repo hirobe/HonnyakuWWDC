@@ -8,9 +8,14 @@ final class SystemSettingViewModelTests: XCTestCase {
     var mockProgressUseCase: MockTaskProgressUseCase!
     var mockVideoListUseCase: MockVideoListUseCase!
     var mockVideoGroupScrapingUseCase: MockVideoGroupScrapingUseCase!
+    var mockUserDefaults: UserDefaults!
 
     override func setUpWithError() throws {
-        mockSettings = MockSettingsUseCase()
+        // テスト用のUserDefaultsを作成
+        mockUserDefaults = UserDefaults(suiteName: #file)
+        mockUserDefaults.removePersistentDomain(forName: #file)
+        
+        mockSettings = MockSettingsUseCase(userDefaults: mockUserDefaults)
         mockProgressUseCase = MockTaskProgressUseCase()
         mockVideoListUseCase = MockVideoListUseCase()
         mockVideoGroupScrapingUseCase = MockVideoGroupScrapingUseCase()
@@ -29,6 +34,7 @@ final class SystemSettingViewModelTests: XCTestCase {
         mockProgressUseCase = nil
         mockVideoListUseCase = nil
         mockVideoGroupScrapingUseCase = nil
+        mockUserDefaults = nil
     }
 
     func testInitialization() {
@@ -42,18 +48,23 @@ final class SystemSettingViewModelTests: XCTestCase {
     func testUpdateSettings() {
         viewModel.deepLAuthKey = "newDeepLKey"
         XCTAssertEqual(mockSettings.deepLAuthKey, "newDeepLKey")
+        XCTAssertEqual(mockUserDefaults.string(forKey: "deepLAuthKey"), "newDeepLKey")
 
         viewModel.isDeepLPro = true
         XCTAssertTrue(mockSettings.isDeepLPro)
+        XCTAssertTrue(mockUserDefaults.bool(forKey: "isDeepLPro"))
 
         viewModel.openAIAuthKey = "newOpenAIKey"
         XCTAssertEqual(mockSettings.openAIAuthKey, "newOpenAIKey")
+        XCTAssertEqual(mockUserDefaults.string(forKey: "openAIAuthKey"), "newOpenAIKey")
 
         viewModel.selectedLanguageId = "en"
         XCTAssertEqual(mockSettings.languageId, "en")
+        XCTAssertEqual(mockUserDefaults.string(forKey: "languageId"), "en")
 
         viewModel.selectedVoiceId = "voice2"
         XCTAssertEqual(mockSettings.voiceId, "voice2")
+        XCTAssertEqual(mockUserDefaults.string(forKey: "voiceId"), "voice2")
     }
 
     func testLanguages() {
@@ -74,13 +85,24 @@ final class SystemSettingViewModelTests: XCTestCase {
         XCTAssertEqual(voices.first?.voice.language, "ja-JP")
     }
 
-    // 他のテストメソッドを追加...
+    func testVideoGroupListInitialization() {
+        XCTAssertFalse(viewModel.videoGroupList.isEmpty)
+        XCTAssertEqual(viewModel.videoGroupList.count, VideoGroupAttributesEntity.all.count)
+    }
+
+    func testVideoGroupToggle() {
+        let firstGroup = viewModel.videoGroupList[0]
+        firstGroup.enabled = true
+        
+        XCTAssertTrue(mockSettings.videoGroupIds.contains(firstGroup.id))
+        XCTAssertTrue((mockUserDefaults.array(forKey: "videoGroupIds") as? [String] ?? []).contains(firstGroup.id))
+    }
 }
 
 // モッククラスの定義
 class MockSettingsUseCase: SettingsUseCase {
-    init() {
-        super.init(userDefaults: UserDefaults(suiteName: #file)!)
+    override init(userDefaults: UserDefaults) {
+        super.init(userDefaults: userDefaults)
         // モックデータの初期化
         self.deepLAuthKey = "mockDeepLKey"
         self.isDeepLPro = false
