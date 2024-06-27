@@ -1,9 +1,9 @@
 //  SettingsUseCase.swift
 
 import Foundation
-import Combine
+import Observation
 
-class SettingsUseCase: ObservableObject {
+@Observable class SettingsUseCase {
     static let shared: SettingsUseCase = SettingsUseCase()
 
     struct LanguageDefinition: Identifiable {
@@ -62,22 +62,18 @@ class SettingsUseCase: ObservableObject {
         }
     }
 
-    @Published var speechVolume: Double
-    @Published var speechRate: Float
-    @Published var videoVolume: Double
-    @Published var videoRate: Float
-    @Published var showOriginalText: Bool
-    @Published var showTransferdText: Bool
-
-    @Published var languageId: String
-    @Published var voiceId: String
-    @Published var deepLAuthKey: String
-    @Published var isDeepLPro: Bool
-    @Published var openAIAuthKey: String
-
-    @Published var videoGroupIds: [String]
-
-    private var cancellables: [AnyCancellable] = []
+    var speechVolume: Double
+    var speechRate: Float
+    var videoVolume: Double
+    var videoRate: Float
+    var showOriginalText: Bool
+    var showTransferdText: Bool
+    var isDeepLPro: Bool
+    var languageId: String
+    var voiceId: String
+    var deepLAuthKey: String
+    var openAIAuthKey: String
+    var videoGroupIds: [String]
 
     init(userDefaults: UserDefaults = .standard) {
         let userDefaults = userDefaults
@@ -113,57 +109,49 @@ class SettingsUseCase: ObservableObject {
         if self.languageId.isEmpty {
             self.languageId = LanguageDefinition.all.first?.id ?? ""
         }
+        
+        Task { @MainActor in
+            self.setupObservation()
+        }
+    }
+    private func setupObservation() {
+        withObservationTracking {
+            _ = self.speechVolume
+            _ = self.speechRate
+            _ = self.videoVolume
+            _ = self.videoRate
+            _ = self.showOriginalText
+            _ = self.showTransferdText
+            _ = self.isDeepLPro
+            _ = self.languageId
+            _ = self.voiceId
+            _ = self.deepLAuthKey
+            _ = self.openAIAuthKey
+            _ = self.videoGroupIds
+        } onChange: {
+            Task { @MainActor in
+                self.updateAllUserDefaults()
+                self.setupObservation()
+            }
+        }
+    }
 
-        $speechVolume.sink { value in
-            userDefaults.setValue(value, forKey: "speechVolume")
-        }
-        .store(in: &cancellables)
-        $speechRate.sink { value in
-            userDefaults.setValue(value, forKey: "speechRate")
-        }
-        .store(in: &cancellables)
-        $videoVolume.sink { value in
-            userDefaults.setValue(value, forKey: "videoVolume")
-        }
-        .store(in: &cancellables)
-        $videoRate.sink { value in
-            userDefaults.setValue(value, forKey: "videoRate")
-        }
-        .store(in: &cancellables)
-        $showOriginalText.sink { value in
-            userDefaults.setValue(value, forKey: "showOriginalText")
-        }
-        .store(in: &cancellables)
-        $showTransferdText.sink { value in
-            userDefaults.setValue(value, forKey: "showTransferdText")
-        }
-        .store(in: &cancellables)
-
-        $languageId.sink { value in
-            userDefaults.setValue(value, forKey: "languageId")
-        }
-        .store(in: &cancellables)
-        $voiceId.sink { value in
-            userDefaults.setValue(value, forKey: "voiceId")
-        }
-        .store(in: &cancellables)
-
-        $deepLAuthKey.sink { value in
-            userDefaults.setValue(value, forKey: "deepLAuthKey")
-        }
-        .store(in: &cancellables)
-        $isDeepLPro.sink { value in
-            userDefaults.setValue(value, forKey: "isDeepLPro")
-        }
-        .store(in: &cancellables)
-        $openAIAuthKey.sink { value in
-            userDefaults.setValue(value, forKey: "openAIAuthKey")
-        }
-        .store(in: &cancellables)
-        $videoGroupIds.sink { value in
-            userDefaults.setValue(value, forKey: "videoGroupIds")
-        }
-        .store(in: &cancellables)
+    private func updateAllUserDefaults() {
+        updateUserDefaults("speechVolume", speechVolume)
+        updateUserDefaults("speechRate", speechRate)
+        updateUserDefaults("videoVolume", videoVolume)
+        updateUserDefaults("videoRate", videoRate)
+        updateUserDefaults("showOriginalText", showOriginalText)
+        updateUserDefaults("showTransferdText", showTransferdText)
+        updateUserDefaults("isDeepLPro", isDeepLPro)
+        updateUserDefaults("languageId", languageId)
+        updateUserDefaults("voiceId", voiceId)
+        updateUserDefaults("deepLAuthKey", deepLAuthKey)
+        updateUserDefaults("openAIAuthKey", openAIAuthKey)
+        updateUserDefaults("videoGroupIds", videoGroupIds)
+    }
+    func updateUserDefaults(_ key: String, _ value: Any) {
+        UserDefaults.standard.set(value, forKey: key)
     }
 
     var languageShortLower: String {
@@ -178,5 +166,4 @@ class SettingsUseCase: ObservableObject {
         }
         return ""
     }
-
 }

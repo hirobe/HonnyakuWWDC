@@ -48,15 +48,15 @@ final class VideoListViewModel: ObservableObject {
         .store(in: &cancellables)
 
         // 設定で表示するVideoGroupが変更されるか、VideoGroupのスクレイピングが終了したら、再読み込みする
-        settingsUseCase.$videoGroupIds.map { _ in true }
-            .merge(with: $isProcessing.filter {$0 == false})
-            .debounce(for: 0.5, scheduler: DispatchQueue.main) // 同時に多数発生してしまうのでまとめる
-            .sink { _ in
-                Task {
-                    await self.reload()
-                }
+        withObservationTracking { [weak self] in
+            _ = self?.settingsUseCase.videoGroupIds
+            _ = self?.isProcessing
+        } onChange: {
+            Task { @MainActor in
+                try? await Task.sleep(for: .milliseconds(500))
+                await self.reload()
             }
-            .store(in: &cancellables)
+        }
 
         // 状態監視の初期値を設定
         try? videoListUseCase.setupVideoGroupsCompletedStatus()

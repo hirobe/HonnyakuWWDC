@@ -47,22 +47,27 @@ final class SystemSettingViewModelTests: XCTestCase {
 
     func testUpdateSettings() {
         viewModel.deepLAuthKey = "newDeepLKey"
+        XCTAssertEqual(viewModel.deepLAuthKey, "newDeepLKey")
         XCTAssertEqual(mockSettings.deepLAuthKey, "newDeepLKey")
         XCTAssertEqual(mockUserDefaults.string(forKey: "deepLAuthKey"), "newDeepLKey")
 
         viewModel.isDeepLPro = true
+        XCTAssertTrue(viewModel.isDeepLPro)
         XCTAssertTrue(mockSettings.isDeepLPro)
         XCTAssertTrue(mockUserDefaults.bool(forKey: "isDeepLPro"))
 
         viewModel.openAIAuthKey = "newOpenAIKey"
+        XCTAssertEqual(viewModel.openAIAuthKey, "newOpenAIKey")
         XCTAssertEqual(mockSettings.openAIAuthKey, "newOpenAIKey")
         XCTAssertEqual(mockUserDefaults.string(forKey: "openAIAuthKey"), "newOpenAIKey")
 
         viewModel.selectedLanguageId = "en"
+        XCTAssertEqual(viewModel.selectedLanguageId, "en")
         XCTAssertEqual(mockSettings.languageId, "en")
         XCTAssertEqual(mockUserDefaults.string(forKey: "languageId"), "en")
 
         viewModel.selectedVoiceId = "voice2"
+        XCTAssertEqual(viewModel.selectedVoiceId, "voice2")
         XCTAssertEqual(mockSettings.voiceId, "voice2")
         XCTAssertEqual(mockUserDefaults.string(forKey: "voiceId"), "voice2")
     }
@@ -94,6 +99,7 @@ final class SystemSettingViewModelTests: XCTestCase {
         let firstGroup = viewModel.videoGroupList[0]
         firstGroup.enabled = true
         
+        XCTAssertTrue(firstGroup.enabled)
         XCTAssertTrue(mockSettings.videoGroupIds.contains(firstGroup.id))
         XCTAssertTrue((mockUserDefaults.array(forKey: "videoGroupIds") as? [String] ?? []).contains(firstGroup.id))
     }

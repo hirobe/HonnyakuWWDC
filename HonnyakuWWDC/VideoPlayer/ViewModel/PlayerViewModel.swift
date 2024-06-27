@@ -65,38 +65,23 @@ final class PlayerViewModel: ObservableObject {
     }
 
     private func setupBindings() {
-        settingsUseCase.$speechVolume.sink { [weak self] value in
-            self?.speechPlayer.setVolume(volume: Float(value))
+        withObservationTracking { [weak self] in
+            guard let self = self else { return }
+            self.speechPlayer.setVolume(volume: Float(self.settingsUseCase.speechVolume))
+            self.speechPlayer.setRate(rate: self.settingsUseCase.speechRate)
+            self.videoPlayer.volume = Float(self.settingsUseCase.videoVolume)
+            if self.videoPlayer.rate > 0 {
+                self.videoPlayer.rate = Float(self.settingsUseCase.videoRate)
+            }
+            self.showBaseSentence = self.settingsUseCase.showOriginalText
+            self.showSpeechSentence = self.settingsUseCase.showTransferdText
+            self.speechPlayer.setVoice(voiceId: self.settingsUseCase.voiceId)
+            self.syncPlayUseCase.isSpeechActive = self.speechPlayer.isActive
+        } onChange: {
+            Task { @MainActor in
+                self.setupBindings()
+            }
         }
-        .store(in: &cancellables)
-        settingsUseCase.$speechRate.sink { [weak self] value in
-            self?.speechPlayer.setRate(rate: value)
-        }
-        .store(in: &cancellables)
-        settingsUseCase.$videoVolume.sink { [weak self] value in
-            self?.videoPlayer.volume = Float(value)
-        }
-        .store(in: &cancellables)
-        settingsUseCase.$videoRate.sink { [weak self] value in
-            guard let self = self,
-                  self.videoPlayer.rate > 0 else { return } // 停止中はrateを変えない
-            self.videoPlayer.rate = Float(value) // rateはplayの直後に再設定する必要がある
-        }
-        .store(in: &cancellables)
-        settingsUseCase.$showOriginalText.sink { [weak self] value in
-            self?.showBaseSentence = value
-        }
-        .store(in: &cancellables)
-        settingsUseCase.$showTransferdText.sink { [weak self] value in
-            self?.showSpeechSentence = value
-        }
-        .store(in: &cancellables)
-
-        settingsUseCase.$voiceId.sink { [weak self] voiceId in
-            self?.speechPlayer.setVoice(voiceId: voiceId)
-            self?.syncPlayUseCase.isSpeechActive = self?.speechPlayer.isActive ?? false
-        }
-        .store(in: &cancellables)
 
         // 画面にホバーしたらボタンを表示し、3秒間触らなければボタンを隠す
         $isHoveringScreen
