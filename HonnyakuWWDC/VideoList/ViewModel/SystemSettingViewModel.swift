@@ -40,7 +40,7 @@ import AVFoundation
 
         selectedLanguageId = settings.languageId
         selectedVoiceId = settings.voiceId
-        updateVoiceSelect()
+        //updateVoiceSelect()
 
         videoGroupList = VideoGroupAttributesEntity.all.keys.sorted().reversed().compactMap({ key in
             guard let entity: VideoGroupAttributesEntity = VideoGroupAttributesEntity.all[key] else { return nil }
