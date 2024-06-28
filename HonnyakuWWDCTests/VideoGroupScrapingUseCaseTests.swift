@@ -1,19 +1,15 @@
 //  VideoListUseCaseTests.swift
 
-import XCTest
+import Testing
 @testable import HonnyakuWWDC
 
-final class VideoGroupScrapingUseCaseTests: XCTestCase {
+struct VideoGroupScrapingUseCaseTests {
 
-    override func setUpWithError() throws {
+    init() throws {
         // Put setup code here. This method is called before the invocation of each test method in the class.
     }
 
-    override func tearDownWithError() throws {
-        // Put teardown code here. This method is called after the invocation of each test method in the class.
-    }
-
-    func testExample() throws {
+    @Test func example() throws {
         let html = """
 <body>
 <li class="collection-item hidden" data-released="true">
@@ -89,22 +85,14 @@ final class VideoGroupScrapingUseCaseTests: XCTestCase {
                                                 fileAccessUseCase: FileAccessUseCase(),
                                                 networkAccessUseCase: NetworkAccessUseCase())
         let result = useCase.parse(text: html)
-        XCTAssertEqual(result.count, 3)
-        XCTAssertEqual(result[0].id, "wwdc2022_10119")
-        XCTAssertEqual(result[0].title, "Optimize your use of Core Data and CloudKit")
-        XCTAssertEqual(result[0].url.absoluteString, "https://developer.apple.com/videos/play/wwdc2022/10119/")
-        XCTAssertEqual(result[0].thumbnailUrl.absoluteString, "https://devimages-cdn.apple.com/wwdc-services/images/124/6615/6615_wide_250x141_2x.jpg")
-        XCTAssertEqual(result[1].id, "wwdc2022_10078")
-        XCTAssertEqual(result[1].title, "Reduce networking delays for a more responsive app")
-        XCTAssertEqual(result[2].title, "What’s new in CloudKit Console")
+        #expect(result.count == 3)
+        #expect(result[0].id == "wwdc2022_10119")
+        #expect(result[0].title == "Optimize your use of Core Data and CloudKit")
+        #expect(result[0].url.absoluteString == "https://developer.apple.com/videos/play/wwdc2022/10119/")
+        #expect(result[0].thumbnailUrl.absoluteString == "https://devimages-cdn.apple.com/wwdc-services/images/124/6615/6615_wide_250x141_2x.jpg")
+        #expect(result[1].id == "wwdc2022_10078")
+        #expect(result[1].title == "Reduce networking delays for a more responsive app")
+        #expect(result[2].title == "What’s new in CloudKit Console")
 
     }
-
-    func testPerformanceExample() throws {
-        // This is an example of a performance test case.
-        self.measure {
-            // Put the code you want to measure the time of here.
-        }
-    }
-
 }

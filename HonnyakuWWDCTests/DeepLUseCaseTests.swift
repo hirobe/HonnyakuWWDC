@@ -1,21 +1,17 @@
 //  DeepLUseCaseTests.swift
 
-import XCTest
+import Testing
 @testable import HonnyakuWWDC
 
-final class DeepLUseCaseTests: XCTestCase {
+struct DeepLUseCaseTests {
     typealias Paragraph = TranscriptEntity.Paragraph
     typealias Sentence = TranscriptEntity.Paragraph.Sentence
 
-    override func setUpWithError() throws {
+    init() throws {
         // Put setup code here. This method is called before the invocation of each test method in the class.
     }
 
-    override func tearDownWithError() throws {
-        // Put teardown code here. This method is called after the invocation of each test method in the class.
-    }
-
-    func testXmlAndTranscript() throws {
+    @Test func xmlAndTranscript() throws {
         let deepLUseCase = DeepLUseCase.init()
         let transcript = TranscriptEntity(
             language: "EN",
@@ -25,9 +21,9 @@ final class DeepLUseCaseTests: XCTestCase {
                 ])
 
         let xml = deepLUseCase.transcriptToXml(transcript: transcript)
-        XCTAssertEqual(xml, "<p><s at=\"0\">The first paragraph. </s><s at=\"10\">The second sentence. </s></p>\n<p><s at=\"20\">The last paragraph. </s></p>\n")
+        #expect(xml == "<p><s at=\"0\">The first paragraph. </s><s at=\"10\">The second sentence. </s></p>\n<p><s at=\"20\">The last paragraph. </s></p>\n")
 
         let transcript2 = deepLUseCase.xmlToTranscript(language: "EN", xml: xml)
-        XCTAssertEqual(transcript, transcript2)
+        #expect(transcript == transcript2)
     }
 }

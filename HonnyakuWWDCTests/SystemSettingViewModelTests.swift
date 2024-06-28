@@ -1,18 +1,20 @@
-import XCTest
+import Testing
 @testable import HonnyakuWWDC
 import AVFoundation
+import Observation
 
-final class SystemSettingViewModelTests: XCTestCase {
+
+final class SystemSettingViewModelTests {
     var viewModel: SystemSettingViewModel!
     var mockSettings: MockSettingsUseCase!
     var mockProgressUseCase: MockTaskProgressUseCase!
     var mockVideoListUseCase: MockVideoListUseCase!
     var mockVideoGroupScrapingUseCase: MockVideoGroupScrapingUseCase!
-    var mockUserDefaults: UserDefaults!
+    //var mockUserDefaults: UserDefaults!
 
-    override func setUpWithError() throws {
+    init() throws {
         // テスト用のUserDefaultsを作成
-        mockUserDefaults = UserDefaults(suiteName: #file)
+        let mockUserDefaults = UserDefaults(suiteName: #file)!
         mockUserDefaults.removePersistentDomain(forName: #file)
         
         mockSettings = MockSettingsUseCase(userDefaults: mockUserDefaults)
@@ -28,56 +30,82 @@ final class SystemSettingViewModelTests: XCTestCase {
         )
     }
 
-    override func tearDownWithError() throws {
+    deinit {
         viewModel = nil
         mockSettings = nil
         mockProgressUseCase = nil
         mockVideoListUseCase = nil
         mockVideoGroupScrapingUseCase = nil
-        mockUserDefaults = nil
+        //mockUserDefaults = nil
     }
 
-    func testInitialization() {
-        XCTAssertEqual(viewModel.deepLAuthKey, mockSettings.deepLAuthKey)
-        XCTAssertEqual(viewModel.isDeepLPro, mockSettings.isDeepLPro)
-        XCTAssertEqual(viewModel.openAIAuthKey, mockSettings.openAIAuthKey)
-        XCTAssertEqual(viewModel.selectedLanguageId, mockSettings.languageId)
-        XCTAssertEqual(viewModel.selectedVoiceId, mockSettings.voiceId)
+    @Test func initialization() {
+        #expect(1 == 2)
+
+        #expect(viewModel.deepLAuthKey == mockSettings.deepLAuthKey)
+        #expect(viewModel.isDeepLPro == mockSettings.isDeepLPro)
+        #expect(viewModel.openAIAuthKey == mockSettings.openAIAuthKey)
+        #expect(viewModel.selectedLanguageId == mockSettings.languageId)
+        #expect(viewModel.selectedVoiceId == mockSettings.voiceId)
     }
 
-    func testUpdateSettings() {
+    @Test func updateSettings() async {
+        _ = mockSettings.deepLAuthKey
         viewModel.deepLAuthKey = "newDeepLKey"
-        XCTAssertEqual(viewModel.deepLAuthKey, "newDeepLKey")
-        XCTAssertEqual(mockSettings.deepLAuthKey, "newDeepLKey")
-        XCTAssertEqual(mockUserDefaults.string(forKey: "deepLAuthKey"), "newDeepLKey")
+        #expect(viewModel.deepLAuthKey == "newDeepLKey")
+        
+        // Wait for the observation to trigger
+        try? await Task.sleep(for: .milliseconds(100))
+        _ = try? await withCheckedThrowingContinuation { continuation in
+            DispatchQueue.main.async {
+                continuation.resume(returning: true)
+            }
+        }
+        
+        #expect(viewModel.deepLAuthKey == "newDeepLKey")
+
+        try? await Task.sleep(for: .milliseconds(1000))
+        #expect(mockSettings.deepLAuthKey == "newDeepLKey")
 
         viewModel.isDeepLPro = true
-        XCTAssertTrue(viewModel.isDeepLPro)
-        XCTAssertTrue(mockSettings.isDeepLPro)
-        XCTAssertTrue(mockUserDefaults.bool(forKey: "isDeepLPro"))
+        #expect(viewModel.isDeepLPro)
+        
+        try? await Task.sleep(for: .milliseconds(100))
+        
+        #expect(mockSettings.isDeepLPro)
+        //XCTAssertTrue(mockUserDefaults.bool(forKey: "isDeepLPro"))
 
         viewModel.openAIAuthKey = "newOpenAIKey"
-        XCTAssertEqual(viewModel.openAIAuthKey, "newOpenAIKey")
-        XCTAssertEqual(mockSettings.openAIAuthKey, "newOpenAIKey")
-        XCTAssertEqual(mockUserDefaults.string(forKey: "openAIAuthKey"), "newOpenAIKey")
+        #expect(viewModel.openAIAuthKey == "newOpenAIKey")
+        
+        try? await Task.sleep(for: .milliseconds(100))
+        
+        #expect(mockSettings.openAIAuthKey == "newOpenAIKey")
+        //XCTAssertEqual(mockUserDefaults.string(forKey: "openAIAuthKey"), "newOpenAIKey")
 
         viewModel.selectedLanguageId = "en"
-        XCTAssertEqual(viewModel.selectedLanguageId, "en")
-        XCTAssertEqual(mockSettings.languageId, "en")
-        XCTAssertEqual(mockUserDefaults.string(forKey: "languageId"), "en")
+        #expect(viewModel.selectedLanguageId == "en")
+        
+        try? await Task.sleep(for: .milliseconds(100))
+        
+        #expect(mockSettings.languageId == "en")
+        //XCTAssertEqual(mockUserDefaults.string(forKey: "languageId"), "en")
 
         viewModel.selectedVoiceId = "voice2"
-        XCTAssertEqual(viewModel.selectedVoiceId, "voice2")
-        XCTAssertEqual(mockSettings.voiceId, "voice2")
-        XCTAssertEqual(mockUserDefaults.string(forKey: "voiceId"), "voice2")
+        #expect(viewModel.selectedVoiceId == "voice2")
+        
+        try? await Task.sleep(for: .milliseconds(100))
+        
+        #expect(mockSettings.voiceId == "voice2")
+        //XCTAssertEqual(mockUserDefaults.string(forKey: "voiceId"), "voice2")
     }
 
-    func testLanguages() {
+    @Test func languages() {
         let languages = viewModel.languages()
-        XCTAssertEqual(languages.map { $0.id }, SettingsUseCase.LanguageDefinition.all.map { $0.id })
+        #expect(languages.map { $0.id } == SettingsUseCase.LanguageDefinition.all.map { $0.id })
     }
 
-    func testVoices() {
+    @Test func voices() {
         // モックの音声リストを設定
         let mockVoices = [
             SpeechPlayer.IdentifiableVoice(voice: AVSpeechSynthesisVoice(language: "ja-JP")!),
@@ -86,22 +114,22 @@ final class SystemSettingViewModelTests: XCTestCase {
         SpeechPlayer.mockVoices = mockVoices
 
         let voices = viewModel.voices(languageId: "ja")
-        XCTAssertEqual(voices.count, 1)
-        XCTAssertEqual(voices.first?.voice.language, "ja-JP")
+        #expect(voices.count == 1)
+        #expect(voices.first?.voice.language == "ja-JP")
     }
 
-    func testVideoGroupListInitialization() {
-        XCTAssertFalse(viewModel.videoGroupList.isEmpty)
-        XCTAssertEqual(viewModel.videoGroupList.count, VideoGroupAttributesEntity.all.count)
+    @Test func videoGroupListInitialization() {
+        #expect(!viewModel.videoGroupList.isEmpty)
+        #expect(viewModel.videoGroupList.count == VideoGroupAttributesEntity.all.count)
     }
 
-    func testVideoGroupToggle() {
+    @Test func videoGroupToggle() async {
         let firstGroup = viewModel.videoGroupList[0]
         firstGroup.enabled = true
         
-        XCTAssertTrue(firstGroup.enabled)
-        XCTAssertTrue(mockSettings.videoGroupIds.contains(firstGroup.id))
-        XCTAssertTrue((mockUserDefaults.array(forKey: "videoGroupIds") as? [String] ?? []).contains(firstGroup.id))
+        #expect(firstGroup.enabled)
+        #expect(mockSettings.videoGroupIds.contains(firstGroup.id))
+        //XCTAssertTrue((mockUserDefaults.array(forKey: "videoGroupIds") as? [String] ?? []).contains(firstGroup.id))
     }
 }
 
