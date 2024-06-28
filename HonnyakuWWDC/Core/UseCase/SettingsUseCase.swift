@@ -54,7 +54,9 @@ import Observation
             VideoRateDefinition(name: "x1.2", value: 1.2),
             VideoRateDefinition(name: "x1.3", value: 1.3),
             VideoRateDefinition(name: "x1.5", value: 1.5),
-            VideoRateDefinition(name: "x1.8", value: 1.8)
+            VideoRateDefinition(name: "x1.8", value: 1.8),
+            VideoRateDefinition(name: "x2.0", value: 2.0),
+            VideoRateDefinition(name: "x2.5", value: 2.5)
         ]
 
         static func find(value: Float) -> VideoRateDefinition? {
