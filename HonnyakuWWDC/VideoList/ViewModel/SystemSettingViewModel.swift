@@ -10,14 +10,12 @@ import AVFoundation
     private var videoListUseCase: VideoListUseCase
     private var videoGroupScrapingUseCase: VideoGroupScrapingUseCase
 
-    private(set) var isPresent: Bool = true
 
     private(set) var langIndex: Int = 0
 
     var voiceId: String = ""
     var deepLAuthKey: String = ""
     var isDeepLPro: Bool = false
-    
     var openAIAuthKey: String = ""
 
     var selectedLanguageId: String = ""
@@ -40,7 +38,6 @@ import AVFoundation
 
         selectedLanguageId = settings.languageId
         selectedVoiceId = settings.voiceId
-        //updateVoiceSelect()
 
         videoGroupList = VideoGroupAttributesEntity.all.keys.sorted().reversed().compactMap({ key in
             guard let entity: VideoGroupAttributesEntity = VideoGroupAttributesEntity.all[key] else { return nil }
@@ -55,7 +52,6 @@ import AVFoundation
     }
 
     private func setupObservation() {
-        
         withObservationTracking {
             _ = self.deepLAuthKey
             _ = self.openAIAuthKey
@@ -70,8 +66,6 @@ import AVFoundation
                 self.settings.isDeepLPro = self.isDeepLPro
                 self.settings.languageId = self.selectedLanguageId
                 self.settings.voiceId = self.selectedVoiceId
-                self.settings.isDeepLPro = self.isDeepLPro
-
                 self.setupObservation()
             }
         }

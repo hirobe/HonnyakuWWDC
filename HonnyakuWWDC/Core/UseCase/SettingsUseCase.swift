@@ -117,7 +117,7 @@ import Observation
         }
     }
     private func setupObservation() {
-        withObservationTracking {
+        let _ = withObservationTracking {
             _ = self.speechVolume
             _ = self.speechRate
             _ = self.videoVolume

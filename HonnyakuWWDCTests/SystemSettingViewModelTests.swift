@@ -40,8 +40,6 @@ final class SystemSettingViewModelTests {
     }
 
     @Test func initialization() {
-        #expect(1 == 2)
-
         #expect(viewModel.deepLAuthKey == mockSettings.deepLAuthKey)
         #expect(viewModel.isDeepLPro == mockSettings.isDeepLPro)
         #expect(viewModel.openAIAuthKey == mockSettings.openAIAuthKey)
@@ -49,55 +47,43 @@ final class SystemSettingViewModelTests {
         #expect(viewModel.selectedVoiceId == mockSettings.voiceId)
     }
 
-    @Test func updateSettings() async {
-        _ = mockSettings.deepLAuthKey
-        viewModel.deepLAuthKey = "newDeepLKey"
-        #expect(viewModel.deepLAuthKey == "newDeepLKey")
-        
-        // Wait for the observation to trigger
-        try? await Task.sleep(for: .milliseconds(100))
-        _ = try? await withCheckedThrowingContinuation { continuation in
-            DispatchQueue.main.async {
-                continuation.resume(returning: true)
-            }
-        }
-        
-        #expect(viewModel.deepLAuthKey == "newDeepLKey")
-
-        try? await Task.sleep(for: .milliseconds(1000))
-        #expect(mockSettings.deepLAuthKey == "newDeepLKey")
-
-        viewModel.isDeepLPro = true
-        #expect(viewModel.isDeepLPro)
-        
-        try? await Task.sleep(for: .milliseconds(100))
-        
-        #expect(mockSettings.isDeepLPro)
-        //XCTAssertTrue(mockUserDefaults.bool(forKey: "isDeepLPro"))
+    @Test @MainActor func updateSettings() async throws {
+        // テスト対象でwithObservationTrackingを使っているので、@MainActorをつけてメインスレッドで実行。また、変更後にTask.yieldを使ってスレッドの完了を待つ。
+        #expect(viewModel.openAIAuthKey == mockSettings.openAIAuthKey)
 
         viewModel.openAIAuthKey = "newOpenAIKey"
         #expect(viewModel.openAIAuthKey == "newOpenAIKey")
-        
-        try? await Task.sleep(for: .milliseconds(100))
-        
+        // 更新を待つ
+        await Task.yield()
         #expect(mockSettings.openAIAuthKey == "newOpenAIKey")
-        //XCTAssertEqual(mockUserDefaults.string(forKey: "openAIAuthKey"), "newOpenAIKey")
+    }
+    @Test @MainActor func updateSettings2() async throws {
+        #expect(viewModel.deepLAuthKey == mockSettings.deepLAuthKey)
+        viewModel.deepLAuthKey = "newDeepLKey"
+        #expect(viewModel.deepLAuthKey == "newDeepLKey")
+        
+        await Task.yield()
+        #expect(mockSettings.deepLAuthKey == "newDeepLKey")
+    }
+    @Test @MainActor func updateSettings3() async throws {
+        #expect(viewModel.isDeepLPro == mockSettings.isDeepLPro)
+        #expect(viewModel.selectedLanguageId == mockSettings.languageId)
+        #expect(viewModel.selectedVoiceId == mockSettings.voiceId)
 
+        viewModel.isDeepLPro = true
+        #expect(viewModel.isDeepLPro)
+        await Task.yield()
+        #expect(mockSettings.isDeepLPro)
+            
         viewModel.selectedLanguageId = "en"
         #expect(viewModel.selectedLanguageId == "en")
-        
-        try? await Task.sleep(for: .milliseconds(100))
-        
+        await Task.yield()
         #expect(mockSettings.languageId == "en")
-        //XCTAssertEqual(mockUserDefaults.string(forKey: "languageId"), "en")
-
+            
         viewModel.selectedVoiceId = "voice2"
         #expect(viewModel.selectedVoiceId == "voice2")
-        
-        try? await Task.sleep(for: .milliseconds(100))
-        
+        await Task.yield()
         #expect(mockSettings.voiceId == "voice2")
-        //XCTAssertEqual(mockUserDefaults.string(forKey: "voiceId"), "voice2")
     }
 
     @Test func languages() {

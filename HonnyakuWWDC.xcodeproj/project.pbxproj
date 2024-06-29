@@ -89,6 +89,7 @@
 		42A935EC2873CCBF000E067B /* SpeechPhraseList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42A935EA2873CCBF000E067B /* SpeechPhraseList.swift */; };
 		5D0DC5FE2C280A500060C936 /* SystemSettingViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D0DC5FD2C280A500060C936 /* SystemSettingViewModelTests.swift */; };
 		5D6CB1982C19A7F700850FB3 /* DownloadAudioUserCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D6CB1962C19A7F100850FB3 /* DownloadAudioUserCase.swift */; };
+		5DAE895F2C2F8CCA004EE5D6 /* Testing in Frameworks */ = {isa = PBXBuildFile; productRef = 5DAE895E2C2F8CCA004EE5D6 /* Testing */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -192,6 +193,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5DAE895F2C2F8CCA004EE5D6 /* Testing in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -505,6 +507,9 @@
 				42A934BE28726FAC000E067B /* PBXTargetDependency */,
 			);
 			name = HonnyakuWWDCTests;
+			packageProductDependencies = (
+				5DAE895E2C2F8CCA004EE5D6 /* Testing */,
+			);
 			productName = HonnyakuWWDCTests;
 			productReference = 42A934BC28726FAC000E067B /* HonnyakuWWDCTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
@@ -579,6 +584,9 @@
 				Base,
 			);
 			mainGroup = 42A934A228726FAC000E067B;
+			packageReferences = (
+				5DAE895D2C2F8CCA004EE5D6 /* XCRemoteSwiftPackageReference "swift-testing" */,
+			);
 			productRefGroup = 42A934AC28726FAC000E067B /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -1143,6 +1151,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		5DAE895D2C2F8CCA004EE5D6 /* XCRemoteSwiftPackageReference "swift-testing" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/apple/swift-testing.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 0.10.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		5DAE895E2C2F8CCA004EE5D6 /* Testing */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 5DAE895D2C2F8CCA004EE5D6 /* XCRemoteSwiftPackageReference "swift-testing" */;
+			productName = Testing;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 42A934A328726FAC000E067B /* Project object */;
 }

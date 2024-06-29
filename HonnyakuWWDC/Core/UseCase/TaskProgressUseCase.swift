@@ -37,7 +37,7 @@ final class ProgressManager {
 
     func fetchObservable(taskId: String) -> ProgressObservable {
         let task: ProgressObservable = tasks[taskId] ?? ProgressObservable(state: .unknwon)
-        tasks[taskId] = task
+        //tasks[taskId] = task
         return task
     }
 }
