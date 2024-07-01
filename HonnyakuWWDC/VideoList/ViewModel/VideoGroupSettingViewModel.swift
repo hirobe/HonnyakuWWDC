@@ -6,11 +6,7 @@ import Observation
 @Observable final class VideoGroupSettingViewModel: Identifiable {
     private(set) var id: String
     private(set) var title: String
-    var enabled: Bool {
-        didSet { // 値変更後に呼ぶためにsinkではなくdidSetを使う
-            onChanged?(self)
-        }
-    }
+    var enabled: Bool
     private(set) var state: ProgressState = .unknwon
     private(set) var progress: ProgressObservable
     private var onChanged: ((_:VideoGroupSettingViewModel) -> Void)?
@@ -23,6 +19,7 @@ import Observation
         self.onChanged = onChanged
 
         setupObservation()
+        setupEnabledObservation()
     }
 
     private func setupObservation() {
@@ -32,6 +29,16 @@ import Observation
             Task { @MainActor in
                 self.state = self.progress.state
                 self.setupObservation()
+            }
+        }
+    }
+    private func setupEnabledObservation() {
+        withObservationTracking {
+            _ = self.enabled
+        } onChange: {
+            Task { @MainActor in
+                self.onChanged?(self)
+                self.setupEnabledObservation()
             }
         }
     }
