@@ -2,20 +2,19 @@
 //  DataModel.swift
 
 import SwiftUI
-import Combine
+import Observation
 
 /// VideoListのViewModel。VideoListStateという方がSwiftUI的には適切なのかもしれない
-final class VideoListViewModel: ObservableObject {
-    @Published private(set) var videoGroups: [VideoGroupEntity] = []
-    @Published private(set) var isProcessing: Bool = false
-    @Published private(set) var errorMessage: String = ""
-    @Published var searchText: String = ""
-    private var cancellables: [AnyCancellable] = []
+@Observable public final class VideoListViewModel {
+    private(set) var videoGroups: [VideoGroupEntity] = []
+    private(set) var isProcessing: Bool = false
+    private(set) var errorMessage: String = ""
+    var searchText: String = ""
     private var videoListUseCase: VideoListUseCase
     private var videoGroupScrapingUseCase: VideoGroupScrapingUseCase
     private var settingsUseCase: SettingsUseCase
 
-    @Published private(set) var progressState: [String: ProgressState] = [:]
+    private(set) var progressState: [String: ProgressState] = [:]
 
     private var progressUseCase: TaskProgressUseCase
 
@@ -28,46 +27,66 @@ final class VideoListViewModel: ObservableObject {
         self.progressUseCase = progressUseCase
         self.videoGroupScrapingUseCase = videoGroupScrapingUseCase
         self.settingsUseCase = settingsUseCase
-        _ = try? videoListUseCase.reload()
+        
+    }
+    
+    func onAppear() {
+        videoGroups = (try? videoListUseCase.reload()) ?? []
 
-        $searchText
-            .sink { [weak self] text in
-                guard let self = self else { return }
-                if text.isEmpty {
-                    self.videoGroups = self.videoListUseCase.videoGroups
-                } else {
-                    self.videoGroups = self.videoListUseCase.search(searchText: text)
-                }
-            }
-            .store(in: &cancellables)
-
-        // isProcessingフラグ
-        videoGroupScrapingUseCase.$isProcessing.sink {[weak self] value in
-            self?.isProcessing = value
-        }
-        .store(in: &cancellables)
-
-        // 設定で表示するVideoGroupが変更されるか、VideoGroupのスクレイピングが終了したら、再読み込みする
-        withObservationTracking { [weak self] in
-            _ = self?.settingsUseCase.videoGroupIds
-            _ = self?.isProcessing
-        } onChange: {
-            Task { @MainActor in
-                try? await Task.sleep(for: .milliseconds(500))
-                await self.reload()
-            }
-        }
-
+        setupSearchTextObservation()
+                
+        setupReloadObservation()
+        
         // 状態監視の初期値を設定
-        try? videoListUseCase.setupVideoGroupsCompletedStatus()
-        try? videoListUseCase.setupVideoCompletedStatus()
-        videoGroupScrapingUseCase.observeProcessing()
+        try? self.videoListUseCase.setupVideoGroupsCompletedStatus()
+        try? self.videoListUseCase.setupVideoCompletedStatus()
+        self.videoGroupScrapingUseCase.observeProcessing()
 
     }
 
+    private func setupSearchTextObservation() {
+        withObservationTracking { [weak self] in
+            _ = self?.searchText
+        } onChange: {
+            Task { @MainActor [weak self] in
+                guard let self = self else { return }
+                self.refreshVideoGroups()
+                self.setupSearchTextObservation()
+            }
+        }
+    }
+
+    private func setupReloadObservation() {
+        // 設定で表示するVideoGroupが変更されるか、VideoGroupのスクレイピングが終了したら、再読み込みする
+        withObservationTracking { [weak self] in
+            _ = self?.settingsUseCase.videoGroupIds
+            _ = self?.videoGroupScrapingUseCase.isProcessing
+        } onChange: {
+            Task { @MainActor [weak self] in
+                guard let self = self else { return }
+                try? await Task.sleep(for: .milliseconds(500))
+                self.reload()
+                self.setupReloadObservation()
+            }
+        }
+
+    }
+
+    // serch text変更時
+    @MainActor private func refreshVideoGroups() {
+        let text = self.searchText
+        if text.isEmpty {
+            self.videoGroups = self.videoListUseCase.videoGroups
+        } else {
+            self.videoGroups = self.videoListUseCase.search(searchText: text)
+        }
+    }
+
+    // settingsの変更時
     @MainActor private func reload() {
         do {
             videoGroups = try videoListUseCase.reload()
+            isProcessing = videoGroupScrapingUseCase.isProcessing
         } catch {
             showError(message: "Fetch list error")
             return
@@ -96,5 +115,4 @@ final class VideoListViewModel: ObservableObject {
     }
 
     static let mockVideos: [VideoEntity] = [VideoEntity.mock]
-
 }

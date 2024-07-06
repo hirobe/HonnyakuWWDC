@@ -81,6 +81,9 @@ struct VideoDetailView: View {
                 }
             }
         }
+        .onAppear() {
+            viewModel.onAppear()
+        }
     }
 }
 
