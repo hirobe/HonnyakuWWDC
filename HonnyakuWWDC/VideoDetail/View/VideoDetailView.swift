@@ -7,7 +7,7 @@ struct VideoDetailView: View {
         case copyError
     }
 
-    @StateObject var viewModel: VideoDetailViewModel
+    @Bindable var viewModel: VideoDetailViewModel
     @State var isShowingPopover: Bool = false
     @State var isShowingSystemSettingPopover: Bool = false
 

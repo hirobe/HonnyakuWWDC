@@ -1,35 +1,36 @@
 //  PlayerViewModel.swift
 
 import SwiftUI
-import Combine
 import AVKit
+import Observation
+import Combine
 
 typealias ControllerInfo = SyncPlayModel.ControllerInfo
 typealias SeekInfo = SyncPlayModel.ControllerInfo.SeekInfo
 typealias SyncState = SyncPlayModel.SyncState
 
-final class PlayerViewModel: ObservableObject {
+@Observable final class PlayerViewModel: ObservableObject {
     //static let empty: PlayerViewModel = PlayerViewModel.init()
 
     private var speechPlayer: SpeechPlayerProtocol
     var controlBarViewModel: ControlBarViewModel
 
-    @Published private(set) var videoAttributes: VideoAttributesEntity = VideoAttributesEntity.zero
-    @Published private(set) var videoPlayer: AVPlayerWrapperProtocol
+    private(set) var videoAttributes: VideoAttributesEntity = VideoAttributesEntity.zero
+    private(set) var videoPlayer: AVPlayerWrapperProtocol
 
-    @Published private(set) var speechSentence: String = ""
-    @Published private(set) var baseSentence: String = ""
-    @Published private(set) var showSpeechSentence: Bool = true
-    @Published private(set) var showBaseSentence: Bool = true
-    @Published private(set) var currentPhraseIndex: Int = 0
-    @Published var isThmbnailedPlayer: Bool = false
+    private(set) var speechSentence: String = ""
+    private(set) var baseSentence: String = ""
+    private(set) var showSpeechSentence: Bool = true
+    private(set) var showBaseSentence: Bool = true
+    private(set) var currentPhraseIndex: Int = 0
+    var isThmbnailedPlayer: Bool = false
     private(set) var translatedPhrases: SpeechPhraseList = SpeechPhraseList.zero
     private var basePhrases: SpeechPhraseList = SpeechPhraseList.zero
 
     // PlayerのController
-    @Published private(set) var isShowingController: Bool = true
+    private(set) var isShowingController: Bool = true
 
-    @Published var isHoveringScreen: Bool = false
+    var isHoveringScreen: Bool = false
 
     private var settingsUseCase: SettingsUseCase
     private var syncPlayUseCase: SyncPlayUseCase
@@ -38,6 +39,7 @@ final class PlayerViewModel: ObservableObject {
     private var cancellables: [AnyCancellable] = []
 
     private let prefferdTimeScale: CMTimeScale = 60
+    private let videoDetailEntity: VideoDetailEntity?
 
     init(fileAccesUseCase: FileAccessUseCaseProtocol = FileAccessUseCase(),
          settingsUseCase: SettingsUseCase = SettingsUseCase.shared,
@@ -45,29 +47,33 @@ final class PlayerViewModel: ObservableObject {
          videoPlayer: AVPlayerWrapperProtocol = AVPlayerWrapper(avPlayer: AVPlayer()),
          speechPlayer: SpeechPlayerProtocol = SpeechPlayer(voiceId: "", volume: 1.0),
          videoDetailEntity: VideoDetailEntity? = nil) {
+        self.syncPlayUseCase = syncPlayUseCase
+        self.controlBarViewModel = ControlBarViewModel(syncPlayUseCase: syncPlayUseCase)
         self.settingsUseCase = settingsUseCase
         self.fileAccesUseCase = fileAccesUseCase
         self.videoPlayer = videoPlayer
         self.speechPlayer = speechPlayer
-
-        self.syncPlayUseCase = syncPlayUseCase
-        self.syncPlayUseCase.setPhrases(phrases: SpeechPhraseList.zero)
-
-        self.controlBarViewModel = ControlBarViewModel(syncPlayUseCase: self.syncPlayUseCase)
-
-        setupBindings()
-        if let videoDetailEntity = videoDetailEntity {
-            self.setupPlayer(detail: videoDetailEntity)
-        }
+        self.videoDetailEntity = videoDetailEntity
 
         self.speechPlayer.delegate = self
     }
     
     func onAppear() {
-        startObservation()
+        startSettingsObservation()
+        startIsHoveringScreenObservation()
+        startVideoPlayerObservation()
+        startSyncPlayModelObservation()
+
+        self.syncPlayUseCase.setPhrases(phrases: SpeechPhraseList.zero)
+
+        if let videoDetailEntity = videoDetailEntity {
+            self.setupPlayer(detail: videoDetailEntity)
+        }
+
+        setSettings()
     }
 
-    private func startObservation() {
+    private func startSettingsObservation() {
         withObservationTracking { [weak self] in
             guard let self = self else { return }
             _ = self.settingsUseCase.speechVolume
@@ -79,53 +85,61 @@ final class PlayerViewModel: ObservableObject {
             _ = self.settingsUseCase.voiceId
         } onChange: {
             Task { @MainActor in
-                self.speechPlayer.setVolume(volume: Float(self.settingsUseCase.speechVolume))
-                self.speechPlayer.setRate(rate: self.settingsUseCase.speechRate)
-                self.videoPlayer.volume = Float(self.settingsUseCase.videoVolume)
-                if self.videoPlayer.rate > 0 {
-                    self.videoPlayer.rate = Float(self.settingsUseCase.videoRate)
-                }
-                self.showBaseSentence = self.settingsUseCase.showOriginalText
-                self.showSpeechSentence = self.settingsUseCase.showTransferdText
-                self.speechPlayer.setVoice(voiceId: self.settingsUseCase.voiceId)
-                self.startObservation()
+                self.setSettings()
+                self.startSettingsObservation()
             }
         }
     }
-    
-    func setupBindings() {
-
-        // 画面にホバーしたらボタンを表示し、3秒間触らなければボタンを隠す
-        $isHoveringScreen
-            .debounce(for: .seconds(3.0), scheduler: RunLoop.main)
-            .sink { [weak self] _ in
-                self?.isShowingController = false
-            }
-            .store(in: &cancellables)
-        $isHoveringScreen
-            .filter { $0 }
-            .sink { [weak self] _ in
-                if self?.isShowingController == false {
-                    self?.isShowingController = true
-                }
-            }
-            .store(in: &cancellables)
-
-        // videoPlayerを入れ替えたら、callBackを再設定する
-        $videoPlayer.sink { [weak self] newPlayer in
-            guard let self = self else { return }
-            var player = newPlayer
-            player.timeChanged = { cmTime in
-                self.syncPlayUseCase.timeObserved(cmTime: cmTime)
-            }
-            self.syncPlayUseCase.videoDuration = player.duration.seconds
+    private func setSettings() {
+        self.speechPlayer.setVolume(volume: Float(self.settingsUseCase.speechVolume))
+        self.speechPlayer.setRate(rate: self.settingsUseCase.speechRate)
+        self.videoPlayer.volume = Float(self.settingsUseCase.videoVolume)
+        if self.videoPlayer.rate > 0 {
+            self.videoPlayer.rate = Float(self.settingsUseCase.videoRate)
         }
-        .store(in: &cancellables)
-
+        self.showBaseSentence = self.settingsUseCase.showOriginalText
+        self.showSpeechSentence = self.settingsUseCase.showTransferdText
+        self.speechPlayer.setVoice(voiceId: self.settingsUseCase.voiceId)
+    }
+    
+    private func startIsHoveringScreenObservation() {
+        withObservationTracking {
+            _ = self.isHoveringScreen
+        } onChange: {
+            Task { @MainActor [weak self] in
+                guard let self = self else { return }
+                if self.isHoveringScreen {
+                    self.isShowingController = true
+                }
+                DispatchQueue.main.asyncAfter(deadline: .now() + 3.0) {
+                    if !self.isHoveringScreen {
+                        self.isShowingController = false
+                    }
+                }
+                self.startIsHoveringScreenObservation()
+            }
+        }
+    }
+    private func startVideoPlayerObservation() {
+        withObservationTracking {
+            _ = self.videoPlayer
+        } onChange: {
+            Task { @MainActor  [weak self] in
+                guard let self = self else { return }
+                self.videoPlayer.timeChanged = { cmTime in
+                    self.syncPlayUseCase.timeObserved(cmTime: cmTime)
+                }
+                self.syncPlayUseCase.videoDuration = self.videoPlayer.duration.seconds
+                self.startVideoPlayerObservation()
+            }
+        }
+    }
+    private func startSyncPlayModelObservation() {
         syncPlayUseCase.$syncPlayModel.sink { [weak self] newState in
             guard let self = self,
                   self.syncPlayUseCase.syncPlayModel != newState else { return }
             let preState = self.syncPlayUseCase.syncPlayModel
+            print("newState:\(newState) preState:\(preState) speechSentence:\(speechSentence)")
             Task {
                 await self.doWithNewState(newState: newState, preState: preState)
             }
@@ -251,7 +265,7 @@ extension PlayerViewModel: SpeakDelegate {
     }
 
     func phraseStarted(phrase: String, index: Int) {
-        DispatchQueue.main.async {
+        Task { @MainActor in
             self.speechSentence = phrase
             self.basePhrases.readyToStart(index: index)
             self.baseSentence = self.basePhrases.currentText() ?? ""

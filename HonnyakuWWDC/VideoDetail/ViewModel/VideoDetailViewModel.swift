@@ -1,27 +1,24 @@
 //  VideoDetailViewModel.swift
 
 import SwiftUI
-import Combine
 import Observation
 
 /// VideoDetailViewのViewModel
-final class VideoDetailViewModel: ObservableObject {
+@Observable final class VideoDetailViewModel: ObservableObject {
     private var videoDetailUseCase: VideoDetailUseCase
     private var transferUserCase: TranslateCaseProtocol
     private var downloadAudioUserCase: TranslateCaseProtocol
     private var progressUseCase: TaskProgressUseCaseProtocol
     
-    @Published var showPlayerIfEnabled: Bool
-    @Published private(set) var progressState: ProgressState = .unknwon
-    @Published private(set) var errorMessage: String = ""
+    var showPlayerIfEnabled: Bool
+    private(set) var progressState: ProgressState = .unknwon
+    private(set) var errorMessage: String = ""
     
-    @Published private(set) var playerViewModel: PlayerViewModel? = nil
+    private(set) var playerViewModel: PlayerViewModel? = nil
     
     private(set) var videoId: String
     private(set) var url: URL
     private(set) var title: String
-    
-    private var cancellables: [AnyCancellable] = []
     
     init(videoDetailUseCase: VideoDetailUseCase = VideoDetailUseCase(),
          transferUserCase: TranslateCaseProtocol = TranslateUseCase(),
@@ -80,7 +77,7 @@ final class VideoDetailViewModel: ObservableObject {
         transferUserCase.startTranslateVideoDetailState(id: videoId)
     }
     
-    @Published var transcriptFetchResult:TranscriptFetchResult = .notFetched
+    var transcriptFetchResult:TranscriptFetchResult = .notFetched
     enum TranscriptFetchResult {
         case notFetched
         case noTranscript

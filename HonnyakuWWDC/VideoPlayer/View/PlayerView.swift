@@ -4,7 +4,7 @@ import SwiftUI
 import AVKit
 
 struct PlayerView: View {
-    @ObservedObject var viewModel: PlayerViewModel
+    @Bindable var viewModel: PlayerViewModel
 
     var body: some View {
         VStack(spacing: 8) {
@@ -24,17 +24,12 @@ struct PlayerView: View {
             }
             .aspectRatio(1920 / CGFloat(1080), contentMode: .fit)
             .contentShape(Rectangle()) // 透明部分もTouch反応させる
-//            .gesture(DragGesture(minimumDistance: 0)
-//                        .onEnded({ _ in viewModel.isTouchingScreen = false })
-//                        .onChanged({ _ in viewModel.isTouchingScreen = true})
-//            )
             
             .onHover { hovering in
                 viewModel.isHoveringScreen = hovering
             }
             .onTapGesture {
                 viewModel.togglePlay()
-                print("tap")
             }
             .onDisappear {
                 viewModel.clearPlayer()
@@ -93,6 +88,6 @@ struct PlayerViewController: UIViewControllerRepresentable {
 
 struct VideoPlayerView_Previews: PreviewProvider {
     static var previews: some View {
-        PlayerView(viewModel: PlayerViewModel())
+        PlayerView(viewModel: PlayerViewModel()).frame(width: 400, height: 400)
     }
 }

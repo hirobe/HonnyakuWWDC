@@ -3,7 +3,7 @@
 import SwiftUI
 
 struct PlayerAndTranscriptView: View {
-    @ObservedObject var viewModel: PlayerViewModel
+    @StateObject var viewModel: PlayerViewModel
     var body: some View {
         ZStack {
             // TranscriptListView(viewModel: viewModel)
@@ -50,7 +50,7 @@ struct PlayerAndTranscriptView: View {
 
 struct PlayerAndTranscriptView_Previews: PreviewProvider {
     static var previews: some View {
-        PlayerAndTranscriptView(viewModel: PlayerViewModel())
-            .previewLayout(.fixed(width: 400, height: 400))
+        PlayerAndTranscriptView(viewModel: PlayerViewModel()).frame(width: 400, height: 400)
+            .previewLayout(.sizeThatFits)
     }
 }
