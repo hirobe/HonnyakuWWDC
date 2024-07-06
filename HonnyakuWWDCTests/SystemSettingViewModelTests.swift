@@ -109,10 +109,11 @@ final class SystemSettingViewModelTests {
         #expect(viewModel.videoGroupList.count == VideoGroupAttributesEntity.all.count)
     }
 
-    @Test func videoGroupToggle() async {
+    @Test @MainActor func videoGroupToggle() async {
         let firstGroup = viewModel.videoGroupList[0]
         firstGroup.enabled = true
-        
+        await Task.yield()
+
         #expect(firstGroup.enabled)
         #expect(mockSettings.videoGroupIds.contains(firstGroup.id))
         //XCTAssertTrue((mockUserDefaults.array(forKey: "videoGroupIds") as? [String] ?? []).contains(firstGroup.id))
