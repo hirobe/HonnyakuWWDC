@@ -11,6 +11,7 @@ struct PlayerView: View {
             ZStack {
                 PlayerViewController(player: viewModel.videoPlayer.avPlayer)
                     .aspectRatio(1920 / CGFloat(1080), contentMode: .fit)
+                    .id(viewModel.videoAttributes.id)
                 
                 if viewModel.isShowingController {
                     VStack(spacing: 8) {
@@ -68,25 +69,18 @@ struct PlayerView: View {
 
 struct PlayerViewController: UIViewControllerRepresentable {
     let player: AVPlayer
-    static var controller : AVPlayerViewController?
 
     init(player: AVPlayer) {
         self.player = player
     }
 
     func makeUIViewController(context: Context) -> AVPlayerViewController {
-        //let controller =  AVPlayerViewController()
-        if Self.controller == nil {
-            Self.controller = AVPlayerViewController()
-            
-            let controller = Self.controller!
-            controller.player = player
-            controller.videoGravity = .resizeAspect
-            controller.showsPlaybackControls = false
+        let controller = AVPlayerViewController()
+        controller.player = player
+        controller.videoGravity = .resizeAspect
+        controller.showsPlaybackControls = false
 
-            // controller.allowsPictureInPicturePlayback = true
-        }
-        return Self.controller!
+        return controller
     }
 
     func updateUIViewController(_ playerController: AVPlayerViewController, context: Context) {
