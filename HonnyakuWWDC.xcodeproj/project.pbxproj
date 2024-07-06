@@ -8,12 +8,9 @@
 
 /* Begin PBXBuildFile section */
 		424E12BA288911FE00A0404D /* TranscriptTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 424E12B9288911FE00A0404D /* TranscriptTextView.swift */; };
-		424E12BB288911FE00A0404D /* TranscriptTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 424E12B9288911FE00A0404D /* TranscriptTextView.swift */; };
 		428F197A28852A1B004A94D0 /* PlayerAndTranscriptView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 428F197928852A1B004A94D0 /* PlayerAndTranscriptView.swift */; };
-		428F197B28852A1B004A94D0 /* PlayerAndTranscriptView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 428F197928852A1B004A94D0 /* PlayerAndTranscriptView.swift */; };
 		428F1980288533CA004A94D0 /* VideoDetailUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 428F197F288533CA004A94D0 /* VideoDetailUseCase.swift */; };
 		42A81F6D2890D66A00550CC8 /* ControlBarViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42A81F6C2890D66A00550CC8 /* ControlBarViewModel.swift */; };
-		42A81F6E2890D66A00550CC8 /* ControlBarViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42A81F6C2890D66A00550CC8 /* ControlBarViewModel.swift */; };
 		42A934AF28726FAC000E067B /* HonnyakuWWDCApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42A934AE28726FAC000E067B /* HonnyakuWWDCApp.swift */; };
 		42A934B328726FAC000E067B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 42A934B228726FAC000E067B /* Assets.xcassets */; };
 		42A934B728726FAC000E067B /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 42A934B628726FAC000E067B /* Preview Assets.xcassets */; };
@@ -21,42 +18,22 @@
 		42A934CB28726FAD000E067B /* HonnyakuWWDCUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42A934CA28726FAD000E067B /* HonnyakuWWDCUITests.swift */; };
 		42A934CD28726FAD000E067B /* HonnyakuWWDCUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42A934CC28726FAD000E067B /* HonnyakuWWDCUITestsLaunchTests.swift */; };
 		42A934DA28726FF2000E067B /* ViewResolver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42A934D928726FF2000E067B /* ViewResolver.swift */; };
-		42A93519287271CF000E067B /* HonnyakuWWDCClassicPlayerApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42A93518287271CF000E067B /* HonnyakuWWDCClassicPlayerApp.swift */; };
-		42A9351B287271CF000E067B /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42A9351A287271CF000E067B /* ContentView.swift */; };
-		42A9351D287271D0000E067B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 42A9351C287271D0000E067B /* Assets.xcassets */; };
-		42A93521287271D0000E067B /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 42A93520287271D0000E067B /* Preview Assets.xcassets */; };
 		42A935872872727B000E067B /* ViewDescriptor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42A935712872727B000E067B /* ViewDescriptor.swift */; };
-		42A935882872727B000E067B /* ViewDescriptor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42A935712872727B000E067B /* ViewDescriptor.swift */; };
 		42A935892872727B000E067B /* SettingsUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42A935732872727B000E067B /* SettingsUseCase.swift */; };
-		42A9358A2872727B000E067B /* SettingsUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42A935732872727B000E067B /* SettingsUseCase.swift */; };
 		42A9358B2872727B000E067B /* NetworkAccessUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42A935742872727B000E067B /* NetworkAccessUseCase.swift */; };
-		42A9358C2872727B000E067B /* NetworkAccessUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42A935742872727B000E067B /* NetworkAccessUseCase.swift */; };
 		42A9358D2872727B000E067B /* TaskProgressUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42A935752872727B000E067B /* TaskProgressUseCase.swift */; };
-		42A9358E2872727B000E067B /* TaskProgressUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42A935752872727B000E067B /* TaskProgressUseCase.swift */; };
 		42A9358F2872727B000E067B /* FileAccessUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42A935762872727B000E067B /* FileAccessUseCase.swift */; };
-		42A935902872727B000E067B /* FileAccessUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42A935762872727B000E067B /* FileAccessUseCase.swift */; };
 		42A935912872727B000E067B /* PlayerSettingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42A935792872727B000E067B /* PlayerSettingViewModel.swift */; };
-		42A935922872727B000E067B /* PlayerSettingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42A935792872727B000E067B /* PlayerSettingViewModel.swift */; };
 		42A935932872727B000E067B /* PlayerViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42A9357A2872727B000E067B /* PlayerViewModel.swift */; };
-		42A935942872727B000E067B /* PlayerViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42A9357A2872727B000E067B /* PlayerViewModel.swift */; };
 		42A935952872727B000E067B /* VideoDeitailEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42A9357C2872727B000E067B /* VideoDeitailEntity.swift */; };
-		42A935962872727B000E067B /* VideoDeitailEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42A9357C2872727B000E067B /* VideoDeitailEntity.swift */; };
 		42A935972872727B000E067B /* VideoAttributesEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42A9357D2872727B000E067B /* VideoAttributesEntity.swift */; };
-		42A935982872727B000E067B /* VideoAttributesEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42A9357D2872727B000E067B /* VideoAttributesEntity.swift */; };
 		42A935992872727B000E067B /* TranscriptEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42A9357E2872727B000E067B /* TranscriptEntity.swift */; };
-		42A9359A2872727B000E067B /* TranscriptEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42A9357E2872727B000E067B /* TranscriptEntity.swift */; };
 		42A9359B2872727B000E067B /* PlayerSettingsPopover.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42A935802872727B000E067B /* PlayerSettingsPopover.swift */; };
-		42A9359C2872727B000E067B /* PlayerSettingsPopover.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42A935802872727B000E067B /* PlayerSettingsPopover.swift */; };
 		42A9359D2872727B000E067B /* SpeechPlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42A935812872727B000E067B /* SpeechPlayer.swift */; };
-		42A9359E2872727B000E067B /* SpeechPlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42A935812872727B000E067B /* SpeechPlayer.swift */; };
 		42A9359F2872727B000E067B /* ControlBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42A935822872727B000E067B /* ControlBar.swift */; };
-		42A935A02872727B000E067B /* ControlBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42A935822872727B000E067B /* ControlBar.swift */; };
 		42A935A12872727B000E067B /* PlayerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42A935832872727B000E067B /* PlayerView.swift */; };
-		42A935A22872727B000E067B /* PlayerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42A935832872727B000E067B /* PlayerView.swift */; };
 		42A935A32872727B000E067B /* SyncPlayModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42A935852872727B000E067B /* SyncPlayModel.swift */; };
-		42A935A42872727B000E067B /* SyncPlayModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42A935852872727B000E067B /* SyncPlayModel.swift */; };
 		42A935A52872727B000E067B /* SyncPlayUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42A935862872727B000E067B /* SyncPlayUseCase.swift */; };
-		42A935A62872727B000E067B /* SyncPlayUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42A935862872727B000E067B /* SyncPlayUseCase.swift */; };
 		42A935C428727298000E067B /* SystemSettingsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42A935A928727298000E067B /* SystemSettingsViewModel.swift */; };
 		42A935C528727298000E067B /* VideoListCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42A935AA28727298000E067B /* VideoListCellViewModel.swift */; };
 		42A935C628727298000E067B /* VideoListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42A935AB28727298000E067B /* VideoListViewModel.swift */; };
@@ -77,16 +54,12 @@
 		42A935D528727298000E067B /* DeepLUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42A935C128727298000E067B /* DeepLUseCase.swift */; };
 		42A935D628727298000E067B /* ParseVideoDetailUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42A935C228727298000E067B /* ParseVideoDetailUseCase.swift */; };
 		42A935D728727298000E067B /* TranslateUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42A935C328727298000E067B /* TranslateUseCase.swift */; };
-		42A935DA287272B1000E067B /* ClassicPlayerSettingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42A935D8287272B0000E067B /* ClassicPlayerSettingView.swift */; };
-		42A935DB287272B1000E067B /* ClassicPlayerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42A935D9287272B0000E067B /* ClassicPlayerView.swift */; };
 		42A935DF28727664000E067B /* DeepLUseCaseTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42A935DC28727664000E067B /* DeepLUseCaseTests.swift */; };
 		42A935E028727664000E067B /* ParseVideoDetailUseCaseTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42A935DD28727664000E067B /* ParseVideoDetailUseCaseTests.swift */; };
 		42A935E128727664000E067B /* VideoGroupScrapingUseCaseTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42A935DE28727664000E067B /* VideoGroupScrapingUseCaseTests.swift */; };
 		42A935E62872834E000E067B /* AVPlayerWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42A935E52872834E000E067B /* AVPlayerWrapper.swift */; };
-		42A935E72872834E000E067B /* AVPlayerWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42A935E52872834E000E067B /* AVPlayerWrapper.swift */; };
 		42A935E92872A147000E067B /* SyncPlayUseCaseTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42A935E82872A147000E067B /* SyncPlayUseCaseTests.swift */; };
 		42A935EB2873CCBF000E067B /* SpeechPhraseList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42A935EA2873CCBF000E067B /* SpeechPhraseList.swift */; };
-		42A935EC2873CCBF000E067B /* SpeechPhraseList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42A935EA2873CCBF000E067B /* SpeechPhraseList.swift */; };
 		5D6CB1982C19A7F700850FB3 /* DownloadAudioUserCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D6CB1962C19A7F100850FB3 /* DownloadAudioUserCase.swift */; };
 /* End PBXBuildFile section */
 
@@ -123,12 +96,6 @@
 		42A934CA28726FAD000E067B /* HonnyakuWWDCUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HonnyakuWWDCUITests.swift; sourceTree = "<group>"; };
 		42A934CC28726FAD000E067B /* HonnyakuWWDCUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HonnyakuWWDCUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		42A934D928726FF2000E067B /* ViewResolver.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewResolver.swift; sourceTree = "<group>"; };
-		42A93516287271CF000E067B /* HonnyakuWWDCClassicPlayer.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = HonnyakuWWDCClassicPlayer.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		42A93518287271CF000E067B /* HonnyakuWWDCClassicPlayerApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HonnyakuWWDCClassicPlayerApp.swift; sourceTree = "<group>"; };
-		42A9351A287271CF000E067B /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
-		42A9351C287271D0000E067B /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
-		42A9351E287271D0000E067B /* HonnyakuWWDCClassicPlayer.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = HonnyakuWWDCClassicPlayer.entitlements; sourceTree = "<group>"; };
-		42A93520287271D0000E067B /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		42A935712872727B000E067B /* ViewDescriptor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewDescriptor.swift; sourceTree = "<group>"; };
 		42A935732872727B000E067B /* SettingsUseCase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsUseCase.swift; sourceTree = "<group>"; };
 		42A935742872727B000E067B /* NetworkAccessUseCase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NetworkAccessUseCase.swift; sourceTree = "<group>"; };
@@ -165,8 +132,6 @@
 		42A935C128727298000E067B /* DeepLUseCase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DeepLUseCase.swift; sourceTree = "<group>"; };
 		42A935C228727298000E067B /* ParseVideoDetailUseCase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ParseVideoDetailUseCase.swift; sourceTree = "<group>"; };
 		42A935C328727298000E067B /* TranslateUseCase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TranslateUseCase.swift; sourceTree = "<group>"; };
-		42A935D8287272B0000E067B /* ClassicPlayerSettingView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ClassicPlayerSettingView.swift; sourceTree = "<group>"; };
-		42A935D9287272B0000E067B /* ClassicPlayerView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ClassicPlayerView.swift; sourceTree = "<group>"; };
 		42A935DC28727664000E067B /* DeepLUseCaseTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DeepLUseCaseTests.swift; sourceTree = "<group>"; };
 		42A935DD28727664000E067B /* ParseVideoDetailUseCaseTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ParseVideoDetailUseCaseTests.swift; sourceTree = "<group>"; };
 		42A935DE28727664000E067B /* VideoGroupScrapingUseCaseTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VideoGroupScrapingUseCaseTests.swift; sourceTree = "<group>"; };
@@ -200,13 +165,6 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		42A93513287271CF000E067B /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
@@ -217,7 +175,6 @@
 				42A934AD28726FAC000E067B /* HonnyakuWWDC */,
 				42A934BF28726FAC000E067B /* HonnyakuWWDCTests */,
 				42A934C928726FAD000E067B /* HonnyakuWWDCUITests */,
-				42A93517287271CF000E067B /* HonnyakuWWDCClassicPlayer */,
 				42A934AC28726FAC000E067B /* Products */,
 			);
 			sourceTree = "<group>";
@@ -228,7 +185,6 @@
 				42A934AB28726FAC000E067B /* HonnyakuWWDC.app */,
 				42A934BC28726FAC000E067B /* HonnyakuWWDCTests.xctest */,
 				42A934C628726FAD000E067B /* HonnyakuWWDCUITests.xctest */,
-				42A93516287271CF000E067B /* HonnyakuWWDCClassicPlayer.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -277,28 +233,6 @@
 				42A934CC28726FAD000E067B /* HonnyakuWWDCUITestsLaunchTests.swift */,
 			);
 			path = HonnyakuWWDCUITests;
-			sourceTree = "<group>";
-		};
-		42A93517287271CF000E067B /* HonnyakuWWDCClassicPlayer */ = {
-			isa = PBXGroup;
-			children = (
-				42A93518287271CF000E067B /* HonnyakuWWDCClassicPlayerApp.swift */,
-				42A9351A287271CF000E067B /* ContentView.swift */,
-				42A935D8287272B0000E067B /* ClassicPlayerSettingView.swift */,
-				42A935D9287272B0000E067B /* ClassicPlayerView.swift */,
-				42A9351C287271D0000E067B /* Assets.xcassets */,
-				42A9351E287271D0000E067B /* HonnyakuWWDCClassicPlayer.entitlements */,
-				42A9351F287271D0000E067B /* Preview Content */,
-			);
-			path = HonnyakuWWDCClassicPlayer;
-			sourceTree = "<group>";
-		};
-		42A9351F287271D0000E067B /* Preview Content */ = {
-			isa = PBXGroup;
-			children = (
-				42A93520287271D0000E067B /* Preview Assets.xcassets */,
-			);
-			path = "Preview Content";
 			sourceTree = "<group>";
 		};
 		42A935702872727B000E067B /* Core */ = {
@@ -524,23 +458,6 @@
 			productReference = 42A934C628726FAD000E067B /* HonnyakuWWDCUITests.xctest */;
 			productType = "com.apple.product-type.bundle.ui-testing";
 		};
-		42A93515287271CF000E067B /* HonnyakuWWDCClassicPlayer */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 42A93522287271D0000E067B /* Build configuration list for PBXNativeTarget "HonnyakuWWDCClassicPlayer" */;
-			buildPhases = (
-				42A93512287271CF000E067B /* Sources */,
-				42A93513287271CF000E067B /* Frameworks */,
-				42A93514287271CF000E067B /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-			);
-			name = HonnyakuWWDCClassicPlayer;
-			productName = HonnyakuWWDCClassicPlayer;
-			productReference = 42A93516287271CF000E067B /* HonnyakuWWDCClassicPlayer.app */;
-			productType = "com.apple.product-type.application";
-		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -562,9 +479,6 @@
 						CreatedOnToolsVersion = 14.0;
 						TestTargetID = 42A934AA28726FAC000E067B;
 					};
-					42A93515287271CF000E067B = {
-						CreatedOnToolsVersion = 14.0;
-					};
 				};
 			};
 			buildConfigurationList = 42A934A628726FAC000E067B /* Build configuration list for PBXProject "HonnyakuWWDC" */;
@@ -583,7 +497,6 @@
 				42A934AA28726FAC000E067B /* HonnyakuWWDC */,
 				42A934BB28726FAC000E067B /* HonnyakuWWDCTests */,
 				42A934C528726FAD000E067B /* HonnyakuWWDCUITests */,
-				42A93515287271CF000E067B /* HonnyakuWWDCClassicPlayer */,
 			);
 		};
 /* End PBXProject section */
@@ -609,15 +522,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		42A93514287271CF000E067B /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				42A93521287271D0000E067B /* Preview Assets.xcassets in Resources */,
-				42A9351D287271D0000E067B /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -694,38 +598,6 @@
 			files = (
 				42A934CD28726FAD000E067B /* HonnyakuWWDCUITestsLaunchTests.swift in Sources */,
 				42A934CB28726FAD000E067B /* HonnyakuWWDCUITests.swift in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		42A93512287271CF000E067B /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				42A935942872727B000E067B /* PlayerViewModel.swift in Sources */,
-				42A935962872727B000E067B /* VideoDeitailEntity.swift in Sources */,
-				42A9351B287271CF000E067B /* ContentView.swift in Sources */,
-				424E12BB288911FE00A0404D /* TranscriptTextView.swift in Sources */,
-				42A935E72872834E000E067B /* AVPlayerWrapper.swift in Sources */,
-				42A935A22872727B000E067B /* PlayerView.swift in Sources */,
-				42A81F6E2890D66A00550CC8 /* ControlBarViewModel.swift in Sources */,
-				42A9359C2872727B000E067B /* PlayerSettingsPopover.swift in Sources */,
-				428F197B28852A1B004A94D0 /* PlayerAndTranscriptView.swift in Sources */,
-				42A9358E2872727B000E067B /* TaskProgressUseCase.swift in Sources */,
-				42A9359A2872727B000E067B /* TranscriptEntity.swift in Sources */,
-				42A9358C2872727B000E067B /* NetworkAccessUseCase.swift in Sources */,
-				42A935A02872727B000E067B /* ControlBar.swift in Sources */,
-				42A935DA287272B1000E067B /* ClassicPlayerSettingView.swift in Sources */,
-				42A93519287271CF000E067B /* HonnyakuWWDCClassicPlayerApp.swift in Sources */,
-				42A935982872727B000E067B /* VideoAttributesEntity.swift in Sources */,
-				42A9358A2872727B000E067B /* SettingsUseCase.swift in Sources */,
-				42A935EC2873CCBF000E067B /* SpeechPhraseList.swift in Sources */,
-				42A935A62872727B000E067B /* SyncPlayUseCase.swift in Sources */,
-				42A9359E2872727B000E067B /* SpeechPlayer.swift in Sources */,
-				42A935A42872727B000E067B /* SyncPlayModel.swift in Sources */,
-				42A935902872727B000E067B /* FileAccessUseCase.swift in Sources */,
-				42A935DB287272B1000E067B /* ClassicPlayerView.swift in Sources */,
-				42A935922872727B000E067B /* PlayerSettingViewModel.swift in Sources */,
-				42A935882872727B000E067B /* ViewDescriptor.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1020,76 +892,6 @@
 			};
 			name = Release;
 		};
-		42A93523287271D0000E067B /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				CODE_SIGN_ENTITLEMENTS = HonnyakuWWDCClassicPlayer/HonnyakuWWDCClassicPlayer.entitlements;
-				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "-";
-				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_ASSET_PATHS = "\"HonnyakuWWDCClassicPlayer/Preview Content\"";
-				DEVELOPMENT_TEAM = L37QDG4F27;
-				ENABLE_HARDENED_RUNTIME = YES;
-				ENABLE_PREVIEWS = YES;
-				GENERATE_INFOPLIST_FILE = YES;
-				"INFOPLIST_KEY_UILaunchScreen_Generation[sdk=iphoneos*]" = YES;
-				"INFOPLIST_KEY_UILaunchScreen_Generation[sdk=iphonesimulator*]" = YES;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				IPHONEOS_DEPLOYMENT_TARGET = 15.4;
-				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
-				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "@executable_path/../Frameworks";
-				MACOSX_DEPLOYMENT_TARGET = 12.4;
-				MARKETING_VERSION = 0.1;
-				PRODUCT_BUNDLE_IDENTIFIER = com.bunguu.HonnyakuWWDCClassicPlayer;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SDKROOT = auto;
-				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
-				SUPPORTS_MACCATALYST = YES;
-				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
-				SWIFT_EMIT_LOC_STRINGS = YES;
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-			};
-			name = Debug;
-		};
-		42A93524287271D0000E067B /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				CODE_SIGN_ENTITLEMENTS = HonnyakuWWDCClassicPlayer/HonnyakuWWDCClassicPlayer.entitlements;
-				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "-";
-				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_ASSET_PATHS = "\"HonnyakuWWDCClassicPlayer/Preview Content\"";
-				DEVELOPMENT_TEAM = L37QDG4F27;
-				ENABLE_HARDENED_RUNTIME = YES;
-				ENABLE_PREVIEWS = YES;
-				GENERATE_INFOPLIST_FILE = YES;
-				"INFOPLIST_KEY_UILaunchScreen_Generation[sdk=iphoneos*]" = YES;
-				"INFOPLIST_KEY_UILaunchScreen_Generation[sdk=iphonesimulator*]" = YES;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				IPHONEOS_DEPLOYMENT_TARGET = 15.4;
-				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
-				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "@executable_path/../Frameworks";
-				MACOSX_DEPLOYMENT_TARGET = 12.4;
-				MARKETING_VERSION = 0.1;
-				PRODUCT_BUNDLE_IDENTIFIER = com.bunguu.HonnyakuWWDCClassicPlayer;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SDKROOT = auto;
-				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
-				SUPPORTS_MACCATALYST = YES;
-				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
-				SWIFT_EMIT_LOC_STRINGS = YES;
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-			};
-			name = Release;
-		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -1125,15 +927,6 @@
 			buildConfigurations = (
 				42A934D728726FAD000E067B /* Debug */,
 				42A934D828726FAD000E067B /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		42A93522287271D0000E067B /* Build configuration list for PBXNativeTarget "HonnyakuWWDCClassicPlayer" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				42A93523287271D0000E067B /* Debug */,
-				42A93524287271D0000E067B /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
