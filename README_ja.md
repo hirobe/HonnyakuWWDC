@@ -13,10 +13,6 @@ https://user-images.githubusercontent.com/85206/177453843-14c8dd98-288d-4f02-948
 - HonnyakuWWDC
 
   本体。動画の選択と翻訳、再生ができます。macOS14.5, iPadOS17, iOS17.4で動作確認しています。
-  
-- HonnyakuWWDCClassicPlayer
-
-  iOS15/MacOS12.4で動くプレイヤー。現在は不要です。そのうち削除します。
 
 ## How to use
 
@@ -51,22 +47,6 @@ WWDC2024の動画のWebサイトにはTranscriptがないので、OpenAIのAudio
 翻訳したデータ(JSONファイル)は、アプリのドキュメントフォルダに保存されます。ファイルアプリから参照することができるので、必要に応じてバックアップしてください。シミュレータをご使用の場合は、アプリ起動時にドキュメントフォルダのパスをログに出しているので、それをファインダアプリで開くことで簡単に参照できます。ドキュメントフォルダのファイルは以下の２種類です。他の端末で動かしたい場合は、これらのファイルをアプリのドキュメントフォルダにおくことで翻訳したデータを参照できます。
 - xxx_list.json 年度毎の動画のリスト
 - xxx_xxxx_xx.json 動画１つの翻訳データ
-
-## ソースコードの構成
-
-アプリは、HonnyakuWWDCとHonnyakuWWDCClassicPlayerの２つで構成されます。この2つのアプリはある程度ソースコードを共有しています。各アプリは、プロジェクトの以下のフォルダを見ています。
-HonnyakuWWDCClassicPlayerはもう必要ないので、そのうち削除します。
-
-- HonnyakuWWDC
-  - HonnyakuWWDC/HonnyakuWWDC以下の全て
-
-- HonnyakuWWDCClassicPlayer
-  - HonnyakuWWDC/HonnyakuWWDCClassicPlayer以下のファイル
-  - HonnyakuWWDC/HonnyakuWWDC/Core
-  - HonnyakuWWDC/HonnyakuWWDC/VideoDetail
-
-なお、ソースコードは2020年に開発したものですが、今見ると汚いですね。
-現在は動くことを優先していますので、ソースコードを綺麗にリファクタリングする作業は、今後行うかもしれないし行わないかもしれません。
 
 ## 他の言語への翻訳
 
