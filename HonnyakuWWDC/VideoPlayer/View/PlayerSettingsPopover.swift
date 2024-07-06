@@ -21,7 +21,7 @@ struct PlayerSettingsPopover: View {
         case close
     }
 
-    @StateObject var viewModel: PlayerSettingViewModel
+    @State var viewModel: PlayerSettingViewModel
     @State var isShowingAlertForLoad: Bool = false
     @State private var selectedInt: Int = 1
     var action: ((_ action: Action) throws -> Void)?
