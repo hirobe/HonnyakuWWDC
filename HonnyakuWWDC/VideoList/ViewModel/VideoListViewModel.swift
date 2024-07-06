@@ -5,7 +5,7 @@ import SwiftUI
 import Observation
 
 /// VideoListのViewModel。VideoListStateという方がSwiftUI的には適切なのかもしれない
-@Observable public final class VideoListViewModel {
+@Observable final class VideoListViewModel {
     @ObservationIgnored private var videoListUseCase: VideoListUseCase
     @ObservationIgnored private var videoGroupScrapingUseCase: VideoGroupScrapingUseCase
     @ObservationIgnored private var settingsUseCase: SettingsUseCase
