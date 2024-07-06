@@ -63,6 +63,9 @@ struct PlayerView: View {
             }
         }
         .padding(EdgeInsets(top: 100, leading: 60, bottom: 50, trailing: 60))
+        .onAppear() {
+            viewModel.onAppear()
+        }
     }
 
 }

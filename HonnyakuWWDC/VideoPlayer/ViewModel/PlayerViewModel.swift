@@ -56,32 +56,44 @@ final class PlayerViewModel: ObservableObject {
         self.controlBarViewModel = ControlBarViewModel(syncPlayUseCase: self.syncPlayUseCase)
 
         setupBindings()
-
         if let videoDetailEntity = videoDetailEntity {
             self.setupPlayer(detail: videoDetailEntity)
         }
 
         self.speechPlayer.delegate = self
     }
+    
+    func onAppear() {
+        startObservation()
+    }
 
-    private func setupBindings() {
+    private func startObservation() {
         withObservationTracking { [weak self] in
             guard let self = self else { return }
-            self.speechPlayer.setVolume(volume: Float(self.settingsUseCase.speechVolume))
-            self.speechPlayer.setRate(rate: self.settingsUseCase.speechRate)
-            self.videoPlayer.volume = Float(self.settingsUseCase.videoVolume)
-            if self.videoPlayer.rate > 0 {
-                self.videoPlayer.rate = Float(self.settingsUseCase.videoRate)
-            }
-            self.showBaseSentence = self.settingsUseCase.showOriginalText
-            self.showSpeechSentence = self.settingsUseCase.showTransferdText
-            self.speechPlayer.setVoice(voiceId: self.settingsUseCase.voiceId)
-            self.syncPlayUseCase.isSpeechActive = self.speechPlayer.isActive
+            _ = self.settingsUseCase.speechVolume
+            _ = self.settingsUseCase.speechRate
+            _ = self.settingsUseCase.videoVolume
+            _ = self.settingsUseCase.videoRate
+            _ = self.settingsUseCase.showOriginalText
+            _ = self.settingsUseCase.showTransferdText
+            _ = self.settingsUseCase.voiceId
         } onChange: {
             Task { @MainActor in
-                self.setupBindings()
+                self.speechPlayer.setVolume(volume: Float(self.settingsUseCase.speechVolume))
+                self.speechPlayer.setRate(rate: self.settingsUseCase.speechRate)
+                self.videoPlayer.volume = Float(self.settingsUseCase.videoVolume)
+                if self.videoPlayer.rate > 0 {
+                    self.videoPlayer.rate = Float(self.settingsUseCase.videoRate)
+                }
+                self.showBaseSentence = self.settingsUseCase.showOriginalText
+                self.showSpeechSentence = self.settingsUseCase.showTransferdText
+                self.speechPlayer.setVoice(voiceId: self.settingsUseCase.voiceId)
+                self.startObservation()
             }
         }
+    }
+    
+    func setupBindings() {
 
         // 画面にホバーしたらボタンを表示し、3秒間触らなければボタンを隠す
         $isHoveringScreen
