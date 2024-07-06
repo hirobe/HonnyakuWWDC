@@ -6,17 +6,18 @@ import Observation
 
 /// VideoListのViewModel。VideoListStateという方がSwiftUI的には適切なのかもしれない
 @Observable public final class VideoListViewModel {
+    @ObservationIgnored private var videoListUseCase: VideoListUseCase
+    @ObservationIgnored private var videoGroupScrapingUseCase: VideoGroupScrapingUseCase
+    @ObservationIgnored private var settingsUseCase: SettingsUseCase
+    @ObservationIgnored private var progressUseCase: TaskProgressUseCase
+
     private(set) var videoGroups: [VideoGroupEntity] = []
     private(set) var isProcessing: Bool = false
     private(set) var errorMessage: String = ""
     var searchText: String = ""
-    private var videoListUseCase: VideoListUseCase
-    private var videoGroupScrapingUseCase: VideoGroupScrapingUseCase
-    private var settingsUseCase: SettingsUseCase
 
     private(set) var progressState: [String: ProgressState] = [:]
 
-    private var progressUseCase: TaskProgressUseCase
 
     init(videoListUseCase: VideoListUseCase = VideoListUseCase(),
          progressUseCase: TaskProgressUseCase = TaskProgressUseCase(),

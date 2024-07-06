@@ -5,11 +5,10 @@ import Observation
 import AVFoundation
 
 @Observable final class SystemSettingViewModel {
-    private var progressUseCase: TaskProgressUseCase
+    @ObservationIgnored private var progressUseCase: TaskProgressUseCase
     @ObservationIgnored private var settings: SettingsUseCase
-    private var videoListUseCase: VideoListUseCase
-    private var videoGroupScrapingUseCase: VideoGroupScrapingUseCase
-
+    @ObservationIgnored private var videoListUseCase: VideoListUseCase
+    @ObservationIgnored private var videoGroupScrapingUseCase: VideoGroupScrapingUseCase
 
     private(set) var langIndex: Int = 0
 
