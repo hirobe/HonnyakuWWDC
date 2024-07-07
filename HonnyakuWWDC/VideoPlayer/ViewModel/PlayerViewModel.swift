@@ -3,7 +3,6 @@
 import SwiftUI
 import AVKit
 import Observation
-import Combine
 
 typealias ControllerInfo = SyncPlayModel.ControllerInfo
 typealias SeekInfo = SyncPlayModel.ControllerInfo.SeekInfo
@@ -35,8 +34,6 @@ typealias SyncState = SyncPlayModel.SyncState
     private var settingsUseCase: SettingsUseCase
     private var syncPlayUseCase: SyncPlayUseCase
     private var fileAccesUseCase: FileAccessUseCaseProtocol
-
-    private var cancellables: [AnyCancellable] = []
 
     private let prefferdTimeScale: CMTimeScale = 60
     private let videoDetailEntity: VideoDetailEntity?

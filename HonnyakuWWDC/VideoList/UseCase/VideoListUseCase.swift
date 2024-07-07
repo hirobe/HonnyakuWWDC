@@ -1,7 +1,6 @@
 //  VideoListUseCase.swift
 
 import Foundation
-import Combine
 
 /// VideoListViewModelで使うためのUseCase
 class VideoListUseCase {
