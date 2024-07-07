@@ -3,14 +3,11 @@
 import Testing
 @testable import HonnyakuWWDC
 import AVKit
-import Combine
 
 struct SyncPlayUseCaseTests {
     typealias Paragraph = TranscriptEntity.Paragraph
     typealias Sentence = Paragraph.Sentence
     typealias SeekInfo = SyncPlayModel.ControllerInfo.SeekInfo
-
-    private var cancellables: [AnyCancellable] = []
 
     class AVPlayerWrapperDumy: AVPlayerWrapperProtocol {
         var timeChanged: ((CMTime) -> Void)?
@@ -79,10 +76,13 @@ struct SyncPlayUseCaseTests {
         useCase.setPhrases(phrases: phrases)
         useCase.isSpeechActive = true
 
-        useCase.$syncPlayModel.sink { model in
-            lastSyncPlayModel = model
+        withObservationTracking {
+            lastSyncPlayModel = useCase.syncPlayModel
+        } onChange: {
+            Task { @MainActor in
+                lastSyncPlayModel = useCase.syncPlayModel
+            }
         }
-        .store(in: &cancellables)
 
         // 開始 @0秒
         useCase.play()
@@ -145,10 +145,13 @@ struct SyncPlayUseCaseTests {
         syncPlayUseCase.setPhrases(phrases: phrases)
         syncPlayUseCase.isSpeechActive = true
 
-        syncPlayUseCase.$syncPlayModel.sink { model in
-            lastSyncPlayModel = model
+        withObservationTracking {
+            lastSyncPlayModel = syncPlayUseCase.syncPlayModel
+        } onChange: {
+            Task { @MainActor in
+                lastSyncPlayModel = syncPlayUseCase.syncPlayModel
+            }
         }
-        .store(in: &cancellables)
 
         syncPlayUseCase.play()
         syncPlayUseCase.timeObserved(cmTime: CMTime(seconds: 0, preferredTimescale: 1000000000))
@@ -176,10 +179,13 @@ struct SyncPlayUseCaseTests {
         syncPlayUseCase.setPhrases(phrases: phrases)
         syncPlayUseCase.isSpeechActive = true
 
-        syncPlayUseCase.$syncPlayModel.sink { model in
-            lastSyncPlayModel = model
+        withObservationTracking {
+            lastSyncPlayModel = syncPlayUseCase.syncPlayModel
+        } onChange: {
+            Task { @MainActor in
+                lastSyncPlayModel = syncPlayUseCase.syncPlayModel
+            }
         }
-        .store(in: &cancellables)
 
         syncPlayUseCase.play()
         syncPlayUseCase.timeObserved(cmTime: CMTime(seconds: 0, preferredTimescale: 1000000000))
@@ -216,10 +222,13 @@ struct SyncPlayUseCaseTests {
         syncPlayUseCase.setPhrases(phrases: phrases)
         syncPlayUseCase.isSpeechActive = true
 
-        syncPlayUseCase.$syncPlayModel.sink { model in
-            lastSyncPlayModel = model
+        withObservationTracking {
+            lastSyncPlayModel = syncPlayUseCase.syncPlayModel
+        } onChange: {
+            Task { @MainActor in
+                lastSyncPlayModel = syncPlayUseCase.syncPlayModel
+            }
         }
-        .store(in: &cancellables)
 
         syncPlayUseCase.play()
         syncPlayUseCase.timeObserved(cmTime: CMTime(seconds: 0, preferredTimescale: 1000000000))
@@ -251,8 +260,10 @@ struct SyncPlayUseCaseTests {
             SpeechPhrase(id: 6, at: 43, text: "The 4th phrase. ", isParagraphFirst: false),
             SpeechPhrase(id: 7, at: 51, text: "The 4th phrase. ", isParagraphFirst: false),
             SpeechPhrase(id: 8, at: 59, text: "The 4th phrase. ", isParagraphFirst: false),
+
             SpeechPhrase(id: 9, at: 67, text: "The first phrase. ", isParagraphFirst: true),
             SpeechPhrase(id: 10, at: 77, text: "The first phrase. ", isParagraphFirst: true),
+
             SpeechPhrase(id: 11, at: 83, text: "The first phrase. ", isParagraphFirst: true),
             SpeechPhrase(id: 12, at: 90, text: "The first phrase. ", isParagraphFirst: true),
             SpeechPhrase(id: 13, at: 110, text: "The first phrase. ", isParagraphFirst: true),
@@ -266,11 +277,15 @@ struct SyncPlayUseCaseTests {
         syncPlayUseCase.setPhrases(phrases: phrases)
         syncPlayUseCase.isSpeechActive = true
 
-        syncPlayUseCase.$syncPlayModel.sink { model in
-            lastSyncPlayModel = model
-            phrases.readyToStart(index: model.phraseIndex)
+        withObservationTracking {
+            lastSyncPlayModel = syncPlayUseCase.syncPlayModel
+            phrases.readyToStart(index: lastSyncPlayModel.phraseIndex)
+        } onChange: {
+            Task { @MainActor in
+                lastSyncPlayModel = syncPlayUseCase.syncPlayModel
+                phrases.readyToStart(index: lastSyncPlayModel.phraseIndex)
+            }
         }
-        .store(in: &cancellables)
 
         syncPlayUseCase.play()
         syncPlayUseCase.timeObserved(cmTime: CMTime(seconds: 0.0, preferredTimescale: 1))
@@ -324,11 +339,15 @@ struct SyncPlayUseCaseTests {
         syncPlayUseCase.setPhrases(phrases: phrases)
         syncPlayUseCase.isSpeechActive = true
 
-        syncPlayUseCase.$syncPlayModel.sink { model in
-            lastSyncPlayModel = model
-            phrases.readyToStart(index: model.phraseIndex)
+        withObservationTracking {
+            lastSyncPlayModel = syncPlayUseCase.syncPlayModel
+            phrases.readyToStart(index: lastSyncPlayModel.phraseIndex)
+        } onChange: {
+            Task { @MainActor in
+                lastSyncPlayModel = syncPlayUseCase.syncPlayModel
+                phrases.readyToStart(index: lastSyncPlayModel.phraseIndex)
+            }
         }
-        .store(in: &cancellables)
 
         syncPlayUseCase.play()
         syncPlayUseCase.timeObserved(cmTime: CMTime(seconds: 0.500079125, preferredTimescale: 1000000000))

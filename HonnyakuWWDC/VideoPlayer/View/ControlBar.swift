@@ -64,7 +64,7 @@ struct SeekSlider: View {
 }
 
 struct ControlBar: View {
-    @StateObject var viewModel: ControlBarViewModel
+    @State var viewModel: ControlBarViewModel
     @State var isTouching: Bool = false
 
     var body: some View {
@@ -102,6 +102,9 @@ struct ControlBar: View {
                            rightTimeString: $viewModel.sliderRightTime)
             }
             .padding(EdgeInsets(top: 0, leading: 8, bottom: 0, trailing: 8))
+        }
+        .onAppear {
+            viewModel.onAppear()
         }
     }
 }

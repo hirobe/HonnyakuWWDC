@@ -135,17 +135,20 @@ typealias SyncState = SyncPlayModel.SyncState
         }
     }
     private func startSyncPlayModelObservation() {
-        syncPlayUseCase.$syncPlayModel.sink { [weak self] newState in
-            guard let self = self,
-                  self.syncPlayUseCase.syncPlayModel != newState else { return }
+        withObservationTracking {
+            _ = self.syncPlayUseCase.syncPlayModel
+        } onChange: {
             let preState = self.syncPlayUseCase.syncPlayModel
-            print("newState:\(newState) preState:\(preState) speechSentence:\(speechSentence)")
-            Task {
-                await self.doWithNewState(newState: newState, preState: preState)
+            Task { @MainActor [weak self] in
+                guard let self = self else { return }
+                let newState = self.syncPlayUseCase.syncPlayModel
+                //print("newState:\(newState) preState:\(preState) speechSentence:\(self.speechSentence)")
+                if newState != preState {
+                    await self.doWithNewState(newState: newState, preState: preState)
+                }
+                self.startSyncPlayModelObservation() // 再度観察を開始
             }
-
         }
-        .store(in: &cancellables)
     }
 
     private func setupPlayer(detail: VideoDetailEntity) {

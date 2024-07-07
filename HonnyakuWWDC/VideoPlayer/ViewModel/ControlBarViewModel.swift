@@ -1,13 +1,13 @@
 //  ControlBarViewModel.swift
 
 import SwiftUI
-import Combine
 import AVKit
+import Observation
 
-final class ControlBarViewModel: ObservableObject {
-    @Published var sliderPosition: Float = 0.0
-    @Published var sliderDragging: SliderDraggingInfo = SliderDraggingInfo(isDragging: false, position: 0.0)
-    @Published private(set) var isPlaying: Bool = false
+@Observable final class ControlBarViewModel {
+    var sliderPosition: Float = 0.0
+    var sliderDragging: SliderDraggingInfo = SliderDraggingInfo(isDragging: false, position: 0.0)
+    private(set) var isPlaying: Bool = false
 
     private let timeRemainingFormatter: DateComponentsFormatter = {
         let formatter = DateComponentsFormatter()
@@ -21,54 +21,79 @@ final class ControlBarViewModel: ObservableObject {
         var position: Float
     }
 
-    @Published var sliderLeftTime: String = "00:00"
-    @Published var sliderRightTime: String = "00:00"
+    var sliderLeftTime: String = "00:00"
+    var sliderRightTime: String = "00:00"
 
     private var syncPlayUseCase: SyncPlayUseCase
 
-    private var cancellables: [AnyCancellable] = []
-
     init(syncPlayUseCase: SyncPlayUseCase = SyncPlayUseCase()) {
-
         self.syncPlayUseCase = syncPlayUseCase
-
-        setupBindings()
-
     }
-    private func setupBindings() {
-        syncPlayUseCase.$syncPlayModel.sink { [weak self] syncPlayModel in
-            if case .playing = syncPlayModel.controllerInfo {
-                self?.isPlaying = true
-            } else {
-                self?.isPlaying = false
+
+    func onAppear() {
+        startSyncPlayModelObservation()
+        startSliderDraggingObservation()
+        startCurrentTimeObservation()
+        startVideoDurationObservation()
+    }
+
+    private func startSyncPlayModelObservation() {
+        withObservationTracking {
+            _ = syncPlayUseCase.syncPlayModel
+        } onChange: {
+            Task { @MainActor [weak self] in
+                if case .playing = self?.syncPlayUseCase.syncPlayModel.controllerInfo {
+                    self?.isPlaying = true
+                } else {
+                    self?.isPlaying = false
+                }
+                self?.startSyncPlayModelObservation()
             }
         }
-        .store(in: &cancellables)
-
-        $sliderDragging.sink { [weak self] value in
-            guard let self = self else { return }
-            if value.isDragging {
-                self.seeking(seconds: self.syncPlayUseCase.videoTime(progress: value.position))
-                self.sliderPosition = value.position
-            } else if self.sliderDragging.isDragging == true {
-                self.finishSeek(seconds: self.syncPlayUseCase.videoTime(progress: value.position))
-                self.sliderPosition = value.position
+    }
+    
+    private func startSliderDraggingObservation() {
+        withObservationTracking {
+            _ = sliderDragging
+        } onChange: {
+            Task { @MainActor [weak self] in
+                guard let self = self else { return }
+                if self.sliderDragging.isDragging {
+                    self.seeking(seconds: self.syncPlayUseCase.videoTime(progress: self.sliderDragging.position))
+                    self.sliderPosition = self.sliderDragging.position
+                } else {
+                    self.finishSeek(seconds: self.syncPlayUseCase.videoTime(progress: self.sliderPosition))
+                    self.sliderPosition = self.sliderDragging.position
+                }
+                self.startSliderDraggingObservation()
             }
         }
-        .store(in: &cancellables)
-
-        syncPlayUseCase.$curerntTime.sink { [weak self] value in
-            guard let self = self else { return }
-            self.updateSlider(seconds: value)
-            self.showCurrentTime(seconds: value)
-        }
-        .store(in: &cancellables)
-
-        syncPlayUseCase.$videoDuration.sink { [weak self] value in
-            self?.showDuration(duration: value)
-        }
-        .store(in: &cancellables)
     }
+
+    private func startCurrentTimeObservation() {
+        withObservationTracking {
+            _ = syncPlayUseCase.curerntTime
+        } onChange: {
+            Task { @MainActor [weak self] in
+                guard let self = self else { return }
+                self.updateSlider(seconds: self.syncPlayUseCase.curerntTime)
+                self.showCurrentTime(seconds: self.syncPlayUseCase.curerntTime)
+                self.startCurrentTimeObservation()
+            }
+        }
+    }
+    private func startVideoDurationObservation() {
+        withObservationTracking {
+            _ = syncPlayUseCase.videoDuration
+        } onChange: {
+            Task { @MainActor [weak self] in
+                guard let self = self else { return }
+                self.showDuration(duration: self.syncPlayUseCase.videoDuration)
+                self.startVideoDurationObservation()
+            }
+        }
+    }
+
 
     func playStart() {
         syncPlayUseCase.play()
@@ -107,5 +132,4 @@ final class ControlBarViewModel: ObservableObject {
         components.second = Int(max(0.0, time))
         return timeRemainingFormatter.string(from: components as DateComponents)!
     }
-
 }
