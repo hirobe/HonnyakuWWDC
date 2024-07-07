@@ -34,7 +34,8 @@
 		42A935A12872727B000E067B /* PlayerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42A935832872727B000E067B /* PlayerView.swift */; };
 		42A935A32872727B000E067B /* SyncPlayModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42A935852872727B000E067B /* SyncPlayModel.swift */; };
 		42A935A52872727B000E067B /* SyncPlayUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42A935862872727B000E067B /* SyncPlayUseCase.swift */; };
-		42A935C428727298000E067B /* SystemSettingsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42A935A928727298000E067B /* SystemSettingsViewModel.swift */; };
+		42A935A62872727B000E067B /* SyncPlayUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42A935862872727B000E067B /* SyncPlayUseCase.swift */; };
+		42A935C428727298000E067B /* SystemSettingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42A935A928727298000E067B /* SystemSettingViewModel.swift */; };
 		42A935C528727298000E067B /* VideoListCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42A935AA28727298000E067B /* VideoListCellViewModel.swift */; };
 		42A935C628727298000E067B /* VideoListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42A935AB28727298000E067B /* VideoListViewModel.swift */; };
 		42A935C728727298000E067B /* VideoGroupSettingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42A935AC28727298000E067B /* VideoGroupSettingViewModel.swift */; };
@@ -60,7 +61,10 @@
 		42A935E62872834E000E067B /* AVPlayerWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42A935E52872834E000E067B /* AVPlayerWrapper.swift */; };
 		42A935E92872A147000E067B /* SyncPlayUseCaseTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42A935E82872A147000E067B /* SyncPlayUseCaseTests.swift */; };
 		42A935EB2873CCBF000E067B /* SpeechPhraseList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42A935EA2873CCBF000E067B /* SpeechPhraseList.swift */; };
+		42A935EC2873CCBF000E067B /* SpeechPhraseList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42A935EA2873CCBF000E067B /* SpeechPhraseList.swift */; };
+		5D0DC5FE2C280A500060C936 /* SystemSettingViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D0DC5FD2C280A500060C936 /* SystemSettingViewModelTests.swift */; };
 		5D6CB1982C19A7F700850FB3 /* DownloadAudioUserCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D6CB1962C19A7F100850FB3 /* DownloadAudioUserCase.swift */; };
+		5DAE895F2C2F8CCA004EE5D6 /* Testing in Frameworks */ = {isa = PBXBuildFile; productRef = 5DAE895E2C2F8CCA004EE5D6 /* Testing */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -112,7 +116,7 @@
 		42A935832872727B000E067B /* PlayerView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlayerView.swift; sourceTree = "<group>"; };
 		42A935852872727B000E067B /* SyncPlayModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SyncPlayModel.swift; sourceTree = "<group>"; };
 		42A935862872727B000E067B /* SyncPlayUseCase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SyncPlayUseCase.swift; sourceTree = "<group>"; };
-		42A935A928727298000E067B /* SystemSettingsViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SystemSettingsViewModel.swift; sourceTree = "<group>"; };
+		42A935A928727298000E067B /* SystemSettingViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SystemSettingViewModel.swift; sourceTree = "<group>"; };
 		42A935AA28727298000E067B /* VideoListCellViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VideoListCellViewModel.swift; sourceTree = "<group>"; };
 		42A935AB28727298000E067B /* VideoListViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VideoListViewModel.swift; sourceTree = "<group>"; };
 		42A935AC28727298000E067B /* VideoGroupSettingViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VideoGroupSettingViewModel.swift; sourceTree = "<group>"; };
@@ -140,6 +144,7 @@
 		42A935E52872834E000E067B /* AVPlayerWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AVPlayerWrapper.swift; sourceTree = "<group>"; };
 		42A935E82872A147000E067B /* SyncPlayUseCaseTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SyncPlayUseCaseTests.swift; sourceTree = "<group>"; };
 		42A935EA2873CCBF000E067B /* SpeechPhraseList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpeechPhraseList.swift; sourceTree = "<group>"; };
+		5D0DC5FD2C280A500060C936 /* SystemSettingViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SystemSettingViewModelTests.swift; sourceTree = "<group>"; };
 		5D6CB1962C19A7F100850FB3 /* DownloadAudioUserCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DownloadAudioUserCase.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -155,6 +160,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5DAE895F2C2F8CCA004EE5D6 /* Testing in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -222,6 +228,7 @@
 				42A935DD28727664000E067B /* ParseVideoDetailUseCaseTests.swift */,
 				42A935DE28727664000E067B /* VideoGroupScrapingUseCaseTests.swift */,
 				42A935E82872A147000E067B /* SyncPlayUseCaseTests.swift */,
+				5D0DC5FD2C280A500060C936 /* SystemSettingViewModelTests.swift */,
 			);
 			path = HonnyakuWWDCTests;
 			sourceTree = "<group>";
@@ -324,7 +331,7 @@
 		42A935A828727298000E067B /* ViewModel */ = {
 			isa = PBXGroup;
 			children = (
-				42A935A928727298000E067B /* SystemSettingsViewModel.swift */,
+				42A935A928727298000E067B /* SystemSettingViewModel.swift */,
 				42A935AA28727298000E067B /* VideoListCellViewModel.swift */,
 				42A935AB28727298000E067B /* VideoListViewModel.swift */,
 				42A935AC28727298000E067B /* VideoGroupSettingViewModel.swift */,
@@ -436,6 +443,9 @@
 				42A934BE28726FAC000E067B /* PBXTargetDependency */,
 			);
 			name = HonnyakuWWDCTests;
+			packageProductDependencies = (
+				5DAE895E2C2F8CCA004EE5D6 /* Testing */,
+			);
 			productName = HonnyakuWWDCTests;
 			productReference = 42A934BC28726FAC000E067B /* HonnyakuWWDCTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
@@ -490,6 +500,9 @@
 				Base,
 			);
 			mainGroup = 42A934A228726FAC000E067B;
+			packageReferences = (
+				5DAE895D2C2F8CCA004EE5D6 /* XCRemoteSwiftPackageReference "swift-testing" */,
+			);
 			productRefGroup = 42A934AC28726FAC000E067B /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -548,7 +561,7 @@
 				42A9358D2872727B000E067B /* TaskProgressUseCase.swift in Sources */,
 				42A935992872727B000E067B /* TranscriptEntity.swift in Sources */,
 				42A9358B2872727B000E067B /* NetworkAccessUseCase.swift in Sources */,
-				42A935C428727298000E067B /* SystemSettingsViewModel.swift in Sources */,
+				42A935C428727298000E067B /* SystemSettingViewModel.swift in Sources */,
 				42A9359F2872727B000E067B /* ControlBar.swift in Sources */,
 				42A935C528727298000E067B /* VideoListCellViewModel.swift in Sources */,
 				42A935D628727298000E067B /* ParseVideoDetailUseCase.swift in Sources */,
@@ -588,6 +601,7 @@
 				42A935E128727664000E067B /* VideoGroupScrapingUseCaseTests.swift in Sources */,
 				42A935E92872A147000E067B /* SyncPlayUseCaseTests.swift in Sources */,
 				42A935DF28727664000E067B /* DeepLUseCaseTests.swift in Sources */,
+				5D0DC5FE2C280A500060C936 /* SystemSettingViewModelTests.swift in Sources */,
 				42A934C128726FAC000E067B /* HonnyakuWWDCTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -747,7 +761,7 @@
 				"INFOPLIST_KEY_UILaunchScreen_Generation[sdk=iphonesimulator*]" = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.2;
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
 				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "@executable_path/../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 12.4;
@@ -785,7 +799,7 @@
 				"INFOPLIST_KEY_UILaunchScreen_Generation[sdk=iphonesimulator*]" = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.2;
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
 				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "@executable_path/../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 12.4;
@@ -811,8 +825,8 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = L37QDG4F27;
 				GENERATE_INFOPLIST_FILE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
-				MACOSX_DEPLOYMENT_TARGET = 12.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.2;
+				MACOSX_DEPLOYMENT_TARGET = 14.2;
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.bunguu.HonnyakuWWDCTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -834,8 +848,8 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = L37QDG4F27;
 				GENERATE_INFOPLIST_FILE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
-				MACOSX_DEPLOYMENT_TARGET = 12.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.2;
+				MACOSX_DEPLOYMENT_TARGET = 14.2;
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.bunguu.HonnyakuWWDCTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -932,6 +946,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		5DAE895D2C2F8CCA004EE5D6 /* XCRemoteSwiftPackageReference "swift-testing" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/apple/swift-testing.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 0.10.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		5DAE895E2C2F8CCA004EE5D6 /* Testing */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 5DAE895D2C2F8CCA004EE5D6 /* XCRemoteSwiftPackageReference "swift-testing" */;
+			productName = Testing;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 42A934A328726FAC000E067B /* Project object */;
 }

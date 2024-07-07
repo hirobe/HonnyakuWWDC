@@ -1,25 +1,22 @@
 //  PlayerSettingViewModel.swift
 
 import Foundation
-import Combine
 import UIKit
 
-final class PlayerSettingViewModel: ObservableObject {
-    @Published var isPresent: Bool = true
+@Observable final class PlayerSettingViewModel {
+    var isPresent: Bool = true
 
-    @Published var speechVolume: Double
-    @Published var speechRate: Float
-    @Published var videoVolume: Double
-    @Published var videoRate: Float
-    @Published var showOriginalText: Bool
-    @Published var showTransferdText: Bool
+    var speechVolume: Double
+    var speechRate: Float
+    var videoVolume: Double
+    var videoRate: Float
+    var showOriginalText: Bool
+    var showTransferdText: Bool
 
-    @Published var selectedLanguageId: String = ""
-    @Published var selectedVoiceId: String = ""
+    var selectedLanguageId: String = ""
+    var selectedVoiceId: String = ""
 
-    private var settings: SettingsUseCase
-
-    private var cancellables: [AnyCancellable] = []
+    @ObservationIgnored private var settings: SettingsUseCase
 
     init(settings: SettingsUseCase = SettingsUseCase.shared) {
         self.settings = settings
@@ -37,47 +34,32 @@ final class PlayerSettingViewModel: ObservableObject {
         updateSpeechRate()
         updateVideoRate()
 
-        $speechVolume.sink { [weak self] value in
-            self?.settings.speechVolume = value
-        }
-        .store(in: &cancellables)
+        startObservation()
+    }
 
-        $speechRate.sink { [weak self] value in
-            self?.settings.speechRate = value
+    private func startObservation() {
+        withObservationTracking { [self] in
+            _ = self.speechVolume
+            _ = self.speechRate
+            _ = self.videoVolume
+            _ = self.videoRate
+            _ = self.showOriginalText
+            _ = self.showTransferdText
+            _ = self.selectedLanguageId
+            _ = self.selectedVoiceId
+        } onChange: { [self] in
+            Task { @MainActor in
+                settings.speechVolume = speechVolume
+                settings.speechRate = speechRate
+                settings.videoVolume = videoVolume
+                settings.videoRate = videoRate
+                settings.showOriginalText = showOriginalText
+                settings.showTransferdText = showTransferdText
+                settings.languageId = selectedLanguageId
+                settings.voiceId = selectedVoiceId
+                startObservation()
+            }
         }
-        .store(in: &cancellables)
-
-        $videoVolume.sink { [weak self] value in
-            self?.settings.videoVolume = value
-        }
-        .store(in: &cancellables)
-
-        $videoRate.sink { [weak self] value in
-            self?.settings.videoRate = value
-        }
-        .store(in: &cancellables)
-
-        $showOriginalText.sink { [weak self] value in
-            self?.settings.showOriginalText = value
-        }
-        .store(in: &cancellables)
-
-        $showTransferdText.sink { [weak self] value in
-            self?.settings.showTransferdText = value
-        }
-        .store(in: &cancellables)
-
-        settings.languageId = ""
-        $selectedLanguageId.sink { [weak self] value in
-            self?.settings.languageId = value
-        }
-        .store(in: &cancellables)
-
-        $selectedVoiceId.sink { [weak self] value in
-            self?.settings.voiceId = value
-        }
-        .store(in: &cancellables)
-
     }
 
     func languages() -> [SettingsUseCase.LanguageDefinition] {

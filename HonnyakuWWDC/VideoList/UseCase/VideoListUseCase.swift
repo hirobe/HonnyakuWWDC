@@ -1,10 +1,9 @@
 //  VideoListUseCase.swift
 
 import Foundation
-import Combine
 
 /// VideoListViewModelで使うためのUseCase
-final class VideoListUseCase {
+class VideoListUseCase {
     private var settingsUseCase: SettingsUseCase
     private var taskProgresUseCase: TaskProgressUseCase
     private var fileAccessUseCase: FileAccessUseCaseProtocol

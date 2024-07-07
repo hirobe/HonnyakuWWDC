@@ -1,19 +1,15 @@
 //  ParseVideoDetailUseCaseTests.swift
 
-import XCTest
+import Testing
 @testable import HonnyakuWWDC
 
-final class ParseVideoDetailUseCaseTests: XCTestCase {
+struct ParseVideoDetailUseCaseTests {
 
-    override func setUpWithError() throws {
+    init() throws {
         // Put setup code here. This method is called before the invocation of each test method in the class.
     }
 
-    override func tearDownWithError() throws {
-        // Put teardown code here. This method is called after the invocation of each test method in the class.
-    }
-
-    func testParseTranscriptJoinSentence() throws {
+    @Test func parseTranscriptJoinSentence() throws {
         let useCase = ParseVideoDetailUseCase()
         let text = """
         <!-- transcript -->
@@ -21,16 +17,16 @@ final class ParseVideoDetailUseCaseTests: XCTestCase {
         </li>
         """
         let result = try useCase.parseTranscript(text: text)
-        XCTAssertEqual(result?.paragraphs.count, 1)
-        XCTAssertEqual(result?.paragraphs[0].at, 15)
-        XCTAssertEqual(result?.paragraphs[0].sentences.count, 2)
-        XCTAssertEqual(result?.paragraphs[0].sentences[0].text, "Today, my colleague Risa and I will be showing you how to use the Object Capture API and RealityKit to create 3D models of real-world objects and bring them into AR. ")
-        XCTAssertEqual(result?.paragraphs[0].sentences[0].at, 15)
-        XCTAssertEqual(result?.paragraphs[0].sentences[1].text, "Let's get started. ")
-        XCTAssertEqual(result?.paragraphs[0].sentences[1].at, 27)
+        #expect(result?.paragraphs.count == 1)
+        #expect(result?.paragraphs[0].at == 15)
+        #expect(result?.paragraphs[0].sentences.count == 2)
+        #expect(result?.paragraphs[0].sentences[0].text == "Today, my colleague Risa and I will be showing you how to use the Object Capture API and RealityKit to create 3D models of real-world objects and bring them into AR. ")
+        #expect(result?.paragraphs[0].sentences[0].at == 15)
+        #expect(result?.paragraphs[0].sentences[1].text == "Let's get started. ")
+        #expect(result?.paragraphs[0].sentences[1].at == 27)
     }
 
-    func testParseTranscriptFromWrongHtml() throws {
+    @Test func parseTranscriptFromWrongHtml() throws {
         let useCase = ParseVideoDetailUseCase()
         // No </span> after "You can also show a context menu on an individual item."
         let text = """
@@ -39,14 +35,14 @@ final class ParseVideoDetailUseCaseTests: XCTestCase {
         </li>
         """
         let result = try useCase.parseTranscript(text: text)
-        XCTAssertEqual(result?.paragraphs.count, 2)
-        XCTAssertEqual(result?.paragraphs[0].sentences.count, 1)
-        XCTAssertEqual(result?.paragraphs[0].sentences[0].text.hasPrefix("You can also show a context menu on an individual item."), true)
-        XCTAssertEqual(result?.paragraphs[1].sentences.count, 1)
-        XCTAssertEqual(result?.paragraphs[1].sentences[0].text.hasSuffix("is no content."), true)
+        #expect(result?.paragraphs.count == 2)
+        #expect(result?.paragraphs[0].sentences.count == 1)
+        #expect(result?.paragraphs[0].sentences[0].text.hasPrefix("You can also show a context menu on an individual item.") == true)
+        #expect(result?.paragraphs[1].sentences.count == 1)
+        #expect(result?.paragraphs[1].sentences[0].text.hasSuffix("is no content.") == true)
     }
 
-    func testParseTranscriptDividByEighthNote() throws {
+    @Test func parseTranscriptDividByEighthNote() throws {
         let useCase = ParseVideoDetailUseCase()
         // ♪ ♪
         let text = """
@@ -55,18 +51,13 @@ final class ParseVideoDetailUseCaseTests: XCTestCase {
         </li>
         """
         let result = try useCase.parseTranscript(text: text)
-        XCTAssertEqual(result?.paragraphs.count, 1)
-        XCTAssertEqual(result?.paragraphs[0].sentences.count, 3)
-        XCTAssertEqual(result?.paragraphs[0].sentences[0].text, "♪ Mellow instrumental hip-hop music ♪ ")
-        XCTAssertEqual(result?.paragraphs[0].sentences[1].text, "♪ ")
-        XCTAssertEqual(result?.paragraphs[0].sentences[2].text, "Hello. ")
+        #expect(result?.paragraphs.count == 1)
+        #expect(result?.paragraphs[0].sentences.count == 3)
+        #expect(result?.paragraphs[0].sentences[0].text == "♪ Mellow instrumental hip-hop music ♪ ")
+        #expect(result?.paragraphs[0].sentences[1].text == "♪ ")
+        #expect(result?.paragraphs[0].sentences[2].text == "Hello. ")
     }
 
-    func testPerformanceExample() throws {
-        // This is an example of a performance test case.
-        self.measure {
-            // Put the code you want to measure the time of here.
-        }
-    }
+
 
 }

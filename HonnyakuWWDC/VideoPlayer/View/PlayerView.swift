@@ -4,13 +4,14 @@ import SwiftUI
 import AVKit
 
 struct PlayerView: View {
-    @ObservedObject var viewModel: PlayerViewModel
+    @Bindable var viewModel: PlayerViewModel
 
     var body: some View {
         VStack(spacing: 8) {
             ZStack {
                 PlayerViewController(player: viewModel.videoPlayer.avPlayer)
                     .aspectRatio(1920 / CGFloat(1080), contentMode: .fit)
+                    .id(viewModel.videoAttributes.id)
                 
                 if viewModel.isShowingController {
                     VStack(spacing: 8) {
@@ -23,17 +24,12 @@ struct PlayerView: View {
             }
             .aspectRatio(1920 / CGFloat(1080), contentMode: .fit)
             .contentShape(Rectangle()) // 透明部分もTouch反応させる
-//            .gesture(DragGesture(minimumDistance: 0)
-//                        .onEnded({ _ in viewModel.isTouchingScreen = false })
-//                        .onChanged({ _ in viewModel.isTouchingScreen = true})
-//            )
             
             .onHover { hovering in
                 viewModel.isHoveringScreen = hovering
             }
             .onTapGesture {
                 viewModel.togglePlay()
-                print("tap")
             }
             .onDisappear {
                 viewModel.clearPlayer()
@@ -62,31 +58,27 @@ struct PlayerView: View {
             }
         }
         .padding(EdgeInsets(top: 100, leading: 60, bottom: 50, trailing: 60))
+        .onAppear() {
+            viewModel.onAppear()
+        }
     }
 
 }
 
 struct PlayerViewController: UIViewControllerRepresentable {
     let player: AVPlayer
-    static var controller : AVPlayerViewController?
 
     init(player: AVPlayer) {
         self.player = player
     }
 
     func makeUIViewController(context: Context) -> AVPlayerViewController {
-        //let controller =  AVPlayerViewController()
-        if Self.controller == nil {
-            Self.controller = AVPlayerViewController()
-            
-            let controller = Self.controller!
-            controller.player = player
-            controller.videoGravity = .resizeAspect
-            controller.showsPlaybackControls = false
+        let controller = AVPlayerViewController()
+        controller.player = player
+        controller.videoGravity = .resizeAspect
+        controller.showsPlaybackControls = false
 
-            // controller.allowsPictureInPicturePlayback = true
-        }
-        return Self.controller!
+        return controller
     }
 
     func updateUIViewController(_ playerController: AVPlayerViewController, context: Context) {
@@ -96,6 +88,6 @@ struct PlayerViewController: UIViewControllerRepresentable {
 
 struct VideoPlayerView_Previews: PreviewProvider {
     static var previews: some View {
-        PlayerView(viewModel: PlayerViewModel())
+        PlayerView(viewModel: PlayerViewModel()).frame(width: 400, height: 400)
     }
 }

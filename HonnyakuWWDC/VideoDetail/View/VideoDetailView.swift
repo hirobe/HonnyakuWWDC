@@ -7,7 +7,7 @@ struct VideoDetailView: View {
         case copyError
     }
 
-    @StateObject var viewModel: VideoDetailViewModel
+    @Bindable var viewModel: VideoDetailViewModel
     @State var isShowingPopover: Bool = false
     @State var isShowingSystemSettingPopover: Bool = false
 
@@ -67,9 +67,9 @@ struct VideoDetailView: View {
                         Label("More", systemImage: "ellipsis.circle")
                     }
                     .popover(isPresented: $isShowingPopover) {
-                        PlayerSettingsPopover(viewModel: PlayerSettingViewModel()) { action in
+                        PlayerSettingsPopover(viewModel: PlayerSettingViewModel()) { [weak viewModel] action in
                             if action == .copyData {
-                                guard viewModel.copyDataToPasteBoard() else { throw VideoDetailViewError.copyError }
+                                guard viewModel?.copyDataToPasteBoard() ?? false else { throw VideoDetailViewError.copyError }
                             } else if action == .close {
                                 isShowingPopover = false
                             }
@@ -80,6 +80,9 @@ struct VideoDetailView: View {
                     }
                 }
             }
+        }
+        .onAppear() {
+            viewModel.onAppear()
         }
     }
 }

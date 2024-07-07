@@ -3,7 +3,7 @@
 import SwiftUI
 
 struct ControlView: View {
-    @ObservedObject var viewModel: VideoDetailViewModel
+    @Bindable var viewModel: VideoDetailViewModel
     var showingAlert: String = ""
     @State var isShowingAlert: Bool = false
 

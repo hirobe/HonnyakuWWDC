@@ -1,21 +1,15 @@
 //  VideoGroupSettingViewModel.swift
 
 import Foundation
-import Combine
+import Observation
 
-final class VideoGroupSettingViewModel: ObservableObject, Identifiable {
+@Observable final class VideoGroupSettingViewModel: Identifiable {
     private(set) var id: String
     private(set) var title: String
-    @Published var enabled: Bool {
-        didSet { // 値変更後に呼ぶためにsinkではなくdidSetを使う
-            onChanged?(self)
-        }
-    }
-    @Published private(set) var state: ProgressState = .unknwon
+    var enabled: Bool
+    private(set) var state: ProgressState = .unknwon
     private(set) var progress: ProgressObservable
     private var onChanged: ((_:VideoGroupSettingViewModel) -> Void)?
-
-    private var cancellables: [AnyCancellable] = []
 
     init(id: String, title: String, enabled: Bool, progress: ProgressObservable, onChanged: ((_:VideoGroupSettingViewModel) -> Void)?) {
         self.id = id
@@ -24,12 +18,28 @@ final class VideoGroupSettingViewModel: ObservableObject, Identifiable {
         self.progress = progress
         self.onChanged = onChanged
 
-        progress
-            .$state
-            .receive(on: DispatchQueue.main)
-            .sink { [weak self] state in
-                self?.state = state
+        setupObservation()
+        setupEnabledObservation()
+    }
+
+    private func setupObservation() {
+        withObservationTracking {
+            _ = self.progress.state
+        } onChange: {
+            Task { @MainActor in
+                self.state = self.progress.state
+                self.setupObservation()
             }
-            .store(in: &cancellables)
+        }
+    }
+    private func setupEnabledObservation() {
+        withObservationTracking {
+            _ = self.enabled
+        } onChange: {
+            Task { @MainActor in
+                self.onChanged?(self)
+                self.setupEnabledObservation()
+            }
+        }
     }
 }

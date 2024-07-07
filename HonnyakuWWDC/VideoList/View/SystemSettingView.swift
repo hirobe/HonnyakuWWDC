@@ -5,7 +5,7 @@ import SwiftUI
 /// 取得するデータのトグルボタン付きのセル
 /// 処理中の状態表示を行うために、VideoGroupViewModelを持つ独立したViewにしています
 struct VideoGroupSettingView: View {
-    @StateObject var viewModel: VideoGroupSettingViewModel
+    @State var viewModel: VideoGroupSettingViewModel
 
     var body: some View {
         HStack {
@@ -30,7 +30,7 @@ struct VideoGroupSettingView: View {
 /// 設定画面のView
 struct SystemSettingView: View {
 
-    @StateObject var viewModel: SystemSettingViewModel
+    @Bindable var viewModel: SystemSettingViewModel
     @State var isShowingAlertForLoad: Bool = false
     @State var isShowingInfoPopover: Bool = false
 
@@ -59,6 +59,7 @@ struct SystemSettingView: View {
             .background(Color(.systemGroupedBackground))
 
             Form {
+                // FormStyleConfigurationは不要なので、削除します
 
                 Section {
                     HStack {
@@ -127,7 +128,16 @@ struct SystemSettingView: View {
                         Spacer()
                         SecureField("XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXX...", text: $viewModel.deepLAuthKey)
                     }
-                    Toggle("DeepL Pro Account", isOn: $viewModel.isDeepLPro)
+                    Toggle("DeepL Pro Account", isOn: Binding(
+                        get: { viewModel.isDeepLPro },
+                        set: { newValue in
+                            print("Toggle changed to: \(newValue)")
+                            viewModel.isDeepLPro = newValue
+                            print("viewModel.isDeepLPro is now: \(viewModel.isDeepLPro)")
+                                
+                        }
+                    ))
+//                    Toggle("DeepL Pro Account", isOn: $viewModel.isDeepLPro)
                 } header: {
                     Text("DeepL")
                 }
@@ -148,6 +158,10 @@ struct SystemSettingView: View {
 
             }
             .padding(EdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 0))
+        }
+        .onAppear() {
+            viewModel.updateVoiceSelect()
+            //viewModel.setupObservation()
         }
     }
 }

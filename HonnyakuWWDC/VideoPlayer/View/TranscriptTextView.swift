@@ -2,7 +2,7 @@
 import SwiftUI
 
 struct TranscriptTextView: View {
-    @ObservedObject var viewModel: PlayerViewModel
+    @State var viewModel: PlayerViewModel
     var textColor: Color
     var padding: EdgeInsets = EdgeInsets()
 
@@ -38,7 +38,7 @@ struct TranscriptTextView: View {
 struct TranscriptTextView_Previews: PreviewProvider {
     static var previews: some View {
         let viewModel = PlayerViewModel(videoDetailEntity: VideoDetailEntity.mock)
-        TranscriptTextView(viewModel: viewModel, textColor: .white)
-            .previewLayout(.fixed(width: 400, height: 400))
+        TranscriptTextView(viewModel: viewModel, textColor: .white).frame(width: 400, height: 400)
+            .previewLayout(.sizeThatFits)
     }
 }

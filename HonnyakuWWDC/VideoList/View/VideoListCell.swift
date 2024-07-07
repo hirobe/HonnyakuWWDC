@@ -5,7 +5,7 @@ import SwiftUI
 /// Videoのリストのセル
 /// 処理中の状態表示も行います
 struct VideoListCell: View {
-    @StateObject var viewModel: VideoListCellViewModel
+    @State var viewModel: VideoListCellViewModel
 
     var body: some View {
         switch viewModel.state {

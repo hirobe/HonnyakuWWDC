@@ -1,16 +1,15 @@
 //  VideoGroupScrapingUseCase.swift
 
 import Foundation
-import Combine
+import Observation
 
 /// Videoのリストをダウンロード、パースし、ファイルとして保存する
-final class VideoGroupScrapingUseCase {
+@Observable class VideoGroupScrapingUseCase {
     private var settingsUseCase: SettingsUseCase
     private var taskProgresUseCase: TaskProgressUseCase
     private var fileAccessUseCase: FileAccessUseCaseProtocol
     private var networkAccessUseCase: NetworkAccessUseCaseProtocol
-    @Published private(set) var isProcessing: Bool = false
-    private var cancellables: [AnyCancellable] = []
+    private(set) var isProcessing: Bool = false
 
     init(settingsUseCase: SettingsUseCase = SettingsUseCase.shared,
          taskProgresUseCase: TaskProgressUseCase = TaskProgressUseCase(),
@@ -85,27 +84,23 @@ final class VideoGroupScrapingUseCase {
         return videos
     }
 
-    func observeProcessing() -> Void {
-        // VideoGroupのダウンロード状態を監視する
-        // ステータスが変化した時、他に処理中がなければisLoading = falseにする。
-        for (_, videoGroupAttributesEntity) in VideoGroupAttributesEntity.all {
-            taskProgresUseCase.fetchObservable(taskId: videoGroupAttributesEntity.id).$state
-            .receive(on: DispatchQueue.main)
-            .sink { [weak self] _ in
+    func observeProcessing() {
+        withObservationTracking { [weak self] in
+            for (_, videoGroupAttributesEntity) in VideoGroupAttributesEntity.all {
+                _ = self?.taskProgresUseCase.fetchObservable(taskId: videoGroupAttributesEntity.id)
+            }
+        } onChange: {
+            Task { @MainActor [weak self] in
                 guard let self = self else { return }
-                self.isProcessing = self.isAnyProcessingVideoGroup()
-        }
-        .store(in: &cancellables)
-        }
-    }
-
-    private func isAnyProcessingVideoGroup() -> Bool {
-        var result: Bool = false
-        for id in settingsUseCase.videoGroupIds {
-            if case .processing = taskProgresUseCase.fetchObservable(taskId: id).state {
-                result = true
+                self.isProcessing = false
+                for id in settingsUseCase.videoGroupIds {
+                    if case .processing = taskProgresUseCase.fetchObservable(taskId: id).state {
+                        self.isProcessing = true
+                        break
+                    }
+                }
+                self.observeProcessing()
             }
         }
-        return result
     }
 }

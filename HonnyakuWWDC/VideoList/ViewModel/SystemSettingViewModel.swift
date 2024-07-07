@@ -1,30 +1,26 @@
 //  SystemSettingsViewModel.swift
 
 import Foundation
-import Combine
+import Observation
 import AVFoundation
 
-final class SystemSettingViewModel: ObservableObject {
-    private var progressUseCase: TaskProgressUseCase
-    private var settings: SettingsUseCase
-    private var videoListUseCase: VideoListUseCase
-    private var videoGroupScrapingUseCase: VideoGroupScrapingUseCase
+@Observable final class SystemSettingViewModel {
+    @ObservationIgnored private var progressUseCase: TaskProgressUseCase
+    @ObservationIgnored private var settings: SettingsUseCase
+    @ObservationIgnored private var videoListUseCase: VideoListUseCase
+    @ObservationIgnored private var videoGroupScrapingUseCase: VideoGroupScrapingUseCase
 
-    @Published private(set) var isPresent: Bool = true
+    private(set) var langIndex: Int = 0
 
-    @Published private(set) var langIndex: Int = 0
+    var voiceId: String = ""
+    var deepLAuthKey: String = ""
+    var isDeepLPro: Bool = false
+    var openAIAuthKey: String = ""
 
-    @Published var voiceId: String = ""
-    @Published var deepLAuthKey: String = ""
-    @Published var isDeepLPro: Bool = false
-    @Published var openAIAuthKey: String = ""
+    var selectedLanguageId: String = ""
+    var selectedVoiceId: String = ""
 
-    @Published var selectedLanguageId: String = ""
-    @Published var selectedVoiceId: String = ""
-
-    @Published private(set) var videoGroupList: [VideoGroupSettingViewModel] = []
-
-    private var cancellables: [AnyCancellable] = []
+    private(set) var videoGroupList: [VideoGroupSettingViewModel] = []
 
     init(settings: SettingsUseCase = SettingsUseCase.shared,
          progressUseCase: TaskProgressUseCase = TaskProgressUseCase(),
@@ -33,7 +29,7 @@ final class SystemSettingViewModel: ObservableObject {
         self.progressUseCase = progressUseCase
         self.videoListUseCase = videoListUseCase
         self.settings = settings
-        self.videoGroupScrapingUseCase = VideoGroupScrapingUseCase()
+        self.videoGroupScrapingUseCase = videoGroupScrapingUseCase
 
         deepLAuthKey = settings.deepLAuthKey
         isDeepLPro = settings.isDeepLPro
@@ -41,7 +37,6 @@ final class SystemSettingViewModel: ObservableObject {
 
         selectedLanguageId = settings.languageId
         selectedVoiceId = settings.voiceId
-        updateVoiceSelect()
 
         videoGroupList = VideoGroupAttributesEntity.all.keys.sorted().reversed().compactMap({ key in
             guard let entity: VideoGroupAttributesEntity = VideoGroupAttributesEntity.all[key] else { return nil }
@@ -50,31 +45,29 @@ final class SystemSettingViewModel: ObservableObject {
                                        onChanged: { item in self.onGroupChanged(item) })
         })
 
-        $deepLAuthKey.sink { [weak self] value in
-            self?.settings.deepLAuthKey = value
+        Task { @MainActor in
+            self.setupObservation()
         }
-        .store(in: &cancellables)
-        
-        $openAIAuthKey.sink { [weak self] value in
-            self?.settings.openAIAuthKey = value
-        }
-        .store(in: &cancellables)
+    }
 
-        $isDeepLPro.sink { [weak self] value in
-            self?.settings.isDeepLPro = value
+    private func setupObservation() {
+        withObservationTracking {
+            _ = self.deepLAuthKey
+            _ = self.openAIAuthKey
+            _ = self.isDeepLPro
+            _ = self.selectedLanguageId
+            _ = self.selectedVoiceId
+        } onChange: { [weak self] in
+            guard let self = self else { return }
+            Task { @MainActor in
+                self.settings.deepLAuthKey = self.deepLAuthKey
+                self.settings.openAIAuthKey = self.openAIAuthKey
+                self.settings.isDeepLPro = self.isDeepLPro
+                self.settings.languageId = self.selectedLanguageId
+                self.settings.voiceId = self.selectedVoiceId
+                self.setupObservation()
+            }
         }
-        .store(in: &cancellables)
-
-        $selectedLanguageId.sink { [weak self] value in
-            self?.settings.languageId = value
-        }
-        .store(in: &cancellables)
-
-        $selectedVoiceId.sink { [weak self] value in
-            self?.settings.voiceId = value
-        }
-        .store(in: &cancellables)
-
     }
 
     // トグル変更後に呼ばれる
@@ -104,10 +97,8 @@ final class SystemSettingViewModel: ObservableObject {
     }
 
     func voices(languageId: String) -> [SpeechPlayer.IdentifiableVoice] {
-        guard let code = SettingsUseCase.LanguageDefinition.find(id: languageId)?.voicesKey else { return []}
-        let voices = SpeechPlayer.getVoices(languageCode: code)
-
-        return voices
+        guard let code = SettingsUseCase.LanguageDefinition.find(id: languageId)?.voicesKey else { return [] }
+        return SpeechPlayer.getVoices(languageCode: code)
     }
 
     func updateVoiceSelect() {

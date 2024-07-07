@@ -1,7 +1,6 @@
 //  ViewResolver.swift
 
 import SwiftUI
-import Combine
 
 /// Viewを返すためのクラス
 /// NavitagionのDetailとして表示するViewを返します

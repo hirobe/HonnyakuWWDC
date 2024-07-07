@@ -3,7 +3,7 @@
 import SwiftUI
 
 struct VideoListView: View {
-    @StateObject var viewModel: VideoListViewModel
+    @State var viewModel: VideoListViewModel
     @State private var selection: VideoEntity?
     @State private var isShowingPopover: Bool = false
     @State private var isShowingSystemSettingPopover: Bool = false
@@ -51,6 +51,9 @@ struct VideoListView: View {
             NavigationStack {
                 ViewResolver.resolve(viewDescriptor: viewModel.generateDetailViewDescriptor(from: selection))
             }
+        }
+        .onAppear() {
+            viewModel.onAppear()
         }
     }
 }

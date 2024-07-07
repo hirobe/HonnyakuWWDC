@@ -1,22 +1,21 @@
 //  PlayController.swift
 
 import SwiftUI
-import Combine
 import AVKit
+import Observation
 
 /// SpeechとVideoを同期して動かすための状態管理クラス
 /// このクラスは内部で、syncPlayModel状態変数を持ち、ユーザの操作入力を受けて$syncPlayModelを更新します。
 /// 実際のSpeechとVideoの操作はこのクラスでは行いません。View ModelでsyncPlayModelを監視して行います
-final class SyncPlayUseCase: ObservableObject {
+@Observable final class SyncPlayUseCase {
     typealias SyncState = SyncPlayModel.SyncState
     typealias ControllerInfo = SyncPlayModel.ControllerInfo
     typealias SeekInfo = SyncPlayModel.ControllerInfo.SeekInfo
 
-    @Published private(set) var syncPlayModel: SyncPlayModel = .zero
-    @Published private(set) var curerntTime: Double = 0.0
-    @Published var videoDuration: Double = 0.0
+    private(set) var syncPlayModel: SyncPlayModel = .zero
+    private(set) var curerntTime: Double = 0.0
+    var videoDuration: Double = 0.0
 
-    private var cancellables: [AnyCancellable] = []
     private var speechPhraseList: SpeechPhraseList!
     var isSpeechActive: Bool = true
 
